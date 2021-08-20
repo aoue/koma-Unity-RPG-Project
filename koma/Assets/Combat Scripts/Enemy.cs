@@ -1,0 +1,174 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Enemy : Unit
+{
+    //enemy class.
+    //inherits from unit.
+    //its additionnal fields and functions are for dungeon ai stuff.
+
+
+    //calculating unit priority.
+    [SerializeField] private int default_priority; //added to unit's priority
+    [SerializeField] private int discipline; //[-discipline, discipline] forms a range that a random number is gen. and added to priority.
+    [SerializeField] private float concerned_level; //unit is concerned when hp / hpmax is below this. range 0-1, inclusive.
+    [SerializeField] private int concerned_priority; //added to unit's priority when unit is concerned.
+    [SerializeField] private bool isHealer; //true if the unit is a healer.
+    [SerializeField] private bool isBuffer; //true if the unit is a buffer.
+    [SerializeField] private int healer_priority; //added to unit's priority if an ally is concerned.
+    
+
+    //move picking system.
+    [SerializeField] private int staminaRegen; //the amount of stamina the unit regens per round.
+    private bool useHealIfPicked; //help healers fulfill their role.
+
+    //overrides from parent class.
+    public virtual void stat_modify(int threat)
+    {
+        //called by dungeon. increases the monster's level and stats a threat-based number of times. may also give it new moves.
+        //can be very specific, so we'll override this function for each enemy type.
+
+        //things to increase:
+        // -level
+        // -hpmax
+        // -patk, pdef, matk, mdef
+        // -exp (given out, that is.)
+    }
+    protected int stat_modify_helper(int first, int second)
+    {
+        //randomly returns first or second.
+        return UnityEngine.Random.Range(first, second + 1);
+        
+    }
+    public void spawning_variance()
+    {
+        //called by dungeon when an instance of a mob class is spawned. we go in and 
+        //randomly apply some spread to their stats so the enemies aren't all the same
+        //since that would be boring.
+
+        //vary them not by a set amount, but by a percentage.
+        //between 0.85f & 1.1f
+        float[] varArr = new float[7];
+        for(int i = 0; i < 7; i++)
+        {
+            varArr[i] = UnityEngine.Random.Range(0.85f, 1f);
+        }
+
+        //stats to vary:
+        // -level
+        level = (int)(level * varArr[0]);
+
+        // -hpmax
+        hpMax = (int)(hpMax * varArr[1]);
+
+        // -starting stamina
+        stamina = (int)(stamina * varArr[2]);
+
+        // -patk, pdef, matk, mdef
+        patk = (int)(patk * varArr[3]);
+        pdef = (int)(pdef * varArr[4]);
+        matk = (int)(matk * varArr[5]);
+        mdef = (int)(mdef * varArr[6]);
+    }
+    public override bool refresh(bool startOfBattle)
+    {
+        if (startOfBattle)
+        {
+            hp = get_hpMax_actual();
+            ooa = false;
+            stamina = UnityEngine.Random.Range(20, 60);
+        }
+        else if (ooa == true) return false; //don't do any of this if out of action.
+
+        ap = get_apMax_actual();
+        stamina += staminaRegen;
+
+        //handle status  
+        bool expired = false;
+        if (startOfBattle == true)
+        {
+            status.reset(this);
+        }
+        else
+        {
+            expired = status.decline(this);
+        }
+        return expired;
+    }
+
+    //AI
+    public bool is_concerned()
+    {
+        if (((float)hp) / ((float)get_hpMax_actual()) <= concerned_level)
+        {
+            return true;
+        }
+        return false;
+    }
+    public int calc_priority(bool needHealing)
+    {
+        //returns the unit's priority to act in battle.
+        //takes a variety of other serialized variables into account, as well as the 
+        //unit's current state, to check this.
+
+        int pri = default_priority;
+        
+        //concerned
+        if ( is_concerned() == true ) pri += concerned_priority;
+
+        //healing
+        if (needHealing == true) { pri += healer_priority; useHealIfPicked = true; }
+
+        //disciple
+        pri += UnityEngine.Random.Range(-discipline, discipline);
+        
+        return pri;
+    }
+    public EnemyMove pick_move(int roll, bool canPickEOR)
+    {
+        //we have roll.
+        //we know whether we can pick EOR moves: canPickEOR
+        //we know whether we must pick a heal  : useHealIfPicked
+
+        //TODO: buff picking (mimic heal picking)
+        Debug.Log("roll is " + roll);
+        EnemyMove chosenMove = null;
+        if ( useHealIfPicked == true )
+        {
+            for (int i = moveset.Length - 1; i >= 0; i--)
+            {
+                //Debug.Log("H. looking at move " + i);
+                //valid move requiremets:
+                // ap >= apDrain, stam drain < roll, does not conflict with EOR, isHeal is true.               
+                if ( moveset[i].get_staminaDrain() <= roll && moveset[i].get_isHeal() == true && !(moveset[i].get_phase() == executionTime.ENDOFROUND && canPickEOR == false) && ap >= moveset[i].get_apDrain())
+                {
+                    //then, move is valid. :)
+                    Debug.Log("enemy picking healing move with index " + i);
+                    chosenMove = (EnemyMove)moveset[i];
+                    break;
+                }
+            }
+        }
+        if ( chosenMove == null )
+        {
+            //then we couldn't find a healing move we liked. go through and look again, but this time, it cannot be a healing move.
+            for (int i = moveset.Length - 1; i >= 0; i--)
+            {                
+                //valid move requiremets:
+                // stam drain < roll, does not conflict with EOR, isHeal is false.
+                if (moveset[i].get_staminaDrain() <= roll && moveset[i].get_isHeal() == false && !(moveset[i].get_phase() == executionTime.ENDOFROUND && canPickEOR == false) && ap >= moveset[i].get_apDrain())
+                {
+                    //then, move is valid. :)
+                    Debug.Log("enemy picking move with index " + i);
+                    chosenMove = (EnemyMove)moveset[i];
+                    break;
+                }
+            }
+        }
+        stamina -= chosenMove.get_staminaDrain();
+        return chosenMove;
+    }
+
+
+}

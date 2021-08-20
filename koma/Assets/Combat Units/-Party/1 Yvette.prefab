@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &363348870611456591
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 363348870611456589}
+  - component: {fileID: 363348870611456590}
+  m_Layer: 0
+  m_Name: 1 Yvette
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &363348870611456589
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 363348870611456591}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 432.7307, y: 285.1584, z: -1489.3125}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &363348870611456590
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 363348870611456591}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba42b37bc7aa8744c844abe1c58e792a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSelectionPortrait: {fileID: 21300000, guid: d692c2a687c50db43be207e5eafe7ceb,
+    type: 3}
+  boxImg: {fileID: 21300000, guid: 0964fe523a50db04fbd4bb0a891aee63, type: 3}
+  exp: 0
+  level: 1
+  nom: Yvette
+  apMax: 1
+  hpMax: 140
+  affinity: 0
+  stamPenIncrement: 10
+  staminaMax: 20
+  patk: 100
+  pdef: 90
+  matk: 70
+  mdef: 60
+  defendMove: {fileID: 4847647077466282067, guid: e08008df3aec39f469b5765c18f19e00,
+    type: 3}
+  moveset:
+  - {fileID: 1738390688075259775, guid: 6a131bd5456e35c43ba5a5b1eae43532, type: 3}
+  - {fileID: 3641029461688156835, guid: 234e58b599071bf4096b848be391eb10, type: 3}
+  - {fileID: 7961881290996551369, guid: ec86c3ad3bac86a4d8f83eef45929ed4, type: 3}
+  - {fileID: 3238818174328016984, guid: 71374493b73392f46b955ef0cf218c5c, type: 3}
+  - {fileID: 0}

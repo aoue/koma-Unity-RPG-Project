@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1817192110456301057
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1817192110456301058}
+  - component: {fileID: 1817192110456301059}
+  m_Layer: 0
+  m_Name: 1 barrier
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1817192110456301058
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817192110456301057}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 563.60077, y: 251.15283, z: -204.6875}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1817192110456301059
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1817192110456301057}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8acc42a8565c06047adf2a4cdfaea9cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSound: {fileID: 0}
+  nom: Barrier
+  targetsParty: 1
+  mustTargetSelf: 1
+  isHeal: 1
+  isStatus: 1
+  statusText: 
+  phase: 0
+  preferredRow: 0
+  strikes: 0
+  power: 0
+  lowSpread: 0
+  highSpread: 0
+  xSize: 1
+  ySize: 1
+  affinity: 0
+  usesPatk: 0
+  usesPdef: 0
+  apDrain: 0
+  staminaDrain: 0
+  flavour: Creates a magic barrier, raising magic defense.
+  amount: 0.5
+  amount_ceiling: 1.5
+  dur: 1
+  dur_ceiling: 1
+  floating_message: Mdef+
