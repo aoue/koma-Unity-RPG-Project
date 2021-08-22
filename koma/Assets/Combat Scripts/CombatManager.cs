@@ -18,9 +18,6 @@ public class CombatManager : MonoBehaviour
     //waves: we keep fighting until we run out of waves. Enemy[6]. blank spots represented by null.
 
     //dummy stuff, for tests
-    [SerializeField] private Unit[] dummyParty;
-    [SerializeField] private Enemy[] wave1;
-    [SerializeField] private Enemy[] wave2;
 
     [SerializeField] private DungeonUnitBox[] partyBoxes; //boxes that hold the party. 0-5
     [SerializeField] private DungeonUnitBox[] enemyBoxes; //boxes that hold the enemies. 0-5
@@ -81,7 +78,7 @@ public class CombatManager : MonoBehaviour
         //called when battle is well and truly over.
         gameObject.SetActive(false);
     }
-    public void load_battle(Unit[] party, Enemy[][] inWaves, int stam, int threat)
+    public void load_battle(Unit[] party, Enemy[][] inWaves, int threat)
     {
         //called from dungeon manager.
         //sets up player party, waves, stamina.
@@ -131,8 +128,6 @@ public class CombatManager : MonoBehaviour
             if (el[i] != null) el[i].place = i;
         }
 
-        stamina = stam;
-        update_stamina_text();
         round = 0;
 
         fill_party_slots();
@@ -452,12 +447,10 @@ public class CombatManager : MonoBehaviour
         }
 
         update_ap_texts();
-        
+
         //drain stamina. Yes, we drain it now no matter if the move is ever executed.
         //take into account currentUnit's status.trance
-        int stamToDrain = (int)(currentUnit.nextMove.get_staminaDrain() * currentUnit.status.trance);
-        stamina -= stamToDrain;
-        update_stamina_text();
+        currentUnit.drain_mp(currentUnit.nextMove.get_mpDrain());
 
         //three cases: depending on move's execution time.
         pTurn = playerTurnPhase.NOT;
@@ -531,7 +524,7 @@ public class CombatManager : MonoBehaviour
                    if (pl[i] != null) pl[i].status.reset(pl[i]);
                 }
 
-                dMan.return_control(battleXP, true, stamina, pl);
+                dMan.return_control(battleXP, true, pl);
             }
         }
     }
@@ -1097,11 +1090,11 @@ public class CombatManager : MonoBehaviour
         
         if ( eorScheduledMove == null)
         {
-            moveSelector.show(currentUnit, stamina, true, playerScheduledUnit.place);
+            moveSelector.show(currentUnit, true, playerScheduledUnit.place);
         }
         else
         {
-            moveSelector.show(currentUnit, stamina, false, playerScheduledUnit.place);
+            moveSelector.show(currentUnit, false, playerScheduledUnit.place);
         }
     }
     public void player_selected_party_unit(int which)
@@ -1279,11 +1272,6 @@ public class CombatManager : MonoBehaviour
 
         partyApText.text = "Team AP: " + plAp;
         enemyApText.text = "Team AP: " + elAp;
-    }
-    void update_stamina_text()
-    {
-        //called after a unit uses a move.
-        staminaText.text = "Stamina: " + stamina;
     }
 
     //MOVE HIGHLIGHTING
@@ -1743,7 +1731,7 @@ public class CombatManager : MonoBehaviour
         //the unit will roll a number from 1-100, add stamina, and pick the most stamina depending move it can afford.
         //(moving from the back to the front of its moveset)
 
-        int roll = Mathf.Max(1, UnityEngine.Random.Range(1, 101) + el[chosenID].get_stamina());
+        int roll = Mathf.Max(1, UnityEngine.Random.Range(1, 101) + el[chosenID].get_mp());
 
         EnemyMove chosenMove;
         if (eorScheduledMove == null)

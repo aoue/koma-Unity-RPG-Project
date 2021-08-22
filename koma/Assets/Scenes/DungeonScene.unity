@@ -1025,7 +1025,6 @@ RectTransform:
   - {fileID: 465615667}
   - {fileID: 1764612220}
   - {fileID: 1198874811}
-  - {fileID: 2125529782}
   - {fileID: 1005177980}
   m_Father: {fileID: 350418929}
   m_RootOrder: 2
@@ -9076,11 +9075,11 @@ RectTransform:
   - {fileID: 1218556148}
   - {fileID: 514083228}
   m_Father: {fileID: 172384921}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 444, y: -84}
+  m_AnchoredPosition: {x: 433, y: -81}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1053167877
@@ -10921,7 +10920,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -61, y: -87.5}
+  m_AnchoredPosition: {x: -61, y: -92}
   m_SizeDelta: {x: 880, y: 122.92432}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1198874812
@@ -10945,7 +10944,7 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 28
+    m_FontSize: 26
     m_FontStyle: 0
     m_BestFit: 0
     m_MinSize: 0
@@ -14681,23 +14680,6 @@ MonoBehaviour:
   - {fileID: -1397390101001611500, guid: 3f14408a838337c43a92be94cef2ab11, type: 3}
   - {fileID: 4661562081599232264, guid: 3f14408a838337c43a92be94cef2ab11, type: 3}
   - {fileID: -4764149586969351601, guid: 3f14408a838337c43a92be94cef2ab11, type: 3}
-  dummyParty:
-  - {fileID: 363348870611456590, guid: 1df84eeb3ae3e4f4592abcded33ac4a6, type: 3}
-  - {fileID: 5589160117182276410, guid: 87937ca7535a6ef40b0ea0b09d34147b, type: 3}
-  wave1:
-  - {fileID: 0}
-  - {fileID: 553496798368208841, guid: f1efe84f158f5fd47acdbe9aec8385b4, type: 3}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  wave2:
-  - {fileID: 553496798368208841, guid: f1efe84f158f5fd47acdbe9aec8385b4, type: 3}
-  - {fileID: 0}
-  - {fileID: 553496798368208841, guid: f1efe84f158f5fd47acdbe9aec8385b4, type: 3}
-  - {fileID: 0}
-  - {fileID: 553496798368208841, guid: f1efe84f158f5fd47acdbe9aec8385b4, type: 3}
-  - {fileID: 0}
   partyBoxes:
   - {fileID: 706242658}
   - {fileID: 728163592}
@@ -14717,7 +14699,7 @@ MonoBehaviour:
   emptySlotSprite: {fileID: 21300000, guid: 90be11d1430c59847b99aef5f70a324c, type: 3}
   partyApText: {fileID: 1332543480}
   enemyApText: {fileID: 669376762}
-  staminaText: {fileID: 2125529783}
+  staminaText: {fileID: 0}
   dmgTextPrefab: {fileID: 3325489636015707765, guid: e6d2a8065f5c1e543b5715bb28e3260d,
     type: 3}
   SM: {fileID: 320779514}
@@ -20989,84 +20971,6 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
---- !u!1 &2125529781
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2125529782}
-  - component: {fileID: 2125529784}
-  - component: {fileID: 2125529783}
-  m_Layer: 5
-  m_Name: stamina text
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &2125529782
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2125529781}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 172384921}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -100, y: 66}
-  m_SizeDelta: {x: 260, y: 80}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2125529783
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2125529781}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_FontData:
-    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
-    m_FontSize: 40
-    m_FontStyle: 0
-    m_BestFit: 0
-    m_MinSize: 0
-    m_MaxSize: 60
-    m_Alignment: 6
-    m_AlignByGeometry: 0
-    m_RichText: 1
-    m_HorizontalOverflow: 0
-    m_VerticalOverflow: 0
-    m_LineSpacing: 1
-  m_Text: 'Stamina: 300'
---- !u!222 &2125529784
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2125529781}
-  m_CullTransparentMesh: 0
 --- !u!1 &2131301108
 GameObject:
   m_ObjectHideFlags: 0

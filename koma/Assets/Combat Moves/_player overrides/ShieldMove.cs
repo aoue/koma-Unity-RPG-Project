@@ -8,6 +8,6 @@ public class ShieldMove : Move
 
     public override void apply_status(Unit target, Unit[] pl, Enemy[] el, int userIndex)
     {
-        target.status.dmgTaken_up(-0.25f, -0.75f, 3, 3);
+        target.status.dmgTaken_up(-0.25f, 0.75f, 3, 3);
     }
 }

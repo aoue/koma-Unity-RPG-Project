@@ -25,7 +25,7 @@ public class MoveSelector : MonoBehaviour
     private string[] affStringArray = new string[6]
     { "earth", "wind", "water", "flame", "light", "dark" };
 
-    public void show(Unit unit, int partyStamina, bool isEORempty, int indexInPl)
+    public void show(Unit unit, bool isEORempty, int indexInPl)
     {
         moveHighlightText.text = "";
         //goes and sets up the move interface with information read from unit.
@@ -90,11 +90,12 @@ public class MoveSelector : MonoBehaviour
 
         //fill in unit moves:
         //5 move slots + 1 defend slot. colors based on move affinity, row, and availability.
+        int mpToSpare = unit.get_mp();
         for (int i = 0; i < 5; i++)
         {
             if ( unit.get_moveset()[i] != null)
             {
-                if (partyStamina >= (int)(unit.get_moveset()[i].get_staminaDrain() * unit.status.trance) && unit.get_ap() >= unit.get_moveset()[i].get_apDrain())
+                if (mpToSpare >= (int)(unit.get_moveset()[i].get_mpDrain() * unit.status.trance) && unit.get_ap() >= unit.get_moveset()[i].get_apDrain())
                 {
                     if (unit.get_moveset()[i].get_phase() != executionTime.ENDOFROUND)
                     {

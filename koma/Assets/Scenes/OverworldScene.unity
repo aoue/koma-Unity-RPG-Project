@@ -774,7 +774,8 @@ PrefabInstance:
         type: 3}
       propertyPath: ev
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 3199853394642285450, guid: ada506ed30d726149a545616eaf0b639,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e9cbe1de118e5bd40b8c15f5abbab346, type: 3}
 --- !u!224 &102868847 stripped
@@ -2103,7 +2104,6 @@ MonoBehaviour:
   charHolders: []
   partHolders:
   - {fileID: 2138438635}
-  - {fileID: 0}
   dunHolders:
   - {fileID: 878224945}
   bg: {fileID: 1537078119}
@@ -2835,10 +2835,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   theWorld: {fileID: 506116908}
+  stamText: {fileID: 267084119}
   unitPreviewGO: {fileID: 552873349}
   bgImage: {fileID: 1107394945}
   embarkButton: {fileID: 750580824}
-  staminaText: {fileID: 267084119}
   unitLimitText: {fileID: 798403381}
   unitBoxes:
   - {fileID: 1839341365}

@@ -22,7 +22,7 @@ public class DungeonUnitBox : MonoBehaviour
         // -image
         unitImage.sprite = u.get_boxImg();
         // -name
-        nameText.text = u.get_nom() + " L" + u.get_level();
+        nameText.text = u.get_nom();
         // -AP
         if (showAP == true) apText.text = "AP: " + u.get_ap();
 
@@ -31,6 +31,11 @@ public class DungeonUnitBox : MonoBehaviour
         else if (u.status.hp > 0) hpText.text = "HP: " + u.get_hp() + " / <color=green>" + u.get_hpMax_actual() + "</color>";
         else hpText.text = "HP: " + u.get_hp() + " / <color=red>" + u.get_hpMax_actual() + "</color>";
 
+        //if we're dealing with a player unit, then show mp / mpmax too.
+        if ( !(u is Enemy) ) 
+        {
+            hpText.text += "\nMP: " + u.get_mp() + " / " + u.get_mpMax();
+        }
 
         //fill in their orb slot too.
         //affOrb.color = AffKeyWords.get_aff_color(u.get_affinity());

@@ -121,8 +121,6 @@ public class Overworld : MonoBehaviour
         //if we failed, then we're stuck.
         Debug.Log("passTime pressed.");
 
-        dungeonLeavingState = LeavingState.CLEAR;
-
         if (partHolders[actPart].get_hasMandatoryDungeon() == true)
         {
             switch (dungeonLeavingState)
@@ -164,15 +162,15 @@ public class Overworld : MonoBehaviour
     }
     void a_new_part(int addToPart, bool repeating)
     {
-        if (repeating == false)
+        if (repeating == false) //stop the player from repeating events.
         {
             partHolders[actPart].reset_doneEvents();
+            
         }
 
         //wipes the slate clean for a new day.
         // -clear the active_events dictionary.
         //what else? i know, autosave ;).
-
         actPart += addToPart;
 
         //reset day progression
@@ -285,7 +283,6 @@ public class Overworld : MonoBehaviour
 
         //distribute exp
         pdm.inc_exp();
-        pdm.modify_staminaPenalty(dungeonLeavingState);
 
         set_background();
     }

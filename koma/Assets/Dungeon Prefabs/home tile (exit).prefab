@@ -145,6 +145,8 @@ MonoBehaviour:
   vision: 2
   exploredSprite: {fileID: 21300000, guid: a06e3ee9c5758554295fad31bae4d903, type: 3}
   rendy: {fileID: 739550801154456686}
+  meshy: {fileID: 0}
+  drainText: {fileID: 0}
   hasEvent: 0
   sparkleEffectRendy: {fileID: 8729187746239872742}
   isExit: 1

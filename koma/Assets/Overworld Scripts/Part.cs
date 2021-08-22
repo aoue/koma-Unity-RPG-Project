@@ -6,7 +6,7 @@ public class Part : MonoBehaviour
 {
     //the new 'dayHolder' for this design of overworld. yeah.
 
-    public static bool[] doneEvents; //parralel array with partEvents. keeps track of which events have already been done.
+    public static List<int> doneEvents; //parralel array with partEvents. keeps track of which events have already been done.
                                      //is reset each time we go to a new day.
 
     [SerializeField] private Event immediateEvent; //if null, do nothing. if not null, then on part, play event first directly.
@@ -26,11 +26,9 @@ public class Part : MonoBehaviour
 
     public void reset_doneEvents()
     {
-        doneEvents = new bool[partEvents.Length];
-        for (int i = 0; i < doneEvents.Length; i++)
-        {
-            doneEvents[i] = false;
-        }
+        if (doneEvents == null) doneEvents = new List<int>();
+        doneEvents.Clear();        
+        //starts each part empty.
     }
     public void load_part(Overworld theWorld, bool repeatingPart)
     {
@@ -50,20 +48,16 @@ public class Part : MonoBehaviour
         //add all to active_events because they may become valid later in the day or something.
         for (int i = 0; i < partEvents.Length; i++)
         {
-            if (doneEvents[i] == false)
+            if ( !doneEvents.Contains(partEvents[i].get_id()) )
             {
                 theWorld.add_active_event(partEvents[i], partEvents[i].get_id());
-            }
-
-            if (doneEvents[i] == false && partEvents[i].validate_event() == true)
-            {
-                partEvents[i].setup_event();
-            }
-            else
-            {
                 partEvents[i].gameObject.SetActive(false);
-            }
-            
+
+                if (partEvents[i].validate_event() == true)
+                {
+                    partEvents[i].setup_event();
+                }
+            }  
         }
 
         //finally, adjust dungeon status now

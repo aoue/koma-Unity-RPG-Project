@@ -52,8 +52,10 @@ public class Cart : MonoBehaviour
         //dungeon fills cart with information that is to be saved  and brought back
         //to the main dungeon info.
         _instance.leaveState = withdrawStatus;
-        if (withdrawStatus == LeavingState.CLEAR) cleared = true;
-        else cleared = false;
+        Debug.Log("_instance.leaveState = " + _instance.leaveState);
+        if (withdrawStatus == LeavingState.CLEAR) _instance.cleared = true;
+        else _instance.cleared = false;
+        Debug.Log("dun_fill_cart(). cleared = " + _instance.cleared);
 
         _instance.dunID = d.get_dungeonId();
         if (_instance.dungeonStates[_instance.dunID] == null) _instance.dungeonStates[_instance.dunID] = new DungeonLibrary();
@@ -65,7 +67,7 @@ public class Cart : MonoBehaviour
     public void ow_unload_cart(Overworld world)
     {
         //called when arriving back in overworld from dungeon.
-
+        Debug.Log("_instance.leaveState = " + _instance.leaveState);
         //ow stuff
         world.actPart = _instance.actPart;
         world.restore_charEvents_progress(_instance);

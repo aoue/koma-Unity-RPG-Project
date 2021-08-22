@@ -16,52 +16,58 @@ public class PrepDungeonManager : MonoBehaviour
     private static List<Unit> reserveParty; //all units, including the ones in the expedition party.
     private static Unit[] party; //the expedition party. always size 6. empty units are null.
     //private Inventory inven; (holds arm, wpn, acc, AND moves)
+    [SerializeField] private Text stamText;
     [SerializeField] private GameObject unitPreviewGO;
     [SerializeField] private Image bgImage;
     [SerializeField] private Button embarkButton; //button that sends us to the dungeon.
-    [SerializeField] private Text staminaText;
     [SerializeField] private Text unitLimitText;
     [SerializeField] private UnitBox[] unitBoxes; //dimensions are 500x250. 2:1
     [SerializeField] private ReserveUnitBox[] reserveUnitBoxes; //dimensions are 110x110. 1:1
+    private int stamina; //transferred to dungeonmanager.
     private int unitsInParty; //to help with the unit limit.
     private int dungeonId; //the id of the dungeon we're headed to.
-    private int stamina; //stamina of this party in the dungeon 
     private int unitLimit; //how many units can you bring into this dungeon at this time. set in load_up.
     private bool unitInFront; //when not true, can only place units in the front row. check everytime a unit is placed.
 
     [SerializeField] private Sprite[] affOrbSprites;
 
-    public void modify_staminaPenalty(LeavingState leave)
-    {
-        //if wasLoss is true, then the party withdrew from a dungeon after a loss, and 
-        //they suffer 2x their normal stamina penalty
-
-        //for all the units in reserveParty:
-        // -if inParty = true; stamina penalty++
-        // -if inParty = false; stamina penalty = 0
-        //set inParty to false for all.
-        for (int i = 0; i < reserveParty.Count; i++)
-        {
-            if (reserveParty[i].inParty == true)
-            {
-                if (leave == LeavingState.LOSS)
-                {
-                    //reserveParty[i].staminaPenalty_up();
-                    reserveParty[i].decrement_stamina();
-                }
-                reserveParty[i].decrement_stamina();
-                reserveParty[i].inParty = false;
-            }
-            else
-            {
-                reserveParty[i].clear_staminaPenalty();
-            }
-        }
-    }
-    
+       
     public void inc_exp()
     {
         ExpManager.distribute_xp(reserveParty);
+    }
+
+
+    public void load_up(Dungeon dun)
+    {
+        unitPreviewGO.SetActive(false);
+        DungeonManager.heldDun = dun;
+        stamina = 30; //in the future we'll actually read this value from somewhere instead of setting it to 20.
+        stamText.text = "Stamina: " + stamina;
+
+        //take necessary info from dun
+        unitLimit = dun.get_unitLimit();
+        unitLimitText.text = "Unit Limit: " + unitLimit;
+        dungeonId = dun.get_dungeonId();
+
+        //add units alraedy in party to their boxes
+        //party length is always 6        
+        for (int i = 0; i < 6; i++)
+        {
+            party[i] = null;
+            unitBoxes[i].fill_empty();
+        }
+        foreach(Unit u in reserveParty)
+        {
+            u.inParty = false;
+            u.set_mp(u.get_mpMax());
+        }
+        unitsInParty = 0;
+
+        load_reserveParty();
+        isPartyValid();
+        gameObject.SetActive(true);
+        
     }
 
     //STRIDES
@@ -104,9 +110,9 @@ public class PrepDungeonManager : MonoBehaviour
         foreach(Unit u in newPartyMembers)
         {
             u.set_hp(u.get_hpMax());
+            u.set_mp(u.get_mpMax());
             reserveParty.Add(u);
             u.inParty = false;
-            u.clear_staminaPenalty();
         }
     }
     public void close()
@@ -114,42 +120,20 @@ public class PrepDungeonManager : MonoBehaviour
         //called on close button click.
         gameObject.SetActive(false);
     }
-    public void load_up(Dungeon dun)
-    {
-        unitPreviewGO.SetActive(false);
-        DungeonManager.heldDun = dun;
-
-        //take necessary info from dun
-        unitLimit = dun.get_unitLimit();
-        unitLimitText.text = "Unit Limit: " + unitLimit;
-        dungeonId = dun.get_dungeonId();
-   
-        //add units alraedy in party to their boxes
-        //party length is always 6        
-        for (int i = 0; i < 6; i++) 
-        {
-            party[i] = null;
-            unitBoxes[i].fill_empty();
-        }
-        unitsInParty = 0;
-
-        load_reserveParty();
-        update_stamina();
-        isPartyValid();
-        gameObject.SetActive(true);
-    }
+    
     public void to_the_dungeon()
     {
         //pass along any necessary relevant info to the dungeonSceneManager.
 
         //(i think you need to do dontdestroyonload to the player units too.)
 
+        
+
         //finally, load the dungeon scene.
         //Debug.Log("loading dungeon scene");
         //pass party to dungeonManager
-        DungeonManager.party = party;        
-
-        DungeonManager.stamina = stamina;
+        DungeonManager.party = party;
+        DungeonManager.stamina = stamina; //default. will actually check somewhere in the future.
 
         theWorld.fill_cart();
 
@@ -252,28 +236,9 @@ public class PrepDungeonManager : MonoBehaviour
     {
         //refreshes menus after a change has been made
         load_reserveParty();
-        update_stamina();
         isPartyValid();
     }   
-    void update_stamina()
-    {
-        //replace the text value with: (base stamina + each party member's base stamina)
-        //what is base stamina? let's say it's 300.
 
-        int staminaMod = 0;
-        for (int i = 0; i < 6; i++)
-        {
-            if (party[i] != null)
-            {
-                staminaMod += party[i].get_stamina();
-            }
-        }
-        stamina = 100 + staminaMod;
-
-        //display it nicely; 
-        staminaText.text = "Stamina: 100 + (" + staminaMod + ")";      
-
-    }
     void isPartyValid()
     {
         //checks if the party is valid:

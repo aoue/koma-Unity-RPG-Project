@@ -35,7 +35,7 @@ public class Move : MonoBehaviour
     [SerializeField] private bool usesPatk; //true: the user uses patk. false: the user uses matk.
     [SerializeField] private bool usesPdef; //true: the target uses pdef. false: the user uses mdef.
     [SerializeField] private int apDrain; //how much ap the user loses when they use this move.
-    [SerializeField] private int staminaDrain; //how much stamina the party loses when this move is used.
+    [SerializeField] private int mpDrain; //how much stamina the party loses when this move is used.
     [SerializeField] private string flavour; //move's flavour text. part of the descr.
 
     public virtual void apply_status(Unit target, Unit[] pl, Enemy[] el, int userIndex)
@@ -52,7 +52,7 @@ public class Move : MonoBehaviour
     public bool get_targetsParty() { return targetsParty; }
     public bool get_mustTargetSelf() { { return mustTargetSelf; } }
     public int get_apDrain() { return apDrain; }
-    public int get_staminaDrain() { return staminaDrain; }
+    public int get_mpDrain() { return mpDrain; }
     public bool get_isHeal() { return isHeal; }
     public bool get_isStatus() { return isStatus; }
     public string get_statusText() { return statusText; }
@@ -106,11 +106,11 @@ public class Move : MonoBehaviour
 
         if (phase == executionTime.ENDOFROUND)
         {
-            toReturn += nom + " | all AP, " + staminaDrain + " Stam\n";
+            toReturn += nom + " | all AP, " + mpDrain + " MP\n";
         }
         else
         {
-            toReturn += nom + " | " + apDrain + " AP, " + staminaDrain + " Stam\n";
+            toReturn += nom + " | " + apDrain + " AP, " + mpDrain + " MP\n";
         }
 
         if (isHeal)
@@ -134,7 +134,7 @@ public class Move : MonoBehaviour
         }
         else
         {
-            toReturn += "/Matk vs. ";
+            toReturn += "Matk vs. ";
         }
 
         if (usesPdef)

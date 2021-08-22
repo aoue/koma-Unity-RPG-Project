@@ -10,8 +10,6 @@ pdm/playerdungeon portrait dimensions: 500x250/450x225 (2x1) maybe enenacle for 
 enemy dungeon portrait dimensions: 450x200 (9x4)
 move select portrait: 540x1080. reuse full portrait.
 
-BRUH
-
 use a thick brush, it looks better.
 - dungeon scene ui bg for the bottom of the screen box. should be somber, with like, carved angels in it.
 - find a custom mouse pointer to use. they're fun.
@@ -34,31 +32,7 @@ Okay, okay, but what do we need for the demo/prologue to be released?
 
 ===== story dependent stuff
 
-Artificer. don't you want to finally connect with another person? grow up.
-
-- story beginning:
-	- I'm having trouble writing it. doesn't that mean it's not good?
-	- no, it's fine, just tighten it up:
-		- why does arthur not want to leave? Because the news about friday was bad and he feels he must stay.
-		- why doesn't yve care? Because she's a subcontractor and isn't working for him.
-		- finally, at the end, the artificer hires yve directly. Now she'll listen to him.
-
-- rel notes: (transport to drive)
-	- yes, mc and yve are siblings. but yve says he's different since caster stuff, she's not sure he's still her brother.
-	  she's taking him so she can watch him. she doesn't trust him. mc is hurt because she relies on dg more, especially.
-	  she treats mc more as a time bomb. it's because of the casters, both enemy and 'friendly' she encountered during the war.
-	- stuff for yve: she likes to collect people. she doesn't need duplicates though.
-	- part of the story will be them getting closer again or not, either way is fine.
-	- keep track of mc's decisions, because we'll do the thing where the little things add up and decide the major decisions for the player.
-
-- consider adding a pet cat or something.
-	- of course! the Vera Lee has a pet cat.
-	- cat's name is Dog. It's funny because it's a cat. (dgs)
-	- can pick it up in Cherespoir in chapter 1. 
-
-- form a detailed plan for story/game flow:
-	- plan out the events and whatnot at each stage of the game. in ABSOLUTE detail.
-	- write out these events.
+grow up? as if he did.
 
 - visuals:
 	finish planning before starting to draw something.
@@ -81,45 +55,106 @@ Artificer. don't you want to finally connect with another person? grow up.
 we are not going to redo the combat system, it is kind of fun. :) just leave it or you'll never finish anything lol.
 =====
 - the overworld bgs should have some animation. (even just weather, like rain or wind.)
-
 - Note: specific events in character chains may also be locked to the world's part level. 
-	- No chains are available in the prologue. 
-- writing events:
-	- next time you're in ink, create the ink-side version of: pov(string pn)
-	prologue skeleton:
-	- part 0: (mandatory dungeon)
-		- beat: p0 ev0, enables dun 0. also, adds party units too. (mc+yve)
-		- dun 0. clear to move forward.
-	- part 1: (mandatory dungeon)
-		- immediate.
-		- beat: p1 ev0. enabled dun 1.
-		- dun 1. clear to move forward.
-	- part 2: (pass time to clear)
-		- immediate.
-		- beat: p2 ev0. enables pass time.
-	End of prologue.
-- designing and building dungeons:
-	- remember, dungeon events. also, some optional treasure.
-		- dun 0: all prebuilt enemy formations, I think.
+	(- No chains are available in the prologue.)
+
 -----
 
-- dungeon unit box:
-	- don't include the level with the name
+- dungeon design: (to keep in mind)
+	- mob parties must absolutely not start on a home tile. 
+	- be careful to make it so the player never becomes stuck in a dungeon. they must always be able to withdraw.
+	- mandatory dungeons, once cleared, you can never go back in. they're roadblocks.
+	- optional dungeons, you don't even 'clear' them. they have no clear tile.
+		- you can go in them as many times as you want, until the dungeon becomes unavailable, usually at an act change.
+		- if doing something in an optional dungeon is necessary for a sidequest or something (like a recruitment quest or a monster slaying quest)
+		  then triggering an event will mark something in history that the event back in overworld checks.
 
-- flash steel:
-	- make stam cost v high
-
-- writing:	
-	- clear old events and modify day by day to reflect the new plan.
-	- revise prologue skeleton
+- writing:
+	- copy in an old file from arti; need all the ink functions/vars again.
+	- remember to include ic and name var again. (read ic same way, from a text file in the save loc folder.)
+		- uncomment vars in eventManager, etc.
+	- create prologue skeleton
 	- write events... bit by bit.
 
+- pdm:
+	- no where does it display a unit's hp, lol. what an oversight.
+	- can display it in unitbox, i suppose.
+
+- sound manager:
+	footsteps sound: no good, it's too slow and is only 1 tap.
+	- find a sound with multiple steps, 1 second long (or just over)
+
+- dungeon tiles:
+	- font of stamina is still okay; but make it only give a little stamina to party's pooledstamina.
+	- new tile: font of mp (restore some portion of each party unit's mp.)
+
+- dungeon scene:
+	- stamina heal: must take at least 1 stam.
+	- retry manager: update it to save and fill unit's mp alongside hp. also... does it really work properly?
+
+- play by play:
+	- when displaying: "unit prepares to use ___ next turn" remove 'next turn', same for 'at end of round'
+	  or whatever.
+	- the time it will be used is obvious from the move previews, which the player will be able to check 
+	  momentarily.
+
+- dungeon unit box:
+	(future)
+	- unit ui layout:
+		- aff and name: unchanged.
+		- ap text: top left, just below aff and name.
+		- hpbar along bottom left (include letters overtop)
+		- mpbar below hpbar (include letters overtop)
+
+- unit stat previews:
+	- keep an eye out for places where the old stamina text needs to be replaced for the new stamina text system.
+
+- dungeon:
+	- add stamina check when enabling dungeon movement arrows.
+		- implemented; now just make sure it's accurate.
+
+
+- dungeon + SM:
+	- play footsteps sound through SM. (need to test it. played in a new tile, stopped in slide listener.)
+	- if it's an unexplored tile:
+		- restore a little (5%?) of each party unit's hp.
+
 - dungeon 0:
-	- the boss's tile is an eventtile too, now. make it so.
-	- the party is: mc, yve, and dg
+	- plan it out. 
+	- mobs? various Sabaind. (designs are still in the sheet, at least)
+	- party? Mc, Friday, Nat, and Tori. (mc is a combat character now. a balance mage, i guess. keep moves same, but make him normal aff i guess)(designs still in the sheet too -- but change them some. e.g. tori's flourish -> flash steel. a weak, but instant move.)
+		- rescale design sheet stats. (hp mostly, but some atk for mobs.)
 
 - exp:
 	- now that monsters actually have exp, is it being carried back properly?
+
+- filling out dungeon hover:
+	- title, current threat
+	- symbol if: mandatory and not yet cleared.
+	- symbol if optional and not yet cleared.
+	- symbol if entered before.
+
+- main menu: (no need to worry about loading, dude. we're not going to implement that.)
+	Just make a fresh scene for mainmenu.
+		- start: scenemanager.load("overworld scene")
+		- load (not interactable for now)
+		- exit: Application.Quit()
+
+- when we include assets (at the end):
+	- moves, music, sounds, etc.
+	remember to credit.
+	OGA faq: https://opengameart.org/content/faq#q-ccgplcompat
+	"What do the licenses mean"
+
+- ui pack:
+	- got one bookmarked from oga with a ton of things. try using it to make the ui look good.
+		- dungeon ui needs to be resized too.
+	- change the move preview menu too. (those three buttons, you know.)
+	- a mouse cursor. just something stylized.
+
+- sound effect for passing time. should be ~4 seconds long. doo doo doo doooooo ... doooo
+
+===== Post Demo
 
 - unit trees:
 	these let you customize and level up each unit. can: increase level, exchange moves, and do gear(?).
@@ -160,50 +195,6 @@ we are not going to redo the combat system, it is kind of fun. :) just leave it 
 		- the cost of learning a move is increased by the player's level?
 
 
-- dungeon design: (to keep in mind)
-	- mob parties must absolutely not start on a home tile. 
-	- mandatory dungeons, once cleared, you can never go back in. they're roadblocks.
-	- optional dungeons, you don't even 'clear' them. they have no clear tile.
-		- you can go in them as many times as you want, until the dungeon becomes unavailable, usually at an act change.
-		- if doing something in an optional dungeon is necessary for a sidequest or something (like a recruitment quest or a monster slaying quest)
-		  then triggering an event will mark something in history that the event back in overworld checks.
-
-- filling out dungeon hover:
-	- title, current threat
-	- symbol if: mandatory and not yet cleared.
-	- symbol if optional and not yet cleared.
-	- symbol if entered before.
-
-- main menu: (no need to worry about loading, dude. we're not going to implement that.)
-	Just make a fresh scene for mainmenu.
-		- start: scenemanager.load("overworld scene")
-		- exit: Application.Quit()
-
-- when we include assets (at the end):
-	- moves, music, sounds, etc.
-	remember to credit.
-	OGA faq: https://opengameart.org/content/faq#q-ccgplcompat
-	"What do the licenses mean"
-
-- ui pack:
-	- got one bookmarked from oga with a ton of things. try using it to make the ui look good.
-		- dungeon ui needs to be resized too.
-	- change the move preview menu too. (those three buttons, you know.)
-	- a special cursor
-
-- sound effect for passing time. should be ~4 seconds long.
-
-- new stamina system: (implement at the end)
-	- pooled stamina is a bad design idea. here's why:
-		- it's an all or nothing system. Everything is great until suddenly everyone has run out.
-		- I guess each unit should use individual stamina instead.
-	- further notes:
-		- smaller stams and stam costs:
-			- then, each unit can recover 1 stam per (new) tile walked on or something.
-
-===== Post Demo
-
-
 - saving and loading: (not in demo)
 	keep it simple.
 	- party members' states.(stats, equipped moves, and unlocked reserve moves.) 
@@ -216,28 +207,20 @@ we are not going to redo the combat system, it is kind of fun. :) just leave it 
 	  and then just make changes to that prefab, which would be saved given the nature of a prefab.
 	  Seems like a much cleaner way to carry data between scenes.
 
-- dungeon: 
-	- anytime you use the use_tile() button, a popup should appear to detail exactly what the
-	  effects of the tile were.
-
 - more status to add:
 	- make a unit's dmg spread get the highest/lowest possible roll. (2 stances)
 
-- the Vera Lee:
-	(available act 1)
-	- it's a tab at the bottom. press it to pop up and show the ship map. this is how we'll 
-	  do party events too (by clicking on the character's cabin).
-
-unsure how to translate this into the artificer's world; but worry not. we'll find a way.
 - guild store:
 	run by moth. each time you enter in a part, it displays a unique part text on the left with moth's character icon.
 		e.g. "remember to report fences, black markets, or any other illegal transactions that violate the guild's exclusive commercial rights in Cherespoir. :)"
 	- on the right two thirds is the list of things to buy and the buy a thing button in two columns.
 	  things can only be bought once OR can be bought a certain number of times.
 	can buy:
-	- dungeon license - NAME | allows the player to enter a new dungeon, NAME.
+	- dungeon license - NAME | allows the player to enter a new dungeon, NAME. 
+	- healing license - I to X? | improves stamina to hp healing percent in dungeon heal button. starts at I = 1%, ends at X = 10%.
+	- stamina license - I to X? | same as healing license, but for unit's stamina.
 	- explorer's pamphlet - TYPE | makes tiles of TYPE (e.g. font of health) start visible in a dungeon. not all tile types, of course.
-	- logistics I to X | can buy multiple times for increasing price. increases base stamina by 10.
+	- logistics I to X | can buy multiple times for increasing price. increases base stamina by a small number. 2? 3? 5?
 	- dogtags I to X? | increases the threat floor of all dungeons. (meaning the dungeon's threat never goes below a certain number)
 	- special contract - EXP | for the next dungeon, receive no gold, but double exp. locks special contract Gold.
 	- special contract - GOLD | for the next dungeon, receive no exp, but double gold. locks special contract exp.

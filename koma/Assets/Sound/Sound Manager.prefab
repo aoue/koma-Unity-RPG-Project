@@ -54,6 +54,8 @@ MonoBehaviour:
   musicPlayer: {fileID: 6235065165579767570}
   soundPlayer: {fileID: 6235065165579767573}
   typer: {fileID: 6235065165579767568}
+  walkingSound: {fileID: 8300000, guid: 3ea80c09963b274408982f1f222cbc14, type: 3}
+  passTimeSound: {fileID: 0}
   buttonClickSound: {fileID: 8300000, guid: 71ca15983b4bdc241968829c1cda0005, type: 3}
   nightMusic: {fileID: 8300000, guid: 2457b2a9e1fe756408973dff840e2055, type: 3}
   musicArr: []

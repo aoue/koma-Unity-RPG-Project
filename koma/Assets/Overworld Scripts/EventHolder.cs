@@ -20,6 +20,12 @@ public class EventHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     {
         //on button click. you know, the button attached to this object.
         EventManager.event_triggered(ev);
+
+        //mark that this event is done for Part's tracking. :)
+        //adds ev.get_id() to done events list.
+        Part.doneEvents.Add(ev.get_id());
+
+
         //remove event from worldmanager active event list.
         Overworld.remove_active_event(ev.get_id());
         Destroy(this.gameObject);

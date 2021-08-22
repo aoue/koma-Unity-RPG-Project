@@ -50,7 +50,6 @@ public class Event : MonoBehaviour
 
     public void post_event_message(Notifier notifier)
     {
-        Part.doneEvents[eventID] = true;
         notifier.show_note(noteTitle, noteBody, noteSummary);
     }
 

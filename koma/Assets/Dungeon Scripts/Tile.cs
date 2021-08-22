@@ -17,6 +17,7 @@ public class Tile : MonoBehaviour
     [SerializeField] private int vision; //how far the party can see on a tile. it's higher on a mountain than a valley, for example.
     [SerializeField] private Sprite exploredSprite; //the sprite the tile will have when it has been explored
     [SerializeField] private SpriteRenderer rendy; //used to show/hide the tile
+    [SerializeField] private MeshRenderer meshy; //used to show/hide the tile's tiledrain textmesh.
      
     private int x;
     private int y;
@@ -26,21 +27,30 @@ public class Tile : MonoBehaviour
     public virtual bool get_isClear() { return false; }
 
     //ADJUST IMAGE BASED ON EXPLORATION
+    public void hide_textMesh()
+    {
+        if (meshy != null) meshy.enabled = false;
+    }
+    public void show_textMesh()
+    {
+        if (meshy != null) meshy.enabled = true;
+    }
     public void set_tile_image() //explored
     {
         rendy.sprite = exploredSprite;
+        hide_textMesh();
     }
     public void set_sprite(Sprite pain) //fog
     {
-        rendy.sprite = pain;
+        rendy.sprite = pain;        
     }
     public void hide_tile() //unknown
     {
-        rendy.enabled = false;
+        rendy.enabled = false;        
     }
     public void show_tile()
     {
-        rendy.enabled = true;
+        rendy.enabled = true;       
     }
 
     public Sprite get_exploredSprite() { return exploredSprite; }

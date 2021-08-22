@@ -8,6 +8,7 @@ public class SoundManager : MonoBehaviour
     [SerializeField] private AudioSource soundPlayer;
     [SerializeField] private AudioSource typer; //only plays text sound.
 
+    [SerializeField] private AudioClip walkingSound;
     [SerializeField] private AudioClip passTimeSound;
     [SerializeField] private AudioClip buttonClickSound;
     [SerializeField] private AudioClip nightMusic;
@@ -77,6 +78,15 @@ public class SoundManager : MonoBehaviour
     public void play_typingSound()
     {
         typer.Play();
+    }
+    public void play_walkingSound()
+    {
+        soundPlayer.clip = walkingSound;
+        soundPlayer.Play();
+    }
+    public void stop_soundPlayer()
+    {
+        soundPlayer.Stop();
     }
 
     //GENERAL MUSIC FUNCTIONS - INSIDE INK

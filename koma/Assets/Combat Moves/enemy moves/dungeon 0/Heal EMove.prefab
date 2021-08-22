@@ -64,7 +64,7 @@ MonoBehaviour:
   affinity: 6
   usesPatk: 0
   usesPdef: 0
-  apDrain: 0
+  apDrain: 1
   staminaDrain: 30
   flavour: cure flavour
   targeting_preference: 0

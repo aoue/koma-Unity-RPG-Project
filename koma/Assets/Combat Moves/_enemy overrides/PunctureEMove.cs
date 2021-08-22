@@ -9,6 +9,6 @@ public class PunctureEMove : EnemyMove
     public override void apply_status(Unit target, Unit[] pl, Enemy[] el, int userIndex)
     {
         //amount, am ceil, set dur, dur ceil
-        target.status.pdef_up(-0.2f, -0.8f, 2, 2);
+        target.status.pdef_up(-0.2f, 0.5f, 2, 2);
     }
 }

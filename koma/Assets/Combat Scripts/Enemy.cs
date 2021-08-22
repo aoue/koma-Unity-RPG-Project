@@ -10,6 +10,7 @@ public class Enemy : Unit
 
 
     //calculating unit priority.
+    [SerializeField] private bool doSpawningVariance; //if false, do not do anything when spawning_variance() is called.
     [SerializeField] private int default_priority; //added to unit's priority
     [SerializeField] private int discipline; //[-discipline, discipline] forms a range that a random number is gen. and added to priority.
     [SerializeField] private float concerned_level; //unit is concerned when hp / hpmax is below this. range 0-1, inclusive.
@@ -20,7 +21,7 @@ public class Enemy : Unit
     
 
     //move picking system.
-    [SerializeField] private int staminaRegen; //the amount of stamina the unit regens per round.
+    [SerializeField] private int mpRegen; //the amount of mp the unit regens per round.
     private bool useHealIfPicked; //help healers fulfill their role.
 
     //overrides from parent class.
@@ -43,6 +44,8 @@ public class Enemy : Unit
     }
     public void spawning_variance()
     {
+        if (doSpawningVariance == false) return;
+        
         //called by dungeon when an instance of a mob class is spawned. we go in and 
         //randomly apply some spread to their stats so the enemies aren't all the same
         //since that would be boring.
@@ -52,7 +55,7 @@ public class Enemy : Unit
         float[] varArr = new float[7];
         for(int i = 0; i < 7; i++)
         {
-            varArr[i] = UnityEngine.Random.Range(0.85f, 1f);
+            varArr[i] = UnityEngine.Random.Range(0.9f, 1f);
         }
 
         //stats to vary:
@@ -63,7 +66,7 @@ public class Enemy : Unit
         hpMax = (int)(hpMax * varArr[1]);
 
         // -starting stamina
-        stamina = (int)(stamina * varArr[2]);
+        mp = (int)(mp * varArr[2]);
 
         // -patk, pdef, matk, mdef
         patk = (int)(patk * varArr[3]);
@@ -77,12 +80,12 @@ public class Enemy : Unit
         {
             hp = get_hpMax_actual();
             ooa = false;
-            stamina = UnityEngine.Random.Range(20, 60);
+            mp = UnityEngine.Random.Range(20, 60);
         }
         else if (ooa == true) return false; //don't do any of this if out of action.
 
         ap = get_apMax_actual();
-        stamina += staminaRegen;
+        mp += mpRegen;
 
         //handle status  
         bool expired = false;
@@ -136,19 +139,20 @@ public class Enemy : Unit
         EnemyMove chosenMove = null;
         if ( useHealIfPicked == true )
         {
+            useHealIfPicked = false;
             for (int i = moveset.Length - 1; i >= 0; i--)
             {
                 //Debug.Log("H. looking at move " + i);
                 //valid move requiremets:
                 // ap >= apDrain, stam drain < roll, does not conflict with EOR, isHeal is true.               
-                if ( moveset[i].get_staminaDrain() <= roll && moveset[i].get_isHeal() == true && !(moveset[i].get_phase() == executionTime.ENDOFROUND && canPickEOR == false) && ap >= moveset[i].get_apDrain())
+                if ( moveset[i].get_mpDrain() <= roll && moveset[i].get_isHeal() == true && !(moveset[i].get_phase() == executionTime.ENDOFROUND && canPickEOR == false) && ap >= moveset[i].get_apDrain())
                 {
                     //then, move is valid. :)
                     Debug.Log("enemy picking healing move with index " + i);
                     chosenMove = (EnemyMove)moveset[i];
                     break;
                 }
-            }
+            }           
         }
         if ( chosenMove == null )
         {
@@ -157,7 +161,7 @@ public class Enemy : Unit
             {                
                 //valid move requiremets:
                 // stam drain < roll, does not conflict with EOR, isHeal is false.
-                if (moveset[i].get_staminaDrain() <= roll && moveset[i].get_isHeal() == false && !(moveset[i].get_phase() == executionTime.ENDOFROUND && canPickEOR == false) && ap >= moveset[i].get_apDrain())
+                if (moveset[i].get_mpDrain() <= roll && moveset[i].get_isHeal() == false && !(moveset[i].get_phase() == executionTime.ENDOFROUND && canPickEOR == false) && ap >= moveset[i].get_apDrain())
                 {
                     //then, move is valid. :)
                     Debug.Log("enemy picking move with index " + i);
@@ -166,7 +170,8 @@ public class Enemy : Unit
                 }
             }
         }
-        stamina -= chosenMove.get_staminaDrain();
+        
+        mp -= Mathf.Max(0, chosenMove.get_mpDrain());
         return chosenMove;
     }
 

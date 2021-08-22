@@ -212,18 +212,7 @@ public class Dungeon0 : Dungeon
         if (explored_grid == null)
         {
             explored_grid = new Exploration[9, 5];
-            /*
-            {
-                { Exploration.EXPLORED, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN },
-                { Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN },
-                { Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN },
-                { Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN },
-                { Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN },
-                { Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN },
-                { Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN },
-                { Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN, Exploration.UNKNOWN }
-            };
-            */
+
             for (int i = 0; i < 9; i++)
             {
                 for (int j = 0; j < 5; j++)
@@ -239,7 +228,7 @@ public class Dungeon0 : Dungeon
         dungeonGrid = new Tile[9, 5]
         {
             { null, blankTile, null, null, null },
-            { homeTile, blankTile, null, null, null },
+            { homeTileWithExit, blankTile, null, null, null },
             { null, blankTile, null, null, null },
             { null, blankTile, null, null, blankTile },
             { null, blankTile, blankTile, blankTile, blankTile },

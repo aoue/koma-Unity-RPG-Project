@@ -58,6 +58,8 @@ MonoBehaviour:
   vision: 2
   exploredSprite: {fileID: 21300000, guid: a06e3ee9c5758554295fad31bae4d903, type: 3}
   rendy: {fileID: 5198775874955203677}
+  meshy: {fileID: 0}
+  drainText: {fileID: 0}
   hasEvent: 0
   sparkleEffectRendy: {fileID: 0}
   isExit: 0

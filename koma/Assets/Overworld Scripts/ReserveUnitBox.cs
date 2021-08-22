@@ -23,7 +23,7 @@ public class ReserveUnitBox : MonoBehaviour
     {
         boxImage.sprite = u.get_boxImg();
         nameText.text = u.get_nom();
-        stamCostText.text = "Stam: " + u.get_stamina() + "/" + u.get_staminaMax();
+        stamCostText.text = "MP: " + u.get_mp() + "/" + u.get_mpMax();
 
         //set the image to partially alpha if canDrag = false as a visual cue to the player.
         Color c = boxImage.color;

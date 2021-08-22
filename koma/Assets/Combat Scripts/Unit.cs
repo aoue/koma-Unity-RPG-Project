@@ -21,9 +21,8 @@ public class Unit : MonoBehaviour
     [SerializeField] protected int hpMax;
     protected int hp;
     [SerializeField] private int affinity;
-    [SerializeField] private int stamPenIncrement; //the amount each deployment decreases the unit's stamina.
-    protected int stamina; //greater/eq to 0 for player and determines how much the unit adds to the party's stamina, positive number for enemy (move picking influencer)
-    [SerializeField] private int staminaMax; //the unit's max stamina.
+    protected int mp; //greater/eq to 0 for player and determines how much the unit adds to the party's stamina, positive number for enemy (move picking influencer)
+    [SerializeField] private int mpMax; //the unit's max stamina.
     [SerializeField] protected int patk;
     [SerializeField] protected int pdef;
     [SerializeField] protected int matk;
@@ -48,15 +47,7 @@ public class Unit : MonoBehaviour
     private List<Move> allKnownMoves; //all the moves the unit knows.
 
     //MODIFIERS
-    public void decrement_stamina()
-    {
-        stamina = Mathf.Max(0, stamina - stamPenIncrement);
-    }
-    public void clear_staminaPenalty()
-    {
-        stamina = staminaMax;
-    }
-    public void set_stamina(int x) { stamina = x; }
+    
     public void inc_exp(int x) { exp += x; }
     public void create_status()
     {
@@ -96,6 +87,9 @@ public class Unit : MonoBehaviour
     }
     public void set_hp(int amount) { hp = amount; }
     public void drain_ap(int amount) { ap -= amount; }
+    public void set_mp(int x) { mp = x; }
+    public void drain_mp(int amount) { mp = (int)(mp - (amount * status.trance)); }
+    public void mp_heal(int amount) { if (!ooa) hp = Mathf.Min(get_hpMax_actual(), hp + amount); }
     public void damage(int amount) { hp = Mathf.Max(0, hp - amount); }
     public void heal(int amount) { if (!ooa) hp = Mathf.Min(get_hpMax_actual(), hp + amount); }
 
@@ -105,8 +99,8 @@ public class Unit : MonoBehaviour
     public int get_level() { return level; }
     public DefendMove get_defendMove() { return defendMove; }
     public Move[] get_moveset() { return moveset; }
-    public int get_stamina() { return stamina; } //not for use in combat.
-    public int get_staminaMax() { return staminaMax; } //not for use in combat.
+    public int get_mp() { return mp; } //not for use in combat.
+    public int get_mpMax() { return mpMax; } //not for use in combat.
     public Sprite get_boxImg() { return boxImg; }
     public string get_nom() { return nom; }
     public int get_apMax() { return apMax; }

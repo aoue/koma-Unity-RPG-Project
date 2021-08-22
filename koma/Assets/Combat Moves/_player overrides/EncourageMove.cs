@@ -8,7 +8,7 @@ public class EncourageMove : Move
 
     public override void apply_status(Unit target, Unit[] pl, Enemy[] el, int userIndex)
     {
-        target.status.trance_up(-0.2f, -0.7f, 3, 3);
+        target.status.trance_up(-0.2f, 0.7f, 3, 3);
 
     }
 }
