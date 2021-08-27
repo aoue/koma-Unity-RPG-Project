@@ -13,6 +13,12 @@ public class EventManager : MonoBehaviour
     //like a library.
     //the overworld will call to it, and it will return events that can be loaded today.
 
+    private int useIC;
+    private string pName;
+
+    [SerializeField] private Font ancientsFont;
+    [SerializeField] private Font defaultFont;
+
     //knows whether an event has been called before.
     [SerializeField] private SoundManager SM;
     [SerializeField] private FadeManager fader;
@@ -42,15 +48,13 @@ public class EventManager : MonoBehaviour
     private bool skipOn = false; //when true, don't wait at all between textWaits, just display one after another.
     private bool autoOn = false; //when true, the player can't continue the text, but it will continue automatically.
     private bool historyOn = false; //when true, viewing history and cannot continue the story.
+    private bool usingDefaultFont = true;
 
     private string currentSpeakerName; //used for pushing entries in history.
     [SerializeField] private GameObject HistoryPort; //master gameobject for the history interface.
     [SerializeField] private HistoryScroller histScroll; //used to fill/clear the content of the history interface.
     private List<HistoryEntry> historyList; 
     private int historyLimit = 10; //the max number of displays the historyList stores at a time.
-
-    [SerializeField] private GameObject povObject;
-    [SerializeField] private Text povText;
     
     [SerializeField] private GameObject canProceedArrow; //visible when canProceed, invisible when cannot.
     private bool canProceed;
@@ -446,14 +450,14 @@ public class EventManager : MonoBehaviour
     }
     void fill_roles()
     {
-        //called at the start of each story event to fill in character roles.
+        //called at the start of each story event to fill in character roles.       
+        sentenceText.font = defaultFont;
 
-        /*
-        useIC = 1;
+        //dummy values -- will actually read from text file in save folder on main menu launch. hold the values in a static class i guess.
+        useIC = 1; 
         script.variablesState["ic"] = useIC;
         pName = "SampleName";
-        script.variablesState["player"] = pName;
-        */
+        script.variablesState["player"] = pName;    
     }
 
     //LINKING EXTERNAL FUNCTIONS
@@ -485,9 +489,9 @@ public class EventManager : MonoBehaviour
         {
             this.set_name(name);
         });
-        script.BindExternalFunction("pov", (string povName) =>
+        script.BindExternalFunction("toggle_font", () =>
         {
-            this.set_pov(povName);
+            this.toggle_font();
         });
         script.BindExternalFunction("show", (int which, int index) =>
         {
@@ -528,17 +532,17 @@ public class EventManager : MonoBehaviour
         }
         currentSpeakerName = s;
     }
-    void set_pov(string s)
+    void toggle_font()
     {
-        if (s == "")
+        if (usingDefaultFont == true)
         {
-            povObject.SetActive(false);
+            sentenceText.font = ancientsFont;
         }
         else
         {
-            povObject.SetActive(true);
-            povText.text = s;
+            sentenceText.font = defaultFont;
         }
+        usingDefaultFont = !usingDefaultFont;
     }
     void set_portrait_slot(int whichSlot, int index)
     {

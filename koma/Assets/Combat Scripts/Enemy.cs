@@ -79,6 +79,7 @@ public class Enemy : Unit
         if (startOfBattle)
         {
             hp = get_hpMax_actual();
+            break_level = 0;
             ooa = false;
             mp = UnityEngine.Random.Range(20, 60);
         }
@@ -86,6 +87,8 @@ public class Enemy : Unit
 
         ap = get_apMax_actual();
         mp += mpRegen;
+
+        brokenThisRound = false;
 
         //handle status  
         bool expired = false;
@@ -95,6 +98,7 @@ public class Enemy : Unit
         }
         else
         {
+            break_level = break_level / 2;
             expired = status.decline(this);
         }
         return expired;

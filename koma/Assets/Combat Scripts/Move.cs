@@ -26,6 +26,7 @@ public class Move : MonoBehaviour
 
     [SerializeField] private int strikes; //the number of times the move hits.
     [SerializeField] private int power; //the move's base damage multiplier
+    [SerializeField] private float break_mult; //the move's base damage multiplier
     [SerializeField] private float lowSpread; //the lowest possible spread multiplier the move can roll
     [SerializeField] private float highSpread; //the highest possible spread multiplier the move can roll
     [SerializeField] private int xSize; //how many tiles in the x area does the move hit: 1, 2, 3
@@ -61,6 +62,7 @@ public class Move : MonoBehaviour
     public int get_ySize() { return ySize; }
     public int get_strikes() { return strikes; }
     public int get_power() { return power; }
+    public float get_breakMult() { return break_mult; }
     public float get_lowSpread() { return lowSpread; }
     public float get_highSpread() { return highSpread; }
     public int get_affinity() { return affinity; }
@@ -121,7 +123,14 @@ public class Move : MonoBehaviour
         {
             toReturn += "Atk ";
         }
-        toReturn += "Power: " + power + " | " + xSize + "x" + ySize + " | ";
+        toReturn += "Power: " + power;
+
+        if (!isHeal)
+        {
+            toReturn += ", BRK x" + break_mult;
+        }
+
+        toReturn += " | " + xSize + "x" + ySize + " | ";
 
         if (isHeal)
         {

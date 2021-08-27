@@ -52,7 +52,7 @@ MonoBehaviour:
   isStatus: 1
   selfStatus: 0
   selfStatusTextColorGreen: 0
-  statusText: Stam consumption-
+  statusText: MP consumption-
   phase: 0
   preferredRow: 2
   strikes: 1
@@ -65,5 +65,5 @@ MonoBehaviour:
   usesPatk: 0
   usesPdef: 0
   apDrain: 1
-  staminaDrain: 0
-  flavour: Encourages an ally to consume less stamina.
+  mpDrain: 0
+  flavour: Heals a little and lowers MP cost of target's moves.

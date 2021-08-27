@@ -51,7 +51,7 @@ public class Status
             toRet += "\nhp_dur: " + hp_duration;
             if (hp != 0) toRet += "\nHP up: +" + hp;
         }
-        if (stat_duration != 0 && trance != 1.0f) toRet += "\nStam mult: " + trance;
+        if (stat_duration != 0 && trance != 1.0f) toRet += "\nMP mult: " + trance;
         return toRet;
     }
     public string generate_string_right()

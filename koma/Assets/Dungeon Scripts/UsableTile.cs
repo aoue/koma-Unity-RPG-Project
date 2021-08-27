@@ -2,11 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TileType { FontOfHp, FontOfStamina }
+public enum TileType { FontOfTriumph, FontOfHp, FontOfMp, FontOfStamina }
 public class UsableTile : Tile
 {
-    
-
     //so, this holds all the different kinds of tiles.
     [SerializeField] private TileType type; //tells the game what to do when you hit the useTile button on this tile.
     [SerializeField] private SpriteRenderer sparkleEffectRendy; //used to show/hide the tile's sparkle effect.
@@ -29,9 +27,19 @@ public class UsableTile : Tile
         //figure out what kind of tile it is and then do its thing
         switch (type)
         {
+            case TileType.FontOfTriumph:
+                //for all the units in the party, restore full hp and mp.
+                for (int i = 0; i < 6; i++)
+                {
+                    if (DungeonManager.party[i] != null)
+                    {
+                        DungeonManager.party[i].set_hp(DungeonManager.party[i].get_hpMax());
+                        DungeonManager.party[i].set_mp(DungeonManager.party[i].get_hpMax());
+                    }
+                }
+                break;
             case TileType.FontOfHp:
-                //for all the units in the party, restore some percentage of hp.
-                Debug.Log("tile is font of hp");
+                //for all the units in the party, restore some percentage (30%) of hp.
                 for(int i = 0; i < 6; i++)
                 {
                     if (DungeonManager.party[i] != null)
@@ -40,10 +48,19 @@ public class UsableTile : Tile
                     }
                 }
                 break;
+            case TileType.FontOfMp:
+                //for all the units in the party, restore some percentage (30%) of mp.
+                for (int i = 0; i < 6; i++)
+                {
+                    if (DungeonManager.party[i] != null)
+                    {
+                        DungeonManager.party[i].mp_heal((int)(DungeonManager.party[i].get_mpMax() * 0.3f));
+                    }
+                }
+                break;
             case TileType.FontOfStamina:
                 //increases the stamina.
-                Debug.Log("tile is font of stamina");
-                DungeonManager.stamina += 30;
+                DungeonManager.stamina += 10;
                 break;
 
 

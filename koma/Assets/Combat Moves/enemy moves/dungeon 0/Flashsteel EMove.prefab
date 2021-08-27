@@ -57,6 +57,7 @@ MonoBehaviour:
   preferredRow: 0
   strikes: 1
   power: 20
+  break_mult: 1
   lowSpread: 1
   highSpread: 1.2
   xSize: 1
@@ -65,6 +66,6 @@ MonoBehaviour:
   usesPatk: 1
   usesPdef: 1
   apDrain: 1
-  staminaDrain: 70
+  mpDrain: 0
   flavour: flashsteel flavour
   targeting_preference: 1

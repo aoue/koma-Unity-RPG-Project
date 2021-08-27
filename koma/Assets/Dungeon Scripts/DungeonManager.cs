@@ -15,7 +15,7 @@ public class DungeonManager : MonoBehaviour
     //SETTINGS
     private float spacing = 1.73f; //space between tiles. currently set at 1.73, as tiles are 173x173
     private float transitionDuration = 2f; //the time movement/rotation takes. higher is faster.
-    private float hpPercentHealedPerStamina = 10; //the % of all unit's maxhp healed with 1 stamina in dungeon healer. this can be changed with difficulty setting or by buying upgrades or something.
+    private float hpPercentHealedPerStamina = 5; //the % of all unit's maxhp healed with 1 stamina in dungeon healer. this can be changed with difficulty setting or by buying upgrades or something.
     private float rotationDuration = 0.5f;
     private float hpPercentHealedPerNewTile = 1; //the % of a unit's maxhp healed when the party moves onto an unexplored tile.
     private float mpPercentHealedPerNewTile = 1; //the % of a unit's maxmp healed when the party moves onto an unexplored tile.
@@ -470,13 +470,10 @@ public class DungeonManager : MonoBehaviour
                 break;
             case DungeonState.COMBAT:
                 //did we win? -> destroy lambs. enable ui again. can proceed.
-                if (wasVictory)
+                if (wasVictory == true)
                 {
-                    state = DungeonState.WAIT;                                   
-                    for (int i = 0; i < party.Length; i++)
-                    {
-                        party[i] = pl[i];
-                    }
+                    state = DungeonState.WAIT;       
+
                     int threatInc = 0;
                     for(int i = 0; i < lambs.Count; i++)
                     {
@@ -489,8 +486,6 @@ public class DungeonManager : MonoBehaviour
                         + "\nThreat rises to " + (threat);                    
 
                     dungeonNotifier.show_note("Victory!", noteString, "bottom text");
-                
-                    //return
 
                     //the function will then be called again on notifier dismiss and fall into 
                     //the DungeonState.WAIT path.
@@ -498,9 +493,12 @@ public class DungeonManager : MonoBehaviour
                 else
                 {
                     combatManager.close();   
-                    show_loss_menu();     
-                }
 
+                    //if mobParty has it, then show a single loss event. after that, show loss menu.
+                    //important that it happens this way; player can lose on purpose -> see loss event -> fight again and win.
+
+                    show_loss_menu();
+                }
                 break;
             case DungeonState.EVENT:
                 //Debug.Log("returning after dungeon event");
@@ -536,16 +534,12 @@ public class DungeonManager : MonoBehaviour
         Enemy[][] waves;
         if (isRetry == true)
         {
-            int[] resetHp = loser.get_prebattle_partyFill();
-            for (int i = 0; i < resetHp.Length; i++)
-            {
-                if (party[i] != null)
-                    party[i].set_hp(resetHp[i]);
-            }
+            loser.setup_party_for_retry(party);
             waves = loser.get_preWaves();
         }
         else
         {
+            loser.prebattle_partyFill(party);
             waves = new Enemy[lambs.Count][];
             for (int i = 0; i < lambs.Count; i++)
             {
@@ -560,7 +554,7 @@ public class DungeonManager : MonoBehaviour
                     waves[i] = heldDun.retrieve_uniqueFormation(lambs[i].get_uniqueParty());
                 }
             }
-            loser.prebattle_partyFill(party);
+            
         }
         
         fader.fade_to_black();
@@ -1268,7 +1262,7 @@ public class DungeonManager : MonoBehaviour
                 cost += (int)(percentageMissing / hpPercentHealedPerStamina);
             }
         }
-        savedHealStamCost = cost;
+        savedHealStamCost = Mathf.Max(1, cost);
         string prompt = "Healing forces will take " + cost + " stamina";
         bool canHeal;
         if (cost > stamina)

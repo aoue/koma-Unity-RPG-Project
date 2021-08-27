@@ -272,9 +272,8 @@ MonoBehaviour:
   exploredSprite: {fileID: 21300000, guid: 01127e2a014855a47a83a7c7f6628340, type: 3}
   rendy: {fileID: 980776756015513244}
   meshy: {fileID: 6970613157928721237}
-  drainText: {fileID: 5589531056326713666}
   hasEvent: 0
-  type: 1
+  type: 3
   sparkleEffectRendy: {fileID: 6481583874222267748}
 --- !u!212 &980776756015513244
 SpriteRenderer:

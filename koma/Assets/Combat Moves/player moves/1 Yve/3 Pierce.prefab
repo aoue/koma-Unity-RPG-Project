@@ -57,6 +57,7 @@ MonoBehaviour:
   preferredRow: 0
   strikes: 1
   power: 30
+  break_mult: 1
   lowSpread: 0.8
   highSpread: 1
   xSize: 1
@@ -65,5 +66,5 @@ MonoBehaviour:
   usesPatk: 1
   usesPdef: 1
   apDrain: 1
-  staminaDrain: 8
+  mpDrain: 0
   flavour: A strike that can pierce through two foes.

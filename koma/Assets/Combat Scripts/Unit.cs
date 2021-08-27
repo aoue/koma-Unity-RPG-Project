@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Unit : MonoBehaviour
 {
-    //player unit, strictly speaking. enemy unit will inherit from it.
+    //player unit. enemy unit will inherit from it.
 
     //ui stuff
     public bool inParty { get; set; }
@@ -27,6 +27,8 @@ public class Unit : MonoBehaviour
     [SerializeField] protected int pdef;
     [SerializeField] protected int matk;
     [SerializeField] protected int mdef;
+    protected bool brokenThisRound; //true if the unit has been broken this round. set to false on round start.
+    protected int break_level; //from 0 to 100. at 100, the units breaks. (if possible)
     protected bool ooa; //true: unit is ooa, cannot be selected. false: unit is active. can be selected.
 
     //targeting
@@ -47,7 +49,6 @@ public class Unit : MonoBehaviour
     private List<Move> allKnownMoves; //all the moves the unit knows.
 
     //MODIFIERS
-    
     public void inc_exp(int x) { exp += x; }
     public void create_status()
     {
@@ -61,14 +62,18 @@ public class Unit : MonoBehaviour
         
         ap = get_apMax_actual();
 
+        brokenThisRound = false;        
+
         //handle status    
         bool expired = false;
         if (startOfBattle == true)
-        {           
+        {
+            break_level = 0;
             status.reset(this);
         }
         else
         {
+            break_level = break_level / 2;
             expired = status.decline(this);
         }
         return expired;
@@ -77,6 +82,8 @@ public class Unit : MonoBehaviour
     {
         //returns true if unit is dead.
         //sets ooa to true and ap to 0.
+        if (ooa == true) return false; //can't be killed if already killed.
+
         if ( hp == 0)
         {
             ooa = true;
@@ -87,13 +94,34 @@ public class Unit : MonoBehaviour
     }
     public void set_hp(int amount) { hp = amount; }
     public void drain_ap(int amount) { ap -= amount; }
+    public void break_ap() { ap = 0; }
     public void set_mp(int x) { mp = x; }
     public void drain_mp(int amount) { mp = (int)(mp - (amount * status.trance)); }
     public void mp_heal(int amount) { if (!ooa) hp = Mathf.Min(get_hpMax_actual(), hp + amount); }
-    public void damage(int amount) { hp = Mathf.Max(0, hp - amount); }
+    public bool damage(int amount, int breakAmount)
+    {
+        //returns whether this damage broke the unit. always returns false if the unit was put ooa.
+        hp = Mathf.Max(0, hp - amount);
+
+        //if already broken this round, then forget it; break will stay at 0.
+        if (brokenThisRound == true) return false;
+
+        //modify break value too.
+        break_level = Mathf.Min(100, break_level + breakAmount);
+
+        //detect if the unit was broken. true (and reset break_level) if was, false if wasnt.
+        if (break_level == 100)
+        {
+            brokenThisRound = true;
+            break_level = 0;
+            return true;
+        }          
+        return false;
+    }
     public void heal(int amount) { if (!ooa) hp = Mathf.Min(get_hpMax_actual(), hp + amount); }
 
     //GETTERS
+    public int get_break() { return break_level; }
     public Sprite get_activePortrait() { return moveSelectionPortrait; }
     public int get_exp() { return exp; }
     public int get_level() { return level; }

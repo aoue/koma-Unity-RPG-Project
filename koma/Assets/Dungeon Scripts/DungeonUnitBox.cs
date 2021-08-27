@@ -24,12 +24,20 @@ public class DungeonUnitBox : MonoBehaviour
         // -name
         nameText.text = u.get_nom();
         // -AP
-        if (showAP == true) apText.text = "AP: " + u.get_ap();
 
-        // -stat block col 1 (HP)
+        // -stat block col 1 (HP and MP)
         if (u.status.hp == 0) hpText.text = "HP: " + u.get_hp() + " / " + u.get_hpMax();
         else if (u.status.hp > 0) hpText.text = "HP: " + u.get_hp() + " / <color=green>" + u.get_hpMax_actual() + "</color>";
         else hpText.text = "HP: " + u.get_hp() + " / <color=red>" + u.get_hpMax_actual() + "</color>";
+
+        //if we're in battle, then show break percentage too.
+        if (showAP == true)
+        {
+            apText.text = "AP: " + u.get_ap();
+            hpText.text += "\n<color=yellow>(" + u.get_break() + "%)</color>";
+
+        }
+
 
         //if we're dealing with a player unit, then show mp / mpmax too.
         if ( !(u is Enemy) ) 

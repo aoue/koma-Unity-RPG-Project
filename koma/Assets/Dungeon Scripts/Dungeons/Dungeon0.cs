@@ -8,6 +8,8 @@ public class Dungeon0 : Dungeon
 
     [SerializeField] private UsableTile fontOfHp; //restores some hp to all party units. starts visible.
     [SerializeField] private UsableTile fontOfStamina; //restores some stamina. starts visible.
+    [SerializeField] private UsableTile fontOnMp; //restores some stamina. starts visible.
+    [SerializeField] private UsableTile fontOfFullRestore; //restores some stamina. starts visible.
     [SerializeField] private HomeTile homeTile; //can spawn here. starts visible.
     [SerializeField] private HomeTile homeTileWithExit; //can spawn and withdraw here. starts visible.
     [SerializeField] private HomeTile ClearTile; //is a home tile, but does not start explored. the first time you withdraw through this tile, dungeon is considered cleared.

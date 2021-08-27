@@ -2385,6 +2385,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0680c0c9fa8a9414397a458947150566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ancientsFont: {fileID: 12800000, guid: 1b67cefbb36168b4e8a01dc696cb8f2f, type: 3}
+  defaultFont: {fileID: 12800000, guid: 3bc2ee0ec6678884a8eb2ca28199892e, type: 3}
   SM: {fileID: 470963628}
   fader: {fileID: 1916730107}
   notifier: {fileID: 324877284}
@@ -8026,6 +8028,10 @@ MonoBehaviour:
   fontOfHp: {fileID: 6600544739704046168, guid: b16d7a259990fc346812316c5e953687,
     type: 3}
   fontOfStamina: {fileID: 980776756015513249, guid: dafbba8e3514f4a46a7ee5a1b9807c10,
+    type: 3}
+  fontOnMp: {fileID: 2874262378472527733, guid: 26942f824113a6c4f85f9263efc54017,
+    type: 3}
+  fontOfFullRestore: {fileID: 534176159955397474, guid: 515251ccd90459242939f935a04c0173,
     type: 3}
   homeTile: {fileID: 5198775874955203678, guid: 9c60f8b45027ddd46b521d4d96a1fa83,
     type: 3}

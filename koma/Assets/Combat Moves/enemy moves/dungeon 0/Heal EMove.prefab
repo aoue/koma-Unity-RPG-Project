@@ -57,6 +57,7 @@ MonoBehaviour:
   preferredRow: 2
   strikes: 1
   power: 30
+  break_mult: 1
   lowSpread: 0.95
   highSpread: 1
   xSize: 1
@@ -65,6 +66,6 @@ MonoBehaviour:
   usesPatk: 0
   usesPdef: 0
   apDrain: 1
-  staminaDrain: 30
+  mpDrain: 0
   flavour: cure flavour
   targeting_preference: 0

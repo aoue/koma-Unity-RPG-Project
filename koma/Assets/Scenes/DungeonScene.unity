@@ -414,7 +414,7 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'AP: 2'
@@ -1562,7 +1562,7 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'AP: 2'
@@ -2101,7 +2101,7 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'AP: 2'
@@ -2217,7 +2217,7 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'AP: 2'
@@ -5295,7 +5295,7 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'AP: 2'
@@ -6176,7 +6176,7 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'AP: 2'
@@ -6907,7 +6907,7 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'AP: 2'
@@ -6985,7 +6985,7 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'AP: 2'
@@ -8951,7 +8951,7 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'AP: 2'
@@ -10590,24 +10590,6 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1172505458}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1172505471 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5065469020474434984, guid: d37b9aff764680b4aad486c2d191bf9e,
-    type: 3}
-  m_PrefabInstance: {fileID: 1172505458}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!1 &1172505472 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4924020420004167199, guid: d37b9aff764680b4aad486c2d191bf9e,
-    type: 3}
-  m_PrefabInstance: {fileID: 1172505458}
-  m_PrefabAsset: {fileID: 0}
 --- !u!225 &1172505473 stripped
 CanvasGroup:
   m_CorrespondingSourceObject: {fileID: 7844305172974050408, guid: d37b9aff764680b4aad486c2d191bf9e,
@@ -11038,7 +11020,7 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'AP: 2'
@@ -13482,7 +13464,7 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'AP: 2'
@@ -15145,6 +15127,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0680c0c9fa8a9414397a458947150566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ancientsFont: {fileID: 12800000, guid: 1b67cefbb36168b4e8a01dc696cb8f2f, type: 3}
+  defaultFont: {fileID: 12800000, guid: 3bc2ee0ec6678884a8eb2ca28199892e, type: 3}
   SM: {fileID: 320779514}
   fader: {fileID: 2010733684}
   notifier: {fileID: 980446825}
@@ -15165,8 +15149,6 @@ MonoBehaviour:
   diaBoxGroup: {fileID: 1172505473}
   HistoryPort: {fileID: 1172505469}
   histScroll: {fileID: 1172505468}
-  povObject: {fileID: 1172505472}
-  povText: {fileID: 1172505471}
   canProceedArrow: {fileID: 1172505470}
   portraitSlots:
   - {fileID: 1172505466}
@@ -16988,7 +16970,7 @@ MonoBehaviour:
     m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 0
+    m_HorizontalOverflow: 1
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: 'AP: 2'

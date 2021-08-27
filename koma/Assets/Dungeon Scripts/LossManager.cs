@@ -12,11 +12,14 @@ public class LossManager : MonoBehaviour
     //also, holds a prebattle version of the units for current battle in case the player
     //ends up wanting to fight them again.
     private Enemy[][] preWaves;
+
     private int[] preBattlePartyHp;
+    private int[] preBattlePartyMp;
+
     [SerializeField] private DungeonManager theBoss;
 
     public Enemy[][] get_preWaves() { return preWaves; }
-    public int[] get_prebattle_partyFill() { return preBattlePartyHp; }
+
     public void prebattle_fill(Queue<Enemy[]> waves)
     {
         Enemy[][] tmp = waves.ToArray();
@@ -28,7 +31,7 @@ public class LossManager : MonoBehaviour
 
         //checking
         /*
-        Debug.Log("testing loser's filling.");
+        Debug.Log("testing lossManager's filling.");
         for(int i = 0; i < preWaves.Length; i++)
         {
             Debug.Log("preWaves[" + i + "]:");
@@ -41,12 +44,31 @@ public class LossManager : MonoBehaviour
     }
     public void prebattle_partyFill(Unit[] party)
     {
+        //save the party's information
         preBattlePartyHp = new int[party.Length];
+        preBattlePartyMp = new int[party.Length];
         for (int i = 0; i < party.Length; i++)
         {
             if (party[i] != null)
+            {
                 preBattlePartyHp[i] = party[i].get_hp();
+                preBattlePartyMp[i] = party[i].get_mp();
+            }
         }
+    }
+    public void setup_party_for_retry(Unit[] party)
+    {
+        //fills in the party's information when the retry option is chosen.
+        //sets hp and mp. (don't need to set unit.place, because swaps are only relative to combat manager's pl, not dman's party)
+        for (int i = 0; i < party.Length; i++)
+        {
+            if (party[i] != null)
+            {
+                party[i].set_hp(preBattlePartyHp[i]);
+                party[i].set_mp(preBattlePartyMp[i]);
+            }
+        }
+
     }
 
     //on button clicks

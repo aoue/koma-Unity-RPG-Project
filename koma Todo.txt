@@ -30,6 +30,10 @@ use drag and drop for assigning gear, moves, positions in formation, etc
 Okay, okay, but what do we need for the demo/prologue to be released?
 (in no particular order)
 
+=====
+OGA licenses:
+- you are required to follow only one of the licenses. 
+
 ===== story dependent stuff
 
 grow up? as if he did.
@@ -52,16 +56,19 @@ grow up? as if he did.
 
 ===== end story dependent stuff
 
-we are not going to redo the combat system, it is kind of fun. :) just leave it or you'll never finish anything lol.
+the combat system is fine. 
 =====
 - the overworld bgs should have some animation. (even just weather, like rain or wind.)
 - Note: specific events in character chains may also be locked to the world's part level. 
 	(- No chains are available in the prologue.)
 
------
+- when going into a dungeon, even though only certain party members are fighting, we still act like
+	  all (recruited) party members are there in events and stuff. Otherwise, it's just too much work.
 
 - dungeon design: (to keep in mind)
 	- mob parties must absolutely not start on a home tile. 
+	- note: you can make a multi-wave bossfight by placing multiple 0-movement mob parties on the same tile. 
+		- (make the extra's have a blank name and order the parties correctly so they are fought in the order you want.)
 	- be careful to make it so the player never becomes stuck in a dungeon. they must always be able to withdraw.
 	- mandatory dungeons, once cleared, you can never go back in. they're roadblocks.
 	- optional dungeons, you don't even 'clear' them. they have no clear tile.
@@ -70,49 +77,19 @@ we are not going to redo the combat system, it is kind of fun. :) just leave it 
 		  then triggering an event will mark something in history that the event back in overworld checks.
 
 - writing:
-	- copy in an old file from arti; need all the ink functions/vars again.
-	- remember to include ic and name var again. (read ic same way, from a text file in the save loc folder.)
-		- uncomment vars in eventManager, etc.
+	- on mainmenu screen; read player ic and name from a textfile in the saves folder.
+		- if textfile not found, then create it with default values.
 	- create prologue skeleton
 	- write events... bit by bit.
+==== 	
 
-- pdm:
-	- no where does it display a unit's hp, lol. what an oversight.
-	- can display it in unitbox, i suppose.
+- plan out story (for real this time.) and write the whole damn thing.
+	- i don't want to waste time making units and mobs and dungeons that won't even show up.
 
-- sound manager:
-	footsteps sound: no good, it's too slow and is only 1 tap.
-	- find a sound with multiple steps, 1 second long (or just over)
-
-- dungeon tiles:
-	- font of stamina is still okay; but make it only give a little stamina to party's pooledstamina.
-	- new tile: font of mp (restore some portion of each party unit's mp.)
-
-- dungeon scene:
-	- stamina heal: must take at least 1 stam.
-	- retry manager: update it to save and fill unit's mp alongside hp. also... does it really work properly?
-
-- play by play:
-	- when displaying: "unit prepares to use ___ next turn" remove 'next turn', same for 'at end of round'
-	  or whatever.
-	- the time it will be used is obvious from the move previews, which the player will be able to check 
-	  momentarily.
-
-- dungeon unit box:
-	(future)
-	- unit ui layout:
-		- aff and name: unchanged.
-		- ap text: top left, just below aff and name.
-		- hpbar along bottom left (include letters overtop)
-		- mpbar below hpbar (include letters overtop)
-
-- unit stat previews:
-	- keep an eye out for places where the old stamina text needs to be replaced for the new stamina text system.
-
-- dungeon:
-	- add stamina check when enabling dungeon movement arrows.
-		- implemented; now just make sure it's accurate.
-
+- aim new targeting types: 
+	- closest to breaking. targets the player unit with the highest break. simple.
+	- player scheduled unit. (if none, then goes random.)
+	- unit with ap left. (randomly picks between all player units with ap > 0)
 
 - dungeon + SM:
 	- play footsteps sound through SM. (need to test it. played in a new tile, stopped in slide listener.)
@@ -120,10 +97,20 @@ we are not going to redo the combat system, it is kind of fun. :) just leave it 
 		- restore a little (5%?) of each party unit's hp.
 
 - dungeon 0:
-	- plan it out. 
+	- plan out grid, mobs, boss monsters, event tiles, etc.
+
+- design party and dungeon0 units:
+	- especially with the break system, enemies should hit hard.
+	enemy stats should be comparable to player. we don't want to just shrug off damage. you have to plan where to deposit it.
+	an enemy's basic move should deal about 30-40 damage to our crew at start. 2 hits break mc/nat. 2.5 breaks tori. 3 breaks friday.
 	- mobs? various Sabaind. (designs are still in the sheet, at least)
-	- party? Mc, Friday, Nat, and Tori. (mc is a combat character now. a balance mage, i guess. keep moves same, but make him normal aff i guess)(designs still in the sheet too -- but change them some. e.g. tori's flourish -> flash steel. a weak, but instant move.)
+	- party? Mc, Friday, Nat, and Tori. 
 		- rescale design sheet stats. (hp mostly, but some atk for mobs.)
+		- finally, remember that we're using an mp system too. numbers should be low, though.
+
+- make party and dungeon0 units:
+	- party. (Mc, friday, nat, tori)
+	- mobs. (pending...)
 
 - exp:
 	- now that monsters actually have exp, is it being carried back properly?
@@ -138,10 +125,11 @@ we are not going to redo the combat system, it is kind of fun. :) just leave it 
 	Just make a fresh scene for mainmenu.
 		- start: scenemanager.load("overworld scene")
 		- load (not interactable for now)
+		- gallery (same scene as main menu. you click to load an event, which plays right there. post demo.)
 		- exit: Application.Quit()
 
 - when we include assets (at the end):
-	- moves, music, sounds, etc.
+	- moves sounds, music, sound effects, etc.
 	remember to credit.
 	OGA faq: https://opengameart.org/content/faq#q-ccgplcompat
 	"What do the licenses mean"
@@ -152,9 +140,78 @@ we are not going to redo the combat system, it is kind of fun. :) just leave it 
 	- change the move preview menu too. (those three buttons, you know.)
 	- a mouse cursor. just something stylized.
 
-- sound effect for passing time. should be ~4 seconds long. doo doo doo doooooo ... doooo
+- dungeon heal button:
+	- consider what the healperstam percentage should be at default and at max.
+		- starting at 5. Range could be 5, 10, 15, 20, 25?
+	- something else to consider:
+		- have the main heal button to heal everyone, but add secondary heal buttons on the boxes of each
+		  unit. that way you could heal only the units you desire, individually.
+
+- sound manager:
+	- sound effect for passing time. should be ~4 seconds long. doo doo doo doooooo ... doooo
+	- footsteps sound: no good, it's too slow and is only 1 tap.
+		- find a sound with multiple steps, 1 second long (or just over)
+
+- help sheet:
+	Do last because things may change.
+	- overworld, combat, and dungeon help sheets: displayed at first time of each. they are images. 
+		- the help button can be pressed to show the help image at any time, depending on the scene.
+	overworld tutorial:
+	- explains colors/types of events.
+		- red: story event; complete to continue
+		- blue: day event; missable. you'll see these once only.
+		- green: char event; available throughout entire game as long as character is present.
+	- explain what ev preview means (char box, location, event title, haich)
+	- explain what dungeon preview means (threat, exploration %, wanted monsters present)
+	combat tutorial:
+	- explain scheduling system. (instant, next turn, eor.) explain a killed unit cannot execute.
+	- explain break system. (when a unit takes >= half their max hp in a single blow, they are broken. they lose all their ap and scheduled moves are cancelled.)
+	- explain move row preference (front/back/ambi. wrong rows do 0nly 0.65x dmg) 
+	- explain defender bonus (units in back row take only 0.75x dmg.)
+	- explain turns. go back and forth until both sides have exhausted all unit's ap.
+	- explain affinity. take note of the image representation, but exact multipliers are also available when targeting moves.
+	- beware that moves may have strange effects
+	- and that's all... you'll learn the rest by doing.
+	dungeon help sheet:
+	- explain stamina system (the tile cost is in red.)
+	- explain that when entering an unexplored tile, all party units regain a bit of hp and mp.
+	- explain about use_tile button. you can use it on any tile that has a sparkling effect on it, a little yellow thing.
+		- remember you can only use each tile once.
+	- you can drag the screen to move camera and hit recenter button to bring it back. also, scroll wheel zooms.
+	- withdraw button: (note, clear tiles and home with exit tiles will be different visually)
+		- you can withdraw from any tile with the door icon. 
+		- but note that mandatory dungeons require you to clear them to progress the story.
+			- a dungeon is only cleared when you withdraw through a cleartile. (show it)	
+	- losing combat:
+		- you can retry at no penalty as many times as you'd like. 
+		- if you feel the battle is unwinnable, then you should hit the withdraw option instead. 
 
 ===== Post Demo
+
+- character events:
+	- make sure they have field where they have a minimum part reached for each event.
+	(or you could just store it in a parallel int array. whatever's easiest)
+
+- mob parties:
+	- if a mob party has a loss event, then add a visual indicator to their flag icon. the haich heart works.
+
+- dungeon withdrawal:
+	- penalty for withdrawing on a loss: you only bring 50% loot and exp with you or something.
+	needs a change because right now 'withdraw' and 'loss' are the same.
+
+- combat:
+	- surrender button. instantly loses the battle.
+
+- interesting moves:
+	- for a character like sincy, some of her drain moves do more dmg against males. this would require adding a gender enum to all units. (which is fine.)
+
+- dungeon unit box:
+	(future -- post demo at least)
+	- unit ui layout:
+		- aff and name: unchanged.
+		- ap text: top left, just below aff and name.
+		- hpbar along bottom left (include letters overtop)
+		- mpbar below hpbar (include letters overtop)
 
 - unit trees:
 	these let you customize and level up each unit. can: increase level, exchange moves, and do gear(?).

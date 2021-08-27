@@ -14,7 +14,7 @@ public class Dungeon : MonoBehaviour
     //holds:
     // -threat and stamina
     // -tile information. (jography; whether each tile is null, has an event, what type of event, etc)
-    // -enemy formation logic.
+    // -enemy formation logic.   
 
     //enemy formations are generated from here, taking the dungeon's threat into consideration.
 

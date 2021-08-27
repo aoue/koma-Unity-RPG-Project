@@ -57,6 +57,7 @@ MonoBehaviour:
   preferredRow: 1
   strikes: 1
   power: 35
+  break_mult: 1
   lowSpread: 0.85
   highSpread: 1
   xSize: 1
@@ -65,5 +66,5 @@ MonoBehaviour:
   usesPatk: 1
   usesPdef: 1
   apDrain: 1
-  staminaDrain: 0
+  mpDrain: 0
   flavour: A powerful shot, but needs reloading afterwards.

@@ -92,13 +92,14 @@ public class CombatManager : MonoBehaviour
             if (pl[i] != null) { pl[i].create_status(); pl[i].place = i;  }
         }
 
-        waves = new Queue<Enemy[]>();
-        //Debug.Log(inWaves.Length);
+        if (waves == null) waves = new Queue<Enemy[]>();
+        waves.Clear();
+
         foreach (Enemy[] wav in inWaves)
         {
             for(int i = 0; i < wav.Length; i++)
             {
-                if ( wav[i] != null)
+                if (wav[i] != null)
                 {
                     wav[i] = Instantiate(wav[i]);
 
@@ -207,15 +208,16 @@ public class CombatManager : MonoBehaviour
         }
 
         previews.hide();
-        plays.show("\n|" + wavesNum);
+        string toShow = "\n|" + wavesNum;
         if (wavesNum > 1)
         {
-            plays.add(" waves remaining|");
+            toShow += " waves remaining|";
         }
         else
         {
-            plays.add(" wave remaining|");
+            toShow += " wave remaining|";
         }
+        plays.show(toShow);
         yield return new WaitForSeconds(time);
         send_in_next_wave();
     }
@@ -511,7 +513,7 @@ public class CombatManager : MonoBehaviour
             battleOver = true;
             if (waves.Count > 0)
             {
-                //send in the next wave baby.                
+                //send in the next wave baby.
                 StartCoroutine(waveWait(2.0f));
             }
             else
@@ -530,63 +532,80 @@ public class CombatManager : MonoBehaviour
     }
     void check_dead()
     {
-        //handles dead enemies.
-        bool allPlayersDead = true;
-        bool allEnemiesDead = true;
-        bool shortcut = false;
-        for (int i = 0; i < 6; i++)
+        //first, update the ooa status of all units. i.e. check if any were suddenly murdered.
+        for (int i = 0; i < pl.Length; i++)
         {
-            if (pl[i] != null)
+            if (pl[i] != null && pl[i].wasKilled() == true)
             {
-                if (pl[i].wasKilled() == true)
-                {
-                    if (playerScheduledUnit.place == i) playerScheduledMove = null;
-                    if (eorUserIsPlayer == true && eorScheduledUnit.place == i) eorScheduledMove = null;
-                    pl[i].status.reset(pl[i]);
-                    partyBoxes[i].kill_unit();
-                    
-                }
-                else
-                {
-                    allPlayersDead = false;
-                }
+                if (playerScheduledUnit.place == i) playerScheduledMove = null;
+                if (eorUserIsPlayer == true && eorScheduledUnit.place == i) eorScheduledMove = null;
+                pl[i].status.reset(pl[i]);
+                partyBoxes[i].kill_unit();
             }
-            if (i == 2 && allPlayersDead == true && shortcut == false)
+
+            if (el[i] != null && el[i].wasKilled() == true)
             {
-                send_pl_backFront();
-                shortcut = true;
-                i = 0;
+                //add exp
+                battleXP += el[i].get_exp();
+
+                if (enemyScheduledUnit != null && enemyScheduledUnit.place == i) { enemyScheduledMove = null; enemyScheduledUnit = null; enemyScheduledMoveSpot = -1; }
+                if (eorUserIsPlayer == false && eorScheduledUnit != null && eorScheduledUnit.place == i) { eorScheduledMove = null; eorScheduledUnit = null; eorScheduledMoveSpot = -1; }
+                Destroy(el[i].gameObject);
+                el[i] = null;
             }
         }
-        shortcut = false;
-        for(int i = 5; i >= 0; i--)
+        
+        
+        
+        //check to see if player rows should be swapped
+        //0 1 2 (front)
+        //3 4 5 (back)
+        bool playerFrontRowDead = true;
+        for (int i = 0; i < 3; i++)
+        {
+            if (pl[i] != null && pl[i].get_ooa() == false)
+            {
+                playerFrontRowDead = false;
+                break;
+            }
+        }
+        if (playerFrontRowDead == true) send_pl_backFront();
+
+        //now, check if player has lost the battle. (all units are ooa)
+        bool playerDefeated = true;
+        for (int i = 0; i < pl.Length; i++)
+        {
+            if (pl[i] != null && pl[i].get_ooa() == false)
+            {
+                playerDefeated = false;
+                break;
+            }
+        }
+
+        //check to see if enemy rows should be swapped
+        //0 1 2 (back)
+        //3 4 5 (front)
+        bool enemyFrontRowDead = true;
+        for (int i = 3; i < 6; i++)
         {
             if (el[i] != null)
             {
-                if (el[i].wasKilled() == true)
-                {
-                    //add exp
-                    battleXP += el[i].get_exp();
-
-                    if (enemyScheduledUnit != null && enemyScheduledUnit.place == i) { enemyScheduledMove = null; enemyScheduledUnit = null; enemyScheduledMoveSpot = -1; }
-                    if (eorUserIsPlayer == false && eorScheduledUnit != null && eorScheduledUnit.place == i) { eorScheduledMove = null; eorScheduledUnit = null; eorScheduledMoveSpot = -1; }
-                    Destroy(el[i].gameObject);
-                    el[i] = null;
-                }
-                else
-                {
-                    allEnemiesDead = false;
-                }
-            }
-            if (i == 3 && allEnemiesDead == true && shortcut == false)
-            {
-                send_el_backFront();
-                shortcut = true;
-                i = 5;
+                enemyFrontRowDead = false;
+                break;
             }
         }
+        if (enemyFrontRowDead == true) send_el_backFront();
 
-        check_endOfBattle(allPlayersDead, allEnemiesDead);
+        bool enemyDefeated = true;
+        for (int i = 0; i < el.Length; i++)
+        {
+            if (el[i] != null)
+            {
+                enemyDefeated = false;
+                break;
+            }
+        }
+        check_endOfBattle(playerDefeated, enemyDefeated);
     }
     void send_pl_backFront()
     {
@@ -781,10 +800,35 @@ public class CombatManager : MonoBehaviour
                             if (dmgList[i] != -1)
                             {
                                 plays.add("Deals " + dmgList[i] + " damage!");
-                                el[i].damage(dmgList[i]);
 
-                                //make a damage number
-                                show_ui_numbers(dmgList[i].ToString(), move.get_targetsParty(), false, 1.0f, i);
+                                //check here for break
+                                int breakAmount = (int)((dmgList[i] * move.get_breakMult() / el[i].get_hpMax_actual()) * 150);
+                                bool didBreak = el[i].damage(dmgList[i], breakAmount);
+
+                                //display dmg numbers or break
+                                if (didBreak == false)
+                                {
+                                    //show dmg in red and break a line below it in yellow and with % at the end
+                                    show_ui_numbers(dmgList[i].ToString() + "\n<color=yellow> " + breakAmount + "%</color>", move.get_targetsParty(), false, 1.0f, i);
+                                }
+                                else
+                                {
+                                    show_ui_numbers(dmgList[i].ToString() + "\n<color=yellow>BREAK</color>", move.get_targetsParty(), false, 1.0f, i);
+                                    //then, do the breaky stuff to the unit. set ap to 0, cancel move if scheduled.
+                                    el[i].break_ap();
+                                    if (el[i] == enemyScheduledUnit)
+                                    {
+                                        enemyScheduledMove = null;
+                                        enemyScheduledUnit = null;
+                                        enemyScheduledMoveSpot = -1;
+                                    }
+                                    else if (el[i] == eorScheduledUnit)
+                                    {
+                                        eorScheduledUnit = null;
+                                        eorScheduledMove = null;
+                                        eorScheduledMoveSpot = -1;
+                                    }
+                                }
                             }
                         }
                         yield return new WaitForSeconds(1.0f);
@@ -942,10 +986,34 @@ public class CombatManager : MonoBehaviour
                             if (dmgList[i] != -1)
                             {
                                 plays.add("Deals " + dmgList[i] + " damage!");
-                                pl[i].damage(dmgList[i]);
 
-                                //make a damage number
-                                show_ui_numbers(dmgList[i].ToString(), move.get_targetsParty(), false, 1.0f, i);
+                                //check here for break
+                                int breakAmount = (int)((dmgList[i] * move.get_breakMult() / pl[i].get_hpMax_actual()) * 150);
+                                bool didBreak = pl[i].damage(dmgList[i], breakAmount);
+
+                                //display dmg numbers or break
+                                if (didBreak == false)
+                                {
+                                    show_ui_numbers(dmgList[i].ToString() + "\n<color=yellow> " + breakAmount + "%</color>", move.get_targetsParty(), false, 1.0f, i);
+                                }
+                                else
+                                {
+                                    show_ui_numbers(dmgList[i].ToString() + "\n<color=yellow>BREAK</color>", move.get_targetsParty(), false, 1.0f, i);
+                                    //then, do the breaky stuff to the unit. set ap to 0, cancel move if scheduled.
+                                    pl[i].break_ap();
+                                    if (pl[i] == playerScheduledUnit)
+                                    {
+                                        playerScheduledMove = null;
+                                        playerScheduledUnit = null;
+                                        playerScheduledMoveSpot = -1;
+                                    }
+                                    else if (pl[i] == eorScheduledUnit)
+                                    {
+                                        eorScheduledUnit = null;
+                                        eorScheduledMove = null;
+                                        eorScheduledMoveSpot = -1;
+                                    }
+                                }
                             }
                         }
                         yield return new WaitForSeconds(1.0f);                       
@@ -1011,7 +1079,7 @@ public class CombatManager : MonoBehaviour
             }
             else
             {
-                eorScheduledUnit.damage(Mathf.Abs(amount));
+                eorScheduledUnit.damage(Mathf.Abs(amount), 0);
             }
             eorHelperDOTs = false;
         }
@@ -1026,7 +1094,7 @@ public class CombatManager : MonoBehaviour
                 }
                 else
                 {
-                    playerScheduledUnit.damage(Mathf.Abs(amount));
+                    playerScheduledUnit.damage(Mathf.Abs(amount), 0);
                 }
                 
             }
@@ -1039,7 +1107,7 @@ public class CombatManager : MonoBehaviour
                 }
                 else
                 {
-                    enemyScheduledUnit.damage(Mathf.Abs(amount));
+                    enemyScheduledUnit.damage(Mathf.Abs(amount), 0);
                 }
             }
         }

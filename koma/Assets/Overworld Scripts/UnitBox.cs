@@ -35,7 +35,12 @@ public class UnitBox : MonoBehaviour
         nameText.text = u.get_nom() + " Lv " + u.get_level();
 
         // -stamina
-        if (StaminaText != null) StaminaText.text = "MP: " + u.get_mp() + "/" + u.get_mpMax();
+        if (StaminaText != null)
+        {
+            StaminaText.text = "HP: " + u.get_hp() + "/" + u.get_hpMax()
+                + "\nMP: " + u.get_mp() + "/" + u.get_mpMax();
+        }
+            
 
         //fill orb - deprecated
         //affOrb.color = AffKeyWords.get_aff_color(u.get_affinity());
