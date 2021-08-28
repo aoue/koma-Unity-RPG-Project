@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum targeting { ALLY, RANDOM, LEASTHP, LEASTPDEF, LEASTMDEF, FRONT, BACK, AOE, BESTAFF, SELF }
+public enum targeting { Heal, Random, LeastHP, MostHP, LeastPdef, LeastMdef, Front, Back, AOE, BestAffMult, Self, HighestBreakLevel }
 public class EnemyMove : Move
 {
     // enemyMove, which includes some information about how a move should be targeted.

@@ -1817,16 +1817,54 @@ public class CombatManager : MonoBehaviour
         //for a chosen move's targeting preference, pick a target spot.
 
         int spot = -1;
-        int lowest = 10000;
+        int lowest = 100000;
         List<int> possibleTargetLocations = new List<int>();
         int w;
         switch (chosenMove.get_targeting_preference())
         {
-            case targeting.SELF:
-                spot = el[chosenID].place;
+            case targeting.MostHP:
+                //target playerunit with highest hp; as a flat number, not percentage of maxhp.
+                int highest0 = 0;
+                for (int i = 0; i < pl.Length; i++)
+                {
+                    if (pl[i] != null && pl[i].get_ooa() == false)
+                    {
+                        if (pl[i].get_hp() > highest0)
+                        {
+                            highest0 = pl[i].get_hp();
+                            spot = i;
+                        }
+                        else if (pl[i].get_hp() == highest0)
+                        {
+                            if (UnityEngine.Random.Range(0, 2) == 0) spot = i;
+                        }
+                    }
+                }
                 break;
 
-            case targeting.BESTAFF: //pick the unit who we would get the highest mult factor against.
+            case targeting.HighestBreakLevel:
+                //target the playerunit with the highest break_level that ALSO has ap > 0.
+                int highest1 = 0;
+                for (int i = 0; i < pl.Length; i++)
+                {
+                    if (pl[i] != null && pl[i].get_ooa() == false)
+                    {
+                        if (pl[i].get_break() > highest1)
+                        {
+                            highest1 = pl[i].get_break();
+                            spot = i;
+                        }
+                        else if (pl[i].get_break() == highest1)
+                        {
+                            if (UnityEngine.Random.Range(0, 2) == 0) spot = i;
+                        }
+                    }
+                }
+                break;
+            case targeting.Self:
+                spot = el[chosenID].place;
+                break;
+            case targeting.BestAffMult: //pick the unit who we would get the highest mult factor against.
                 //calculate_aff_mod(int attacker_aff, int defender_aff)
                 float best = 0f;
                 for (int i = 0; i < pl.Length; i++)
@@ -1847,25 +1885,25 @@ public class CombatManager : MonoBehaviour
                 }
                 break;
 
-            case targeting.ALLY: //randomly heal a concerned unit.
+            case targeting.Heal: //randomly heal a concerned unit.
                 //we want to maximize the number of concerned el units that we hit. that's all.
-                int highest_h = -1;
+                int highest = -1;
                 for (int i = 0; i < el.Length; i++)
                 {
                     //a valid target is not null and is concerned.
                     int targetsHit = e_get_validTargetNumber(chosenMove, i);
-                    if (targetsHit > highest_h)
+                    if (targetsHit > highest)
                     {
-                        highest_h = targetsHit;
+                        highest = targetsHit;
                         spot = i;
                     }
-                    else if (targetsHit == highest_h)
+                    else if (targetsHit == highest)
                     {
                         if (UnityEngine.Random.Range(0, 2) == 0) spot = i;
                     }
                 }
                 break;
-            case targeting.RANDOM: //random target               
+            case targeting.Random: //random target               
                 for (int i = 0; i < pl.Length; i++)
                 {
                     if (pl[i] != null && pl[i].get_ooa() == false) possibleTargetLocations.Add(i);
@@ -1873,7 +1911,7 @@ public class CombatManager : MonoBehaviour
                 w = UnityEngine.Random.Range(0, possibleTargetLocations.Count);
                 spot = possibleTargetLocations[w];
                 break;
-            case targeting.LEASTHP:
+            case targeting.LeastHP:
                 for (int i = 0; i < pl.Length; i++)
                 {
                     if (pl[i] != null && pl[i].get_ooa() == false)
@@ -1890,7 +1928,7 @@ public class CombatManager : MonoBehaviour
                     }
                 }
                 break;
-            case targeting.LEASTPDEF:
+            case targeting.LeastPdef:
                 for (int i = 0; i < pl.Length; i++)
                 {
                     if (pl[i] != null && pl[i].get_ooa() == false)
@@ -1907,7 +1945,7 @@ public class CombatManager : MonoBehaviour
                     }
                 }
                 break;
-            case targeting.LEASTMDEF:              
+            case targeting.LeastMdef:              
                 for (int i = 0; i < pl.Length; i++)
                 {
                     if (pl[i] != null && pl[i].get_ooa() == false)
@@ -1924,7 +1962,7 @@ public class CombatManager : MonoBehaviour
                     }
                 }
                 break;
-            case targeting.FRONT:
+            case targeting.Front:
                 //there must be a unit in the front.
                 for(int i = 0; i < 3; i++)
                 {
@@ -1933,7 +1971,7 @@ public class CombatManager : MonoBehaviour
                 w = UnityEngine.Random.Range(0, possibleTargetLocations.Count);
                 spot = possibleTargetLocations[w];
                 break;
-            case targeting.BACK:
+            case targeting.Back:
                 //first check back. if back is empty, then check front. there must be a unit in the front.
                 for (int i = 0; i < 3; i++)
                 {
@@ -1951,16 +1989,16 @@ public class CombatManager : MonoBehaviour
                 break;
             case targeting.AOE:
                 //we want to maximize the number of pl units that we hit. that's all.
-                int highest = -1;
+                int highest2 = -1;
                 for (int i = 0; i < 6; i++)
                 {
                     int targetsHit = f_get_validTargetNumber(chosenMove, i);
-                    if (targetsHit > highest)
+                    if (targetsHit > highest2)
                     {
-                        highest = targetsHit;
+                        highest2 = targetsHit;
                         spot = i;
                     }
-                    else if (targetsHit == highest)
+                    else if (targetsHit == highest2)
                     {
                         if (UnityEngine.Random.Range(0, 2) == 0) spot = i;
                     }

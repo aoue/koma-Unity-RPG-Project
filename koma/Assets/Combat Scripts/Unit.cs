@@ -109,6 +109,9 @@ public class Unit : MonoBehaviour
         //modify break value too.
         break_level = Mathf.Min(100, break_level + breakAmount);
 
+        //if unit's ap is 0, then you cannot break them. (but you can still stack break) can only break a unit with ap > 0. 
+        if (ap == 0) return false;
+
         //detect if the unit was broken. true (and reset break_level) if was, false if wasnt.
         if (break_level == 100)
         {

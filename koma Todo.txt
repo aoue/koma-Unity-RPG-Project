@@ -83,24 +83,28 @@ the combat system is fine.
 	- write events... bit by bit.
 ==== 	
 
+- should we consider some kind of guard ability? yeah, i guess.
+	here's how it would work:
+	- apply it as a status to a unit. set the user of the status move as the guarder field of the target.
+	- when a unit with guarded != null. after damage and break are calculated, but before dealing them to the guarded unit,
+	  check if the unit is being guarded. if it is, then send dmg and break to our guarding unit.
+	- if the guarding unit is broken, then their guard ends.
+	- if the guarding unit is put ooa, then their guard ends too.
+
 - plan out story (for real this time.) and write the whole damn thing.
 	- i don't want to waste time making units and mobs and dungeons that won't even show up.
-
-- aim new targeting types: 
-	- closest to breaking. targets the player unit with the highest break. simple.
-	- player scheduled unit. (if none, then goes random.)
-	- unit with ap left. (randomly picks between all player units with ap > 0)
+	general guideline to plan:
+	- only 1 event before first dungeon, and it should be short.
+	- 
 
 - dungeon + SM:
 	- play footsteps sound through SM. (need to test it. played in a new tile, stopped in slide listener.)
-	- if it's an unexplored tile:
-		- restore a little (5%?) of each party unit's hp.
 
 - dungeon 0:
 	- plan out grid, mobs, boss monsters, event tiles, etc.
 
 - design party and dungeon0 units:
-	- especially with the break system, enemies should hit hard.
+	especially with the break system, enemies should hit hard. you break enemies to avoid hits you don't like.
 	enemy stats should be comparable to player. we don't want to just shrug off damage. you have to plan where to deposit it.
 	an enemy's basic move should deal about 30-40 damage to our crew at start. 2 hits break mc/nat. 2.5 breaks tori. 3 breaks friday.
 	- mobs? various Sabaind. (designs are still in the sheet, at least)
@@ -109,8 +113,7 @@ the combat system is fine.
 		- finally, remember that we're using an mp system too. numbers should be low, though.
 
 - make party and dungeon0 units:
-	- party. (Mc, friday, nat, tori)
-	- mobs. (pending...)
+	- waiting for designs.
 
 - exp:
 	- now that monsters actually have exp, is it being carried back properly?
