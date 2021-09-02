@@ -20,13 +20,12 @@ public class LossManager : MonoBehaviour
 
     public Enemy[][] get_preWaves() { return preWaves; }
 
-    public void prebattle_fill(Queue<Enemy[]> waves)
+    public void prebattle_fill(Enemy[][] waves)
     {
-        Enemy[][] tmp = waves.ToArray();
-        preWaves = new Enemy[tmp.Length][];
-        for (int i = 0; i < tmp.Length; i++)
+        preWaves = new Enemy[waves.Length][];
+        for (int i = 0; i < waves.Length; i++)
         {
-            preWaves[i] = tmp[i];
+            preWaves[i] = waves[i];
         }
 
         //checking
@@ -51,6 +50,7 @@ public class LossManager : MonoBehaviour
         {
             if (party[i] != null)
             {
+                party[i].set_preBattlePosition(i);
                 preBattlePartyHp[i] = party[i].get_hp();
                 preBattlePartyMp[i] = party[i].get_mp();
             }
@@ -59,16 +59,35 @@ public class LossManager : MonoBehaviour
     public void setup_party_for_retry(Unit[] party)
     {
         //fills in the party's information when the retry option is chosen.
-        //sets hp and mp. (don't need to set unit.place, because swaps are only relative to combat manager's pl, not dman's party)
-        for (int i = 0; i < party.Length; i++)
+        //sets hp and mp.
+        Unit[] toFill = new Unit[6];
+        //first, replace the party in their original spots.
+
+        for (int j = 0; j < toFill.Length; j++)
         {
-            if (party[i] != null)
+            //find the proper unit. we want to find the unit whose preBattlePosition == i
+            Unit whoIsIt = null;
+            for (int i = 0; i < party.Length; i++)
             {
-                party[i].set_hp(preBattlePartyHp[i]);
-                party[i].set_mp(preBattlePartyMp[i]);
+                if (party[i] != null && party[i].get_preBattlePosition() == j)
+                {
+                    whoIsIt = party[i];
+                }
+            }
+            toFill[j] = whoIsIt;
+        }
+    
+        //give them back their previous stats.
+        for (int i = 0; i < toFill.Length; i++)
+        {
+            if (toFill[i] != null)
+            {
+                toFill[i].set_hp(preBattlePartyHp[i]);
+                toFill[i].set_mp(preBattlePartyMp[i]);               
             }
         }
-
+        
+        party = toFill;
     }
 
     //on button clicks

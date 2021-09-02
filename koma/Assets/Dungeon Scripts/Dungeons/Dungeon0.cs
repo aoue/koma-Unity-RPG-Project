@@ -24,6 +24,8 @@ public class Dungeon0 : Dungeon
 
     protected override int pick_front(int points)
     {
+        return 0;
+        /*
         //assigns into formation[3, 4, 5]
         Debug.Log("dungeon0 calling pick_front() with points = " + points);
         //first, pick a formationID with points >= cost. first must be less/equal to 10.
@@ -69,10 +71,14 @@ public class Dungeon0 : Dungeon
                 formation[5] = enemyPool[0];
                 break;
         }       
+        
         return points - formationCosts[id];
+        */
     }
     protected override int pick_back(int points)
     {
+        return 0;
+        /*
         Debug.Log("dungeon0 calling pick_back() with points = " + points);
 
         //assigns into formation[0, 1, 2]
@@ -123,19 +129,17 @@ public class Dungeon0 : Dungeon
                 formation[2] = null;
                 break;
         }
+        
         return points - formationCosts[id];
+        */
     }
-    public override Enemy[] retrieve_uniqueFormation(int id)
+    public override void retrieve_uniqueFormation(Enemy[] formation, int id)
     {
         //remember enemy layout is:
         // 0 1 2
         // 3 4 5
-        if (formation == null) formation = new Enemy[6];
-        for (int i = 0; i < formation.Length; i++)
-        {
-            formation[i] = null;
-        }
-
+        
+        Debug.Log("retrieve unique formation called, id = " + id);
         switch (id)
         {
             case 0: //first fight
@@ -160,7 +164,6 @@ public class Dungeon0 : Dungeon
                 formation[5] = enemyPool[0];
                 break;
         }
-        return formation;
     }
 
     public override void spawn_mob_parties(List<MobParty> activeParties)
@@ -225,6 +228,7 @@ public class Dungeon0 : Dungeon
             }
             //set initial home tile to explored:
             explored_grid[1, 0] = Exploration.EXPLORED;
+            explored_grid[4, 3] = Exploration.EXPLORED;
         }
 
         dungeonGrid = new Tile[9, 5]
@@ -233,7 +237,7 @@ public class Dungeon0 : Dungeon
             { homeTileWithExit, blankTile, null, null, null },
             { null, blankTile, null, null, null },
             { null, blankTile, null, null, blankTile },
-            { null, blankTile, blankTile, blankTile, blankTile },
+            { null, blankTile, blankTile, homeTileWithExit, blankTile },
             { null, blankTile, null, null, blankTile },
             { null, null, null, null, blankTile },
             { null, null, null, null, blankTile },

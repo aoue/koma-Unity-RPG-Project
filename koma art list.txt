@@ -2,6 +2,41 @@ keeping track of planned art for Ink.
 format:
 name - description
 ==========================================
+for prologue, we need:
+(note that some units will be duplicates, e.g. deaconess is npc + enemy unit)
+
+OVERWORLD
+- single overworld image for the town (Agairy?) is fine.
+
+DUNGEON TILES
+- a unique image for each tile prefab
+
+PARTY UNITS
+- friday portrait + variants
+- mc portrait (combat only)
+- moth portrait + variants. Note, in prologue moth will be wearing sister clothes.
+- hunter portrait + variants
+
+ENEMY UNITS
+- sabaind-at-large
+- sabaind warrior
+- sabaind skirmisher
+- wolf
+- qegmer
+- settler
+
+NPCS
+- deaconess portrait + variants
+
+SCENES: (see notes, scattered)
+- sc0: sabaind-at-large + Moth, at cave
+- sc1: friday + mc, at festival
+- sc2: artifact's tentacles + two settler girls? (one unconscious, one who wakes up during)
+
+
+
+
+==========================================
 (only add ones that have been used explicitly. for char images, each will have 2 versions, at near/far zooms)
 
 

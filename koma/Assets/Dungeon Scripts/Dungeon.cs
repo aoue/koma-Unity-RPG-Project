@@ -64,7 +64,44 @@ public class Dungeon : MonoBehaviour
 
 
     //FORMATION GENERATION
-    protected Enemy[] formation;
+    public Enemy[][] generate_waves(int threat, int[] mobPartyInfo)
+    {
+        //creates multiple waves in a battle at once.
+        Enemy[][] allWaves = new Enemy[mobPartyInfo.Length][]; //to return
+        for (int i = 0; i < allWaves.Length; i++)
+        {
+            allWaves[i] = new Enemy[6];
+        }
+
+        for (int i = 0; i < allWaves.Length; i++)
+        {
+            Debug.Log(i);
+            if (mobPartyInfo[i] == -1) //create random formation
+            {
+                allWaves[i] = generate_formation(threat);
+            }
+            else //retrieve unique formation
+            {
+                retrieve_uniqueFormation(allWaves[i], mobPartyInfo[i]);
+            }
+            //check here
+        }
+        /*
+        for (int i = 0; i < allWaves.Length; i++)
+        {
+            Debug.Log("(finished) allWaves[" + i + "]:");
+            for (int j = 0; j < 6; j++)
+            {
+                Debug.Log(j + " = " + allWaves[i][j]);
+            }
+        }
+        */
+
+        //try checking enemy pool.
+        //no, that wasn't it.
+
+        return allWaves;
+    }
     public Enemy[] generate_formation(int threat)
     {
         //this works like this:
@@ -73,8 +110,7 @@ public class Dungeon : MonoBehaviour
         // -buy a first row, randomly choose between all those you can afford, weighted more heavily towards the expensive end.
         // -buy the most expensive opposite row that you can afford
         //combine the two and return a completed list.
-
-        formation = new Enemy[6];
+        return null;
 
         int points = threat + 10;
         bool frontFirst = true;
@@ -102,7 +138,6 @@ public class Dungeon : MonoBehaviour
             //pick front
             points = pick_front(points);
         }
-        return formation;
     }
     protected virtual int pick_front(int val)
     {
@@ -112,110 +147,9 @@ public class Dungeon : MonoBehaviour
     {
         return val;
     }
-    /*
-    public Enemy[] generate_formation(int threat)
+    public virtual void retrieve_uniqueFormation(Enemy[] formation, int id)
     {
         
-        //taking into account threat, and idk what else.
-        //generates a group of enemies for the player to fight.
-
-        //remember, for enemies, their spots are oriented reverse of the players.
-        List<int> emptyBackSpots = new List<int>() { 0, 1, 2 };
-        List<int> emptyFrontSpots = new List<int>() { 3, 4, 5 };
-
-        Enemy[] formation = new Enemy[6];
-
-        // > convert threat to points
-        int points = 10 + threat;
-
-        //calc lowest front and back costs.
-        int lowestCost = enemyPool[0].get_deployCost();
-
-        Debug.Log("generate formation() with threat = " + threat + ", points = " + points);
-
-        // > while at least one empty deployment spot and can deploy cheapest unit
-        while ( (emptyFrontSpots.Count > 0  || emptyBackSpots.Count > 0) && points > lowestCost)
-        {
-            // > select a unit, starting from back.
-            for (int i = enemyPool.Length - 1; i > 0; i--)
-            {
-                //if not enough threat to consider this unit, next unit.
-                if ( threat < enemyPool[i].get_minThreat()) continue;
-                //if not enough points for this unit, next unit
-                if ( points < enemyPool[i].get_deployCost()) continue;
-
-                //only spawn the unit if you succeed the deploy chance role
-                if (UnityEngine.Random.Range(0, 101) - points < enemyPool[i].get_deployChance())
-                {
-                    //if you've made it this far you're in, pal.
-
-                    //we prefer to place the mob in its desired row, but if it's full, then we place it
-                    //in the other row.
-                    int spot;
-                    Debug.Log("I choose select enemyPool[" + i + "]");
-                    if (enemyPool[i].get_rowPref() == preferredRow.FRONT)
-                    {
-                        //randomly place them in one of the available front tiles
-                        if (emptyFrontSpots.Count > 0)
-                        {
-                            int w = UnityEngine.Random.Range(0, emptyFrontSpots.Count);
-                            spot = emptyFrontSpots[w];
-                            //tile no longer empty
-                            emptyFrontSpots.Remove(spot);
-                        }
-                        else //place it in back after all
-                        {
-                            int w = UnityEngine.Random.Range(0, emptyBackSpots.Count);
-                            spot = emptyBackSpots[w];
-                            //tile no longer empty
-                            emptyBackSpots.Remove(spot);
-                        }
-
-                    }
-                    else if (enemyPool[i].get_rowPref() == preferredRow.BACK)
-                    {
-                        if (emptyBackSpots.Count > 0)
-                        {
-                            //randomly place them in one of the available back tiles
-                            int w = UnityEngine.Random.Range(0, emptyBackSpots.Count);
-                            spot = emptyBackSpots[w];
-                            //tile no longer empty
-                            emptyBackSpots.Remove(spot);
-                        }
-                        else
-                        {
-                            int w = UnityEngine.Random.Range(0, emptyFrontSpots.Count);
-                            spot = emptyFrontSpots[w];
-                            //tile no longer empty
-                            emptyFrontSpots.Remove(spot);
-                        }
-                    }
-                    else
-                    {
-                        //ambi placement: place them in any empty spot.
-                        List<int> tmpConcat = emptyFrontSpots;
-                        tmpConcat.AddRange(emptyBackSpots);
-                        int w = UnityEngine.Random.Range(0, tmpConcat.Count);
-                        spot = tmpConcat[w];
-                        //tile no longer empty
-                        if (emptyFrontSpots.Contains(spot)) emptyFrontSpots.Remove(spot);
-                        else if (emptyBackSpots.Contains(spot)) emptyBackSpots.Remove(spot);
-                    }
-                    //finish assigning; 
-                    points -= enemyPool[i].get_deployCost();
-                    formation[spot] = enemyPool[i];
-
-                }
-
-                                                                
-            }
-        }
-        return formation;       
-    }
-    */
-    public virtual Enemy[] retrieve_uniqueFormation(int id)
-    {
-        return null;
     }
     
 

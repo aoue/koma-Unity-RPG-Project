@@ -75,17 +75,14 @@ public class BattleBrain
     {
         return affMultArray[attacker_aff, defender_aff];
     }
-    int calculate_damage(int level, int power, int atk, int def, float affMod, float lowSpread, float highSpread, float rowMod, float defenderMod, float dmgDealtMod, float dmgTakenMod)
+    int calculate_damage(int level, int power, int atk, int def, float affMod, float spread, float rowMod, float defenderMod, float dmgDealtMod, float dmgTakenMod)
     {        
-        float spread = UnityEngine.Random.Range(lowSpread, highSpread);
-
         int damage = Convert.ToInt32(((atk * (power + level)) / Mathf.Max(1, def)) * affMod * spread * rowMod * defenderMod * dmgDealtMod * dmgTakenMod);
             
         return damage;
     }
-    int calculate_healing(int level, int power, int atk, int def, float lowSpread, float highSpread, float rowMod)
+    int calculate_healing(int level, int power, int atk, int def, float spread, float rowMod)
     {
-        float spread = UnityEngine.Random.Range(lowSpread, highSpread);
         //heals don't care about affinity OR defender penalty
         //unit's defense is divided by 2. target's defense shoud matter... but not make them unhealable.
 
@@ -102,6 +99,7 @@ public class BattleBrain
     {
         //row multiplier
         float rowMod = p_calculate_row_mod(move, userSpot);
+        float spread = UnityEngine.Random.Range(move.get_lowSpread(), move.get_highSpread());
 
         List<int> dmgList = new List<int>(); 
         foreach(Enemy target in targets)
@@ -119,7 +117,7 @@ public class BattleBrain
                 if (move.get_usesPdef() == true) def = target.get_pdef_actual();
                 else def = target.get_mdef_actual();
 
-                dmgList.Add(calculate_damage(user.get_level(), move.get_power(), atk, def, affMod, move.get_lowSpread(), move.get_highSpread(), rowMod, defenderPen, user.status.dmg_dealt, target.status.dmg_taken));
+                dmgList.Add(calculate_damage(user.get_level(), move.get_power(), atk, def, affMod, spread, rowMod, defenderPen, user.status.dmg_dealt, target.status.dmg_taken));
             }
             else
             {
@@ -133,6 +131,8 @@ public class BattleBrain
     {
         //row multiplier
         float rowMod = p_calculate_row_mod(move, userSpot);
+        float spread = UnityEngine.Random.Range(move.get_lowSpread(), move.get_highSpread());
+
 
         List<int> healList = new List<int>();
         foreach (Unit target in targets)
@@ -148,7 +148,7 @@ public class BattleBrain
                 if (move.get_usesPdef() == true) def = target.get_pdef_actual();
                 else def = target.get_mdef_actual();
 
-                healList.Add(calculate_healing(user.get_level(), move.get_power(), atk, def, move.get_lowSpread(), move.get_highSpread(), rowMod));
+                healList.Add(calculate_healing(user.get_level(), move.get_power(), atk, def, spread, rowMod));
             }
             else
             {
@@ -165,6 +165,8 @@ public class BattleBrain
     {
         //row multiplier
         float rowMod = e_calculate_row_mod(move, userSpot);
+        float spread = UnityEngine.Random.Range(move.get_lowSpread(), move.get_highSpread());
+
         List<int> dmgList = new List<int>();
 
         foreach (Unit target in targets)
@@ -182,7 +184,7 @@ public class BattleBrain
                 if (move.get_usesPdef() == true) def = target.get_pdef_actual();
                 else def = target.get_mdef_actual();
 
-                dmgList.Add(calculate_damage(user.get_level(), move.get_power(), atk, def, affMod, move.get_lowSpread(), move.get_highSpread(), rowMod, defenderPen, user.status.dmg_dealt, target.status.dmg_taken));
+                dmgList.Add(calculate_damage(user.get_level(), move.get_power(), atk, def, affMod, spread, rowMod, defenderPen, user.status.dmg_dealt, target.status.dmg_taken));
             }
             else
             {
@@ -198,6 +200,8 @@ public class BattleBrain
     {
         //row multiplier
         float rowMod = e_calculate_row_mod(move, userSpot);
+        float spread = UnityEngine.Random.Range(move.get_lowSpread(), move.get_highSpread());
+
 
         List<int> healList = new List<int>();
         foreach (Enemy target in targets)
@@ -213,7 +217,7 @@ public class BattleBrain
                 if (move.get_usesPdef() == true) def = target.get_pdef_actual();
                 else def = target.get_mdef_actual();
 
-                healList.Add(calculate_healing(user.get_level(), move.get_power(), atk, def, move.get_lowSpread(), move.get_highSpread(), rowMod));
+                healList.Add(calculate_healing(user.get_level(), move.get_power(), atk, def, spread, rowMod));
             }
             else
             {

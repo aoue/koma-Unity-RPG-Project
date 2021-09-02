@@ -60,7 +60,7 @@ MonoBehaviour:
   defendMove: {fileID: 0}
   moveset:
   - {fileID: 3105984617471798404, guid: c39c9fd622736644e93074ad25e7421a, type: 3}
-  doSpawningVariance: 0
+  doSpawningVariance: 1
   default_priority: 3
   discipline: 1
   concerned_level: 0.6

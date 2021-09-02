@@ -52,8 +52,7 @@ MonoBehaviour:
   apMax: 1
   hpMax: 90
   affinity: 6
-  stamPenIncrement: 0
-  staminaMax: 0
+  mpMax: 0
   patk: 85
   pdef: 75
   matk: 60
@@ -62,6 +61,7 @@ MonoBehaviour:
   moveset:
   - {fileID: 721815442784072258, guid: f4678ed8ab9a6db4bb138d3ba19a52fd, type: 3}
   - {fileID: 2750658329751107813, guid: 55c08de67f4374745a74b764cc53be64, type: 3}
+  doSpawningVariance: 1
   default_priority: 2
   discipline: 2
   concerned_level: 0.6
@@ -69,4 +69,4 @@ MonoBehaviour:
   isHealer: 0
   isBuffer: 0
   healer_priority: 0
-  staminaRegen: 20
+  mpRegen: 0

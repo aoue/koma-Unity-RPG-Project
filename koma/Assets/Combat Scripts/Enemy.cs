@@ -55,7 +55,7 @@ public class Enemy : Unit
         float[] varArr = new float[7];
         for(int i = 0; i < 7; i++)
         {
-            varArr[i] = UnityEngine.Random.Range(0.9f, 1f);
+            varArr[i] = UnityEngine.Random.Range(0.95f, 1.1f);
         }
 
         //stats to vary:
@@ -76,6 +76,7 @@ public class Enemy : Unit
     }
     public override bool refresh(bool startOfBattle)
     {
+        isScheduled = false;
         if (startOfBattle)
         {
             hp = get_hpMax_actual();

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TileType { FontOfTriumph, FontOfHp, FontOfMp, FontOfStamina }
+public enum TileType { FontOfTriumph, FontOfHp, FontOfMp, FontOfStamina, SmallTreasure }
 public class UsableTile : Tile
 {
     //so, this holds all the different kinds of tiles.
@@ -37,6 +37,7 @@ public class UsableTile : Tile
                         DungeonManager.party[i].set_mp(DungeonManager.party[i].get_hpMax());
                     }
                 }
+                dman.display_pbp_message("Fully restored party HP and MP.");
                 break;
             case TileType.FontOfHp:
                 //for all the units in the party, restore some percentage (30%) of hp.
@@ -47,6 +48,7 @@ public class UsableTile : Tile
                         DungeonManager.party[i].heal((int)(DungeonManager.party[i].get_hpMax() * 0.3f));
                     }
                 }
+                dman.display_pbp_message("Partially restored party HP.");
                 break;
             case TileType.FontOfMp:
                 //for all the units in the party, restore some percentage (30%) of mp.
@@ -57,13 +59,21 @@ public class UsableTile : Tile
                         DungeonManager.party[i].mp_heal((int)(DungeonManager.party[i].get_mpMax() * 0.3f));
                     }
                 }
+                dman.display_pbp_message("Partially restored party MP.");
                 break;
             case TileType.FontOfStamina:
                 //increases the stamina.
                 DungeonManager.stamina += 10;
+                dman.display_pbp_message("Gained 10 stamina.");
                 break;
-
-
+            case TileType.SmallTreasure:
+                //roll for loot; is an amount of money within a certain range, added to by threat.
+                //randomly generate golden within a certain range and depending on the threat, raise the floor and ceiling.
+                int threatBonus = 5 * dman.get_threat();
+                int goldAmount = UnityEngine.Random.Range(80 + threatBonus, 100 + threatBonus);
+                dman.obtainedGold += goldAmount;
+                dman.display_pbp_message("Gained " + goldAmount + " gold.");
+                break;
         }
 
     }

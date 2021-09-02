@@ -27,9 +27,15 @@ public class Unit : MonoBehaviour
     [SerializeField] protected int pdef;
     [SerializeField] protected int matk;
     [SerializeField] protected int mdef;
+    protected bool isScheduled; //true if the unit has a move scheduled that has not yet executed.
     protected bool brokenThisRound; //true if the unit has been broken this round. set to false on round start.
     protected int break_level; //from 0 to 100. at 100, the units breaks. (if possible)
     protected bool ooa; //true: unit is ooa, cannot be selected. false: unit is active. can be selected.
+
+    //for retrying battles:
+    private int preBattlePosition; //used to restore the unit's position in the rows if we retry a battle.
+    public int get_preBattlePosition() { return preBattlePosition; }
+    public void set_preBattlePosition(int x) { preBattlePosition = x; }
 
     //targeting
     public int place { get; set; } //position on the battlefield. 0-5. equivalent to their position in pl.
@@ -58,6 +64,7 @@ public class Unit : MonoBehaviour
     public virtual bool refresh(bool startOfBattle)
     {
         //called at the start of a round.
+        isScheduled = false;
         if (ooa == true) return false; //don't do any of this if out of action.
         
         ap = get_apMax_actual();
@@ -110,7 +117,8 @@ public class Unit : MonoBehaviour
         break_level = Mathf.Min(100, break_level + breakAmount);
 
         //if unit's ap is 0, then you cannot break them. (but you can still stack break) can only break a unit with ap > 0. 
-        if (ap == 0) return false;
+        //OR: you can also break a unit that has a move scheduled. (if isScheduled == true)
+        if (ap == 0 && isScheduled == false) return false;
 
         //detect if the unit was broken. true (and reset break_level) if was, false if wasnt.
         if (break_level == 100)
@@ -122,8 +130,10 @@ public class Unit : MonoBehaviour
         return false;
     }
     public void heal(int amount) { if (!ooa) hp = Mathf.Min(get_hpMax_actual(), hp + amount); }
+    public void set_isScheduled(bool x) { isScheduled = x; }
 
     //GETTERS
+    public bool get_isScheduled() { return isScheduled; }
     public int get_break() { return break_level; }
     public Sprite get_activePortrait() { return moveSelectionPortrait; }
     public int get_exp() { return exp; }

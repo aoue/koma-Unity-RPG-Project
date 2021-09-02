@@ -39,6 +39,7 @@ OGA licenses:
 grow up? as if he did.
 
 - visuals:
+	(combat box portraits should have mostly clear backgrounds, maybe. not pure white, but like an opaque blue.)
 	finish planning before starting to draw something.
 	once the plan is done, then we can start making all the visuals. we will need:
 	- overworld background, complete with all the buildings we'll need.
@@ -69,8 +70,9 @@ the combat system is fine.
 	- mob parties must absolutely not start on a home tile. 
 	- note: you can make a multi-wave bossfight by placing multiple 0-movement mob parties on the same tile. 
 		- (make the extra's have a blank name and order the parties correctly so they are fought in the order you want.)
+		- (the later a mob party is added to mob parties list, the sooner it will be fought.)
 	- be careful to make it so the player never becomes stuck in a dungeon. they must always be able to withdraw.
-	- mandatory dungeons, once cleared, you can never go back in. they're roadblocks.
+	- mandatory dungeons; once cleared, you can never go back in. they're roadblocks.
 	- optional dungeons, you don't even 'clear' them. they have no clear tile.
 		- you can go in them as many times as you want, until the dungeon becomes unavailable, usually at an act change.
 		- if doing something in an optional dungeon is necessary for a sidequest or something (like a recruitment quest or a monster slaying quest)
@@ -83,40 +85,31 @@ the combat system is fine.
 	- write events... bit by bit.
 ==== 	
 
-- should we consider some kind of guard ability? yeah, i guess.
-	here's how it would work:
-	- apply it as a status to a unit. set the user of the status move as the guarder field of the target.
-	- when a unit with guarded != null. after damage and break are calculated, but before dealing them to the guarded unit,
-	  check if the unit is being guarded. if it is, then send dmg and break to our guarding unit.
-	- if the guarding unit is broken, then their guard ends.
-	- if the guarding unit is put ooa, then their guard ends too.
+- plan out story (for real this time.) and start writing the damn thing.
+	- cleanse day by day and refill with new outline:
+		- after dungeon 1 boss fight; scene 2: two settler gs, one unconscious and one who wakes up during.
+		   All the while friday tries to start sealing it, then moth helps, then the sisters, then finally the abbess. In the end, they manage to seal it.
+	- detailed plan finished: make skeleton next. (i.e. divide into parts, dungeons, and events.)
 
-- plan out story (for real this time.) and write the whole damn thing.
-	- i don't want to waste time making units and mobs and dungeons that won't even show up.
-	general guideline to plan:
-	- only 1 event before first dungeon, and it should be short.
-	- 
 
-- dungeon + SM:
-	- play footsteps sound through SM. (need to test it. played in a new tile, stopped in slide listener.)
+- make party units:
+	- mc, friday, moth
+
+- make dungeon units:
+	- dungeon0
+	- dungeon1
 
 - dungeon 0:
-	- plan out grid, mobs, boss monsters, event tiles, etc.
+	- fill out grid and place mobs
 
-- design party and dungeon0 units:
-	especially with the break system, enemies should hit hard. you break enemies to avoid hits you don't like.
-	enemy stats should be comparable to player. we don't want to just shrug off damage. you have to plan where to deposit it.
-	an enemy's basic move should deal about 30-40 damage to our crew at start. 2 hits break mc/nat. 2.5 breaks tori. 3 breaks friday.
-	- mobs? various Sabaind. (designs are still in the sheet, at least)
-	- party? Mc, Friday, Nat, and Tori. 
-		- rescale design sheet stats. (hp mostly, but some atk for mobs.)
-		- finally, remember that we're using an mp system too. numbers should be low, though.
-
-- make party and dungeon0 units:
-	- waiting for designs.
+- dungeon 1:
+	- fill out grid and place mobs
 
 - exp:
-	- now that monsters actually have exp, is it being carried back properly?
+	- is it being carried back properly?
+
+- level tree:
+	- make a basic version of this with just a few moves learnable for prologue.
 
 - filling out dungeon hover:
 	- title, current threat
@@ -124,12 +117,19 @@ the combat system is fine.
 	- symbol if optional and not yet cleared.
 	- symbol if entered before.
 
+- dungeon:
+	- mob random generation commands are broken. so fix them when you get to dungeon 1.
+
 - main menu: (no need to worry about loading, dude. we're not going to implement that.)
+	- read file to get ic and playername. if no file, then create it.
 	Just make a fresh scene for mainmenu.
 		- start: scenemanager.load("overworld scene")
 		- load (not interactable for now)
 		- gallery (same scene as main menu. you click to load an event, which plays right there. post demo.)
 		- exit: Application.Quit()
+
+- sound manager:
+	- need footsteps sound.
 
 - when we include assets (at the end):
 	- moves sounds, music, sound effects, etc.
@@ -142,13 +142,6 @@ the combat system is fine.
 		- dungeon ui needs to be resized too.
 	- change the move preview menu too. (those three buttons, you know.)
 	- a mouse cursor. just something stylized.
-
-- dungeon heal button:
-	- consider what the healperstam percentage should be at default and at max.
-		- starting at 5. Range could be 5, 10, 15, 20, 25?
-	- something else to consider:
-		- have the main heal button to heal everyone, but add secondary heal buttons on the boxes of each
-		  unit. that way you could heal only the units you desire, individually.
 
 - sound manager:
 	- sound effect for passing time. should be ~4 seconds long. doo doo doo doooooo ... doooo
@@ -168,7 +161,7 @@ the combat system is fine.
 	- explain what dungeon preview means (threat, exploration %, wanted monsters present)
 	combat tutorial:
 	- explain scheduling system. (instant, next turn, eor.) explain a killed unit cannot execute.
-	- explain break system. (when a unit takes >= half their max hp in a single blow, they are broken. they lose all their ap and scheduled moves are cancelled.)
+	- explain break system. (when a unit's break% reaches 100, they are broken. Only a unit with ap > 0 or a scheduled move can be broken. a broken unit has their break% set to 0, loses all their ap, and scheduled moves are cancelled. break% halves at the end of a turn.)
 	- explain move row preference (front/back/ambi. wrong rows do 0nly 0.65x dmg) 
 	- explain defender bonus (units in back row take only 0.75x dmg.)
 	- explain turns. go back and forth until both sides have exhausted all unit's ap.
@@ -189,11 +182,26 @@ the combat system is fine.
 		- you can retry at no penalty as many times as you'd like. 
 		- if you feel the battle is unwinnable, then you should hit the withdraw option instead. 
 
+- dungeon transfer:
+	- transfer obtainedExp and obtainedGold from dungeon back to overworld.
+
 ===== Post Demo
+
+- should we consider some kind of guard ability? yeah, i guess.
+	(post demo)
+	here's how it would work:
+	- apply it as a status to a unit. set the user of the status move as the guarder field of the target.
+	- when a unit with guarded != null. after damage and break are calculated, but before dealing them to the guarded unit,
+	  check if the unit is being guarded. if it is, then send dmg and break to our guarding unit.
+	- if the guarding unit is broken, then their guard ends.
+	- if the guarding unit is put ooa, then their guard ends too.
 
 - character events:
 	- make sure they have field where they have a minimum part reached for each event.
 	(or you could just store it in a parallel int array. whatever's easiest)
+
+- event type:
+	- remove certain party member by unit id.
 
 - mob parties:
 	- if a mob party has a loss event, then add a visual indicator to their flag icon. the haich heart works.
@@ -203,6 +211,7 @@ the combat system is fine.
 	needs a change because right now 'withdraw' and 'loss' are the same.
 
 - combat:
+	(you have to buy the license for this)
 	- surrender button. instantly loses the battle.
 
 - interesting moves:
@@ -254,7 +263,6 @@ the combat system is fine.
 		- every time the player learns a move, the cost of learning every other move goes up by 5%?
 		- the cost of learning a move is increased by the player's level?
 
-
 - saving and loading: (not in demo)
 	keep it simple.
 	- party members' states.(stats, equipped moves, and unlocked reserve moves.) 
@@ -271,22 +279,24 @@ the combat system is fine.
 	- make a unit's dmg spread get the highest/lowest possible roll. (2 stances)
 
 - guild store:
-	run by moth. each time you enter in a part, it displays a unique part text on the left with moth's character icon.
+	run by ??. each time you enter in a part, it displays a unique part text on the left with moth's character icon.
 		e.g. "remember to report fences, black markets, or any other illegal transactions that violate the guild's exclusive commercial rights in Cherespoir. :)"
 	- on the right two thirds is the list of things to buy and the buy a thing button in two columns.
 	  things can only be bought once OR can be bought a certain number of times.
 	can buy:
-	- dungeon license - NAME | allows the player to enter a new dungeon, NAME. 
-	- healing license - I to X? | improves stamina to hp healing percent in dungeon heal button. starts at I = 1%, ends at X = 10%.
-	- stamina license - I to X? | same as healing license, but for unit's stamina.
+	- surrender permit | allows the player to surrender and instantly lose a battle.
+	- dungeon permit - NAME | allows the player to enter a new dungeon, NAME. 
+	- healing charge license - I to V | increases number of healing charges you have. from 1 at I to 5 at V.
+	- healing techniques - I to X | increase percentage of unit hpmax healed when using a healing charge. start at 50% at I to 100% at X
+	- explorer's license - I to V? | increases percentage of hp and mp regenerated when entering an unexplored tile.
 	- explorer's pamphlet - TYPE | makes tiles of TYPE (e.g. font of health) start visible in a dungeon. not all tile types, of course.
 	- logistics I to X | can buy multiple times for increasing price. increases base stamina by a small number. 2? 3? 5?
-	- dogtags I to X? | increases the threat floor of all dungeons. (meaning the dungeon's threat never goes below a certain number)
+	- sponsors I to X? | increases the threat floor of all dungeons. (meaning the dungeon's threat never goes below a certain number)
 	- special contract - EXP | for the next dungeon, receive no gold, but double exp. locks special contract Gold.
 	- special contract - GOLD | for the next dungeon, receive no exp, but double gold. locks special contract exp.
 
 - guild hall:
-	run by tori. each time you enter in a part, displays unique part text, etc, etc same as guild store.
+	run by ??. each time you enter in a part, displays unique part text, etc, etc same as guild store.
 		e.g. "The guild waives all responsibility for loss of limb or life."
 	interface is the same layout as guild store, but products are different.
 	it's more like a bounty thing. you do things playing and you may be eligible for a reward.

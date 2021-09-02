@@ -94,33 +94,31 @@ public class CombatManager : MonoBehaviour
 
         if (waves == null) waves = new Queue<Enemy[]>();
         waves.Clear();
-
-        foreach (Enemy[] wav in inWaves)
+        
+        for (int i = 0; i < inWaves.Length; i++)
         {
-            for(int i = 0; i < wav.Length; i++)
+            Enemy[] someArr = new Enemy[6];
+            for(int j = 0; j < 6; j++)
             {
-                if (wav[i] != null)
+                if (inWaves[i][j] != null)
                 {
-                    wav[i] = Instantiate(wav[i]);
-
+                    someArr[j] = Instantiate(inWaves[i][j]);
                     //apply variance and threat based stat modifications to the mob  
                     //doing spawning_variance() second emphasizes the stat variations, which we want i guess.
-                    wav[i].stat_modify(threat); //virtual function.
-                    wav[i].spawning_variance(); //non-virtual.
-                                     
-                    //end that part
-                    wav[i].create_status();
-                    wav[i].set_hp(wav[i].get_hpMax_actual());
+                    someArr[j].stat_modify(threat); //virtual function.
+                    someArr[j].spawning_variance(); //non-virtual.
+
+                    //setup the monster for this battle.
+                    someArr[j].create_status();
+                    someArr[j].set_hp(someArr[j].get_hpMax_actual());
                 }
-
             }
-            
-            waves.Enqueue(wav);
+            waves.Enqueue(someArr);
         }
-        loser.prebattle_fill(waves);
-
+               
         wavesNum = waves.Count;
         el = waves.Dequeue();
+        
         //check if has an empty front row and needs someone to be sent to the front.
         if (el[3] == null && el[4] == null && el[5] == null) send_el_backFront();
 
@@ -143,6 +141,7 @@ public class CombatManager : MonoBehaviour
     void send_in_next_wave()
     {
         el = waves.Dequeue();
+
         //check if has an empty front row and needs someone to be sent to the front.
         if (el[3] == null && el[4] == null && el[5] == null) send_el_backFront();
 
@@ -240,7 +239,7 @@ public class CombatManager : MonoBehaviour
         }
         yield return new WaitForSeconds(time);
         if (startOfBattle) yield return new WaitForSeconds(1.5f);
-        continue_startOfRound(startOfBattle);
+        control();
     }   
     void start_of_round(bool startOfBattle = false)
     {
@@ -294,12 +293,6 @@ public class CombatManager : MonoBehaviour
 
         //wait for a second here.
         StartCoroutine(rounderWait(1.5f, startOfBattle));
-    }
-    void continue_startOfRound(bool startOfBattle)
-    {
-        //Debug.Log("continue_start_of_round() called.");
-
-        control();
     }
     void count_ap()
     {
@@ -394,7 +387,7 @@ public class CombatManager : MonoBehaviour
         if (playerScheduledMove != null)
         {
             pTurn = playerTurnPhase.EXECUTING;
-            StartCoroutine(waitWhilePlayerMoveExecutes(playerScheduledMove, playerScheduledMoveSpot, playerScheduledUnit.place, whoseTurn.PLAYER));
+            StartCoroutine(waitWhilePlayerMoveExecutes(playerScheduledMove, playerScheduledMoveSpot, playerScheduledUnit.place, whoseTurn.PLAYER, false));
             return;
         }
 
@@ -462,14 +455,16 @@ public class CombatManager : MonoBehaviour
         {
             case executionTime.INSTANT:
                 playerScheduledUnit = currentUnit;
-                StartCoroutine(waitWhilePlayerMoveExecutes(currentUnit.nextMove, playerScheduledMoveSpot, playerScheduledUnit.place, whoseTurn.AI));
+                StartCoroutine(waitWhilePlayerMoveExecutes(currentUnit.nextMove, playerScheduledMoveSpot, playerScheduledUnit.place, whoseTurn.AI, false));
                 return;
 
             case executionTime.NEXTTURN:
+                currentUnit.set_isScheduled(true);
                 playerScheduledMove = currentUnit.nextMove;
                 break;
 
             case executionTime.ENDOFROUND:
+                currentUnit.set_isScheduled(true);
                 eorScheduledMove = currentUnit.nextMove;
                 eorScheduledUnit = currentUnit;
                 eorScheduledMoveSpot = playerScheduledMoveSpot;
@@ -483,7 +478,7 @@ public class CombatManager : MonoBehaviour
         //Debug.Log("eor move execute called.");
         if (eorUserIsPlayer)
         {
-            StartCoroutine(waitWhilePlayerMoveExecutes(eorScheduledMove, eorScheduledMoveSpot, eorScheduledUnit.place, whoseTurn.WAIT));
+            StartCoroutine(waitWhilePlayerMoveExecutes(eorScheduledMove, eorScheduledMoveSpot, eorScheduledUnit.place, whoseTurn.WAIT, true));
         }
         else
         {
@@ -669,11 +664,13 @@ public class CombatManager : MonoBehaviour
         hide_active_portrait();
         end_player_turn_p1(true);
     }
-    IEnumerator waitWhilePlayerMoveExecutes(Move move, int spot, int unitIndex, whoseTurn setTurnTo)
+    IEnumerator waitWhilePlayerMoveExecutes(Move move, int spot, int unitIndex, whoseTurn setTurnTo, bool isEOR)
     {
         //check that the unit is still alive
-        if (playerScheduledUnit.get_ooa() == false)
+        if ((isEOR == false && playerScheduledUnit.get_ooa() == false) || (isEOR == true && eorScheduledUnit != null))
         {
+            pl[unitIndex].set_isScheduled(false);
+
             show_active_portrait(pl[unitIndex].get_activePortrait());
             previews.hide();
             plays.show(pl[unitIndex].get_nom() + " uses " + move.get_nom() + "...");
@@ -875,6 +872,7 @@ public class CombatManager : MonoBehaviour
         //check unit is still alive.
         if ( (isEOR == false && enemyScheduledUnit != null) || (isEOR == true && eorScheduledUnit != null) )
         {
+            el[unitIndex].set_isScheduled(false);
             show_active_portrait(el[unitIndex].get_activePortrait());
             previews.hide();
             plays.show(el[unitIndex].get_nom() + " uses " + move.get_nom() + "...");
@@ -2034,12 +2032,14 @@ public class CombatManager : MonoBehaviour
                 StartCoroutine(waitWhileEnemyMoveExecutes(move, targetSpot, chosenID, whoseTurn.PLAYER, false));
                 return;
             case executionTime.NEXTTURN:
+                el[chosenID].set_isScheduled(true);
                 enemyScheduledMove = move;
                 enemyScheduledUnit = el[chosenID];
                 enemyScheduledMoveSpot = targetSpot;
                 phase_words = "next turn...";
                 break;
             case executionTime.ENDOFROUND:
+                el[chosenID].set_isScheduled(true);
                 eorScheduledMove = move;
                 eorScheduledUnit = el[chosenID];
                 eorScheduledMoveSpot = targetSpot;

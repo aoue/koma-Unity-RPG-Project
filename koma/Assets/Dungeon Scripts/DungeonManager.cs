@@ -15,7 +15,9 @@ public class DungeonManager : MonoBehaviour
     //SETTINGS
     private float spacing = 1.73f; //space between tiles. currently set at 1.73, as tiles are 173x173
     private float transitionDuration = 2f; //the time movement/rotation takes. higher is faster.
-    private float hpPercentHealedPerStamina = 5; //the % of all unit's maxhp healed with 1 stamina in dungeon healer. this can be changed with difficulty setting or by buying upgrades or something.
+    //private float hpPercentHealedPerStamina = 5; //the % of all unit's maxhp healed with 1 stamina in dungeon healer. this can be changed with difficulty setting or by buying upgrades or something.
+    private int healCharges; //number of healing charges the party has left. set on dungeon load.
+    private float healPercentage; //the percentage of a unit's hpmax healed by use of the heal charge. ranges from 0.50f to 1.0f
     private float rotationDuration = 0.5f;
     private float hpPercentHealedPerNewTile = 1; //the % of a unit's maxhp healed when the party moves onto an unexplored tile.
     private float mpPercentHealedPerNewTile = 1; //the % of a unit's maxmp healed when the party moves onto an unexplored tile.
@@ -34,18 +36,19 @@ public class DungeonManager : MonoBehaviour
     private Direction facing; //directio the party is facing. N-E-S-W
 
     private int threat; //read from dungeon
+    public int get_threat() { return threat; }
 
     //the coordinates of the party in the dungeon.
     private int xParty;
     private int yParty;
 
     //the size of the dungeon.
+    public int obtainedGold { get; set; }
     public int obtainedXP { get; set; }
     private PathfinderManager pathManager;
     private int vision;
     private int xDungeon;
     private int yDungeon;
-    private int savedHealStamCost;
 
     [SerializeField] private DungeonNotifier dungeonNotifier; //for some post combat things.
     [SerializeField] private SoundManager SM; //handles music and sounds, baby.
@@ -55,6 +58,7 @@ public class DungeonManager : MonoBehaviour
     [SerializeField] private EventManager evManager; //the dungeon's event manager. doesn't have tooltipmanager, otherwise the same.
     [SerializeField] private DungeonUnitBox[] partyBoxes;
     [SerializeField] private Text staminaText;
+    [SerializeField] private Text healChargesText;
     [SerializeField] private Text coordText;
     [SerializeField] private Camera cammy;
     [SerializeField] private GameObject partyFlag;
@@ -103,12 +107,18 @@ public class DungeonManager : MonoBehaviour
         
         //read and display information
         threat = heldDun.threat;
-        staminaText.text = "Stamina: " + stamina;
-        
+        staminaText.text = "Stamina\n" + stamina;
+
         //party setup
         fill_party();
 
         //dungeon setup
+
+        //dummy values, will be sent over properly by prep dungeon manager eventually:
+        healCharges = 1;
+        healPercentage = 0.5f;
+        healChargesText.text = "Heal (" + healCharges + " left)";
+
         fill_dungeon();
         allow_pick_starting_position();
         SM.play_background_music(heldDun.get_bgTheme());
@@ -492,7 +502,7 @@ public class DungeonManager : MonoBehaviour
                 }
                 else
                 {
-                    combatManager.close();   
+                    combatManager.close();
 
                     //if mobParty has it, then show a single loss event. after that, show loss menu.
                     //important that it happens this way; player can lose on purpose -> see loss event -> fight again and win.
@@ -540,23 +550,17 @@ public class DungeonManager : MonoBehaviour
         else
         {
             loser.prebattle_partyFill(party);
-            waves = new Enemy[lambs.Count][];
-            for (int i = 0; i < lambs.Count; i++)
-            {
-                //generate one wave from each party.
-                if (lambs[i].get_uniqueParty() == -1)
-                {
-                    waves[i] = heldDun.generate_formation(threat);
 
-                }
-                else
-                {
-                    waves[i] = heldDun.retrieve_uniqueFormation(lambs[i].get_uniqueParty());
-                }
+            int[] mobPartyInfo = new int[lambs.Count];
+            for (int i = 0; i < mobPartyInfo.Length; i++)
+            {
+                mobPartyInfo[i] = lambs[i].get_uniqueParty();
             }
-            
+            waves = heldDun.generate_waves(threat, mobPartyInfo);
+           
+            loser.prebattle_fill(waves);
         }
-        
+
         fader.fade_to_black();
         StartCoroutine(healthy_pause(2.0f, true, waves));
     }
@@ -687,7 +691,7 @@ public class DungeonManager : MonoBehaviour
 
             //decrement stamina
             stamina = System.Math.Max(0, stamina - heldDun.get_tile(xParty, yParty).get_tileDrain());
-            staminaText.text = "Stamina:\n" + stamina;
+            staminaText.text = "Stamina\n" + stamina;
 
             rendyGrid[xParty, yParty].gameObject.GetComponent<Tile>().set_tile_image();
             //if this breaks tiles that aren't Tile, but inherit from it, just do rendyGrid[].enabled = true; and fill the image manually.
@@ -922,6 +926,10 @@ public class DungeonManager : MonoBehaviour
     }
     
     //RUNNING
+    public void display_pbp_message(string toShow)
+    {
+        pbp.typeItOut(toShow);
+    }
     void update_pbp(bool entering = false)
     {
         //update play by play text too
@@ -1243,37 +1251,27 @@ public class DungeonManager : MonoBehaviour
     //DUNGEON HEALING BUTTON
     public void use_heal_button()
     {
-        //called when the player hits the button. it opens up a more informative prompt that tells
-        //the player the exact details, heal to _% and how much stam it will cost. then the player
-        //hits confirm on that and we do the actual calculation.
-        //lock input while the heal prompt is shown of course.
-
-        //we pay stamina based on the percentage of each injured unit's hp we want to heal at a rate of x% per stamina.
-        disable_movement_arrows();
-        //first calc cost, in stamina.
-        int cost = 0;
-        for (int i = 0; i <party.Length; i++)
-        {
-            if (party[i] != null && party[i].get_hp() < party[i].get_hpMax())
-            {
-                //then we have to heal them. use hpPercentHealedPerStamina to calc cost.
-                //trust me, the math is probably right.
-                float percentageMissing = 100f * (1f - ((float)party[i].get_hp()) / ((float)party[i].get_hpMax()));
-                cost += (int)(percentageMissing / hpPercentHealedPerStamina);
-            }
-        }
-        savedHealStamCost = Mathf.Max(1, cost);
-        string prompt = "Healing forces will take " + cost + " stamina";
-        bool canHeal;
-        if (cost > stamina)
+        //called when the player hits the button. it opens up a more informative prompt and to more buttons.
+        string prompt = "Healing the party by " + (100 * healPercentage).ToString() + "% will take 1 healing charge";
+        bool canHeal = false;
+        if (healCharges == 0)
         {
             canHeal = false;
-            prompt += ", which is more than we have.";
+            prompt += ", which is beyond our current means.\nUnable to proceed.";
         }
         else
         {
             canHeal = true;
-            prompt += ".\nWould you like to proceed?";
+            prompt += ", leaving us with " + (healCharges - 1).ToString();
+
+            if (healCharges - 1 > 1)
+            {
+                prompt += "s.\nWould you like to proceed?";
+            }
+            else
+            {
+                prompt += "s.\nWould you like to proceed?";
+            }                
         }
         healer.show(prompt, canHeal);
     }
@@ -1281,11 +1279,12 @@ public class DungeonManager : MonoBehaviour
     {
         //the player accepts the heal conditions.
         //take away their stamina, heal units, etc.
-        stamina -= savedHealStamCost;
-        staminaText.text = "Stamina: " + stamina;
+        healCharges -= 1;
+        healChargesText.text = "Heal (" + healCharges + " left)";
         for (int i = 0; i < party.Length; i++)
         {
-            if (party[i] != null) party[i].set_hp(party[i].get_hpMax());
+            //heal by license percent.
+            if (party[i] != null) party[i].heal((int)(healPercentage * party[i].get_hpMax()));
         }
         fill_party();
         healer.hide();
@@ -1363,7 +1362,7 @@ public class DungeonManager : MonoBehaviour
         heldDun.get_tile(xParty, yParty).use_tile(this);
 
         //update stamina text
-        staminaText.text = "Stamina: " + stamina;
+        staminaText.text = "Stamina\n" + stamina;
 
         //update dungeon boxes
         fill_party();

@@ -254,7 +254,10 @@ public class EventManager : MonoBehaviour
             canProceedArrow.SetActive(false);
 
             sentenceText.text = "";
+            string displayString = ""; 
+
             yield return new WaitForSeconds(0.05f);
+            
             foreach (char letter in sentence.ToCharArray())
             {
                 if (skipOn == true)
@@ -264,9 +267,19 @@ public class EventManager : MonoBehaviour
                     break;
                 }
 
-                sentenceText.text += letter;
-                yield return new WaitForSeconds(textWait);
- 
+                displayString += letter;
+
+                //if it's a character speaking, then show quotes. else, don't show quotes.
+                if (nameText.text != "")
+                {
+                    sentenceText.text = "\"" + displayString + "\"";
+                }
+                else
+                {
+                    sentenceText.text = displayString;
+                }
+
+                yield return new WaitForSeconds(textWait); 
             }
             //show canProceed arrow.
             canProceedArrow.SetActive(true);
