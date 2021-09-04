@@ -104,7 +104,7 @@ public class Unit : MonoBehaviour
     public void break_ap() { ap = 0; }
     public void set_mp(int x) { mp = x; }
     public void drain_mp(int amount) { mp = (int)(mp - (amount * status.trance)); }
-    public void mp_heal(int amount) { if (!ooa) hp = Mathf.Min(get_hpMax_actual(), hp + amount); }
+    public void mp_heal(int amount) { if (!ooa) mp = Mathf.Min(get_mpMax(), mp + amount); }
     public bool damage(int amount, int breakAmount)
     {
         //returns whether this damage broke the unit. always returns false if the unit was put ooa.
@@ -131,6 +131,8 @@ public class Unit : MonoBehaviour
     }
     public void heal(int amount) { if (!ooa) hp = Mathf.Min(get_hpMax_actual(), hp + amount); }
     public void set_isScheduled(bool x) { isScheduled = x; }
+    public void set_ooa(bool state) { ooa = state; }
+    public void set_break(int to) { break_level = to; }
 
     //GETTERS
     public bool get_isScheduled() { return isScheduled; }

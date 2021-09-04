@@ -62,10 +62,10 @@ MonoBehaviour:
   highSpread: 1.2
   xSize: 1
   ySize: 1
-  affinity: 6
+  affinity: 1
   usesPatk: 1
   usesPdef: 1
   apDrain: 1
-  mpDrain: 0
+  mpDrain: 70
   flavour: flashsteel flavour
   targeting_preference: 1

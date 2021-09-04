@@ -66,6 +66,6 @@ MonoBehaviour:
   usesPatk: 1
   usesPdef: 1
   apDrain: 1
-  mpDrain: 0
+  mpDrain: 60
   flavour: puncture flavour
-  targeting_preference: 5
+  targeting_preference: 4

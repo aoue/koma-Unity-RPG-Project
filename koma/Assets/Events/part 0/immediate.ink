@@ -1,6 +1,7 @@
 //Link external functions here.
 EXTERNAL bg(id)
-EXTERNAL n(name)
+EXTERNAL n(name) //set to empty string to hide namebox.
+EXTERNAL talk(mode) //1: true, use quotes. 0: false, use parantheses.
 EXTERNAL toggle_font()
 EXTERNAL show(whichSlot, portraitID)
 EXTERNAL hide(whichSlot)
@@ -15,10 +16,21 @@ VAR player = "playerCharName"
 //end variables
 
 //SCENE OUTLINE
-//Welcome to part0 immediate.
+//Welcome to part0 immediate: the very first scene in the game.
 //=============
 
+/*
+~show(0, 0)
+~n("Friday")
+~talk(1)
+testing talk and think speech modes. This should be talk mode.
+~talk(0)
+I think I did a good job...
+~n("")
+*/
+
 part 0 immediate.
+
 /*
 ~toggle_font()
 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.

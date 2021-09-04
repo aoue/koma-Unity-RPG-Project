@@ -32,7 +32,7 @@ Okay, okay, but what do we need for the demo/prologue to be released?
 
 =====
 OGA licenses:
-- you are required to follow only one of the licenses. 
+- you are required to follow only one of the licenses listed for a multi-licensed asset.
 
 ===== story dependent stuff
 
@@ -63,14 +63,13 @@ the combat system is fine.
 - Note: specific events in character chains may also be locked to the world's part level. 
 	(- No chains are available in the prologue.)
 
-- when going into a dungeon, even though only certain party members are fighting, we still act like
+- when going into a dungeon, even though only certain party members may have been put in the party, we act like
 	  all (recruited) party members are there in events and stuff. Otherwise, it's just too much work.
 
 - dungeon design: (to keep in mind)
 	- mob parties must absolutely not start on a home tile. 
 	- note: you can make a multi-wave bossfight by placing multiple 0-movement mob parties on the same tile. 
 		- (make the extra's have a blank name and order the parties correctly so they are fought in the order you want.)
-		- (the later a mob party is added to mob parties list, the sooner it will be fought.)
 	- be careful to make it so the player never becomes stuck in a dungeon. they must always be able to withdraw.
 	- mandatory dungeons; once cleared, you can never go back in. they're roadblocks.
 	- optional dungeons, you don't even 'clear' them. they have no clear tile.
@@ -80,20 +79,48 @@ the combat system is fine.
 
 - writing:
 	- on mainmenu screen; read player ic and name from a textfile in the saves folder.
+		- if read ic and name different from default values, then display them on the mainmenu so player can easily see.
 		- if textfile not found, then create it with default values.
 	- create prologue skeleton
 	- write events... bit by bit.
-==== 	
+====
 
 - plan out story (for real this time.) and start writing the damn thing.
-	- cleanse day by day and refill with new outline:
-		- after dungeon 1 boss fight; scene 2: two settler gs, one unconscious and one who wakes up during.
-		   All the while friday tries to start sealing it, then moth helps, then the sisters, then finally the abbess. In the end, they manage to seal it.
-	- detailed plan finished: make skeleton next. (i.e. divide into parts, dungeons, and events.)
+	- start writing events proper. One a day is reasonable, there are more than 10, after all.
+		- feel free to work more than once a day to complete an event.
+		- no lollygagging; continue this good momentum.
 
+- filling out event hover:
+	- there's now info text too. add a field to events that fill this.
 
-- make party units:
-	- mc, friday, moth
+- dungeon class:
+	to add: (these need to be preserved between runs and kept updated.)
+	- keep track of the number of tiles explored.
+	- keep track of the total number of tiles in the dungeon.
+	- keeps track of how many expeditions the player has made into this dungeon.
+	broken:
+	- mob formation random generation commands are commented out from last time.
+
+- dungeon manager: 
+	- when entering unexplored tile: increment dungeon's exploredTiles value.
+	- show exploration state when in dungeon crawler mode: explored tiles/non-null tiles (both whole numbers)
+		- update when moving onto a new tile. simply increase tiles found by 1.
+	on a withdrawal:
+	- if loss: you only keep half the exp and gold of the run.
+	- instead of abruptly ending, show the expedition summary popup.
+		- the popup has a confirm button and a cancel button.
+
+- expedition summary popup:
+	- confirm button: transfer gold, exp, and clear state to overworld. if loss then halve exp and gold.
+	- cancel button: return control to dungeon manager.
+	what is shows:
+	- as a title:
+		- Loss: Expedition retreats!
+		- Withdraw: Expedition withdraws!
+		- Clear: Expedition Clear!
+	- dungeon name and expedition #. (i.e. how many times you've entered the dungeon.)
+	- shows exp and gold the expedition has gathered, and then next to them how much of it will be returned.
+	- shows how much exploration you added to the dungeon. (in explored tiles/non null tiles, both whole numbers)
 
 - make dungeon units:
 	- dungeon0
@@ -105,20 +132,14 @@ the combat system is fine.
 - dungeon 1:
 	- fill out grid and place mobs
 
-- exp:
-	- is it being carried back properly?
+
 
 - level tree:
-	- make a basic version of this with just a few moves learnable for prologue.
+	- make sure exp and gold are carried back and stored properly.
+	- make a basic version of this with just a few moves learnable for prologue. 
+		- include it for mc and friday. for moth, it's not necessary.
 
-- filling out dungeon hover:
-	- title, current threat
-	- symbol if: mandatory and not yet cleared.
-	- symbol if optional and not yet cleared.
-	- symbol if entered before.
 
-- dungeon:
-	- mob random generation commands are broken. so fix them when you get to dungeon 1.
 
 - main menu: (no need to worry about loading, dude. we're not going to implement that.)
 	- read file to get ic and playername. if no file, then create it.

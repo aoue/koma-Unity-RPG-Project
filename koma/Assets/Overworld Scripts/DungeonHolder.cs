@@ -23,7 +23,7 @@ public class DungeonHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         //called everyday, from overworld's a_new_day()
         //decrements the dungeon's threat by its threatDecay
-        if (dun.threat > 0) dun.threat -= System.Math.Max(0, dun.get_threatDecay());
+        if (dun.threat > 0) dun.threat = System.Math.Max(0, dun.threat - dun.get_threatDecay());
 
     }
 

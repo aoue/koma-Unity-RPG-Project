@@ -56,12 +56,12 @@ MonoBehaviour:
   phase: 0
   preferredRow: 2
   strikes: 1
-  power: 9999
+  power: 30
   break_mult: 1
   lowSpread: 0.9
   highSpread: 1
-  xSize: 3
-  ySize: 2
+  xSize: 1
+  ySize: 1
   affinity: 6
   usesPatk: 0
   usesPdef: 0

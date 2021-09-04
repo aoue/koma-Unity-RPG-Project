@@ -49,6 +49,7 @@ public class EventManager : MonoBehaviour
     private bool autoOn = false; //when true, the player can't continue the text, but it will continue automatically.
     private bool historyOn = false; //when true, viewing history and cannot continue the story.
     private bool usingDefaultFont = true;
+    private bool isTalking; //determines the mode of speech which is used when nametext is not empty. can either be true:talk [""] or false:think [()] 
 
     private string currentSpeakerName; //used for pushing entries in history.
     [SerializeField] private GameObject HistoryPort; //master gameobject for the history interface.
@@ -232,7 +233,6 @@ public class EventManager : MonoBehaviour
         HistoryPort.SetActive(false);
     }
 
-
     //MANAGE EVENT RUNNING
     public static void event_triggered(Event ev, bool doPause = true)
     {
@@ -269,14 +269,21 @@ public class EventManager : MonoBehaviour
 
                 displayString += letter;
 
-                //if it's a character speaking, then show quotes. else, don't show quotes.
-                if (nameText.text != "")
+                //control quotes, parentheses, or nothing.
+                if (nameText.text == "")
                 {
-                    sentenceText.text = "\"" + displayString + "\"";
+                    sentenceText.text = displayString;                    
                 }
                 else
                 {
-                    sentenceText.text = displayString;
+                    if (isTalking == true) //use quotes
+                    {
+                        sentenceText.text = "\"" + displayString + "\"";
+                    }
+                    else //use parantheses
+                    {
+                        sentenceText.text = "(" + displayString + ")";
+                    }
                 }
 
                 yield return new WaitForSeconds(textWait); 
@@ -502,6 +509,10 @@ public class EventManager : MonoBehaviour
         {
             this.set_name(name);
         });
+        script.BindExternalFunction("talk", (bool mode) =>
+        {
+            this.set_speech(mode);
+        });
         script.BindExternalFunction("toggle_font", () =>
         {
             this.toggle_font();
@@ -536,6 +547,7 @@ public class EventManager : MonoBehaviour
     {
         if ( s == "" )
         {
+            nameText.text = "";
             nameBox.SetActive(false);
         }
         else
@@ -544,6 +556,10 @@ public class EventManager : MonoBehaviour
             nameText.text = s;
         }
         currentSpeakerName = s;
+    }
+    void set_speech(bool state)
+    {
+        isTalking = state;
     }
     void toggle_font()
     {

@@ -451,9 +451,14 @@ public class DungeonManager : MonoBehaviour
 
                 for (int i = 0; i < party.Length; i++)
                 {
-                    if (party[i] != null && party[i].get_ooa() == true)
+                    if (party[i] != null)
                     {
-                        party[i].set_hp(1);
+                        if (party[i].get_ooa() == true) //if unit ooa, then set them back to 1 hp.
+                        {
+                            party[i].set_ooa(false);
+                            party[i].set_hp(1);
+                        }                       
+                        party[i].set_break(0);                                            
                     }
                 }
 

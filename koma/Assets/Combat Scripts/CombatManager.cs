@@ -532,8 +532,8 @@ public class CombatManager : MonoBehaviour
         {
             if (pl[i] != null && pl[i].wasKilled() == true)
             {
-                if (playerScheduledUnit.place == i) playerScheduledMove = null;
-                if (eorUserIsPlayer == true && eorScheduledUnit.place == i) eorScheduledMove = null;
+                if ( playerScheduledUnit != null && playerScheduledUnit.place == i) playerScheduledMove = null;
+                if (eorUserIsPlayer == true && eorScheduledUnit != null && eorScheduledUnit.place == i) eorScheduledMove = null;
                 pl[i].status.reset(pl[i]);
                 partyBoxes[i].kill_unit();
             }
@@ -2023,12 +2023,22 @@ public class CombatManager : MonoBehaviour
         int para = 2;
         string phase_words = "";
         bool useEnemyScheduledUnit = true;
+
+        //if player has no ap remaining and move is not EOR, then execute immediately to save time.
+        if (plAp == 0 && move.get_phase() != executionTime.ENDOFROUND)
+        {
+            //execute immediately. 
+            enemyScheduledUnit = el[chosenID];
+            //Debug.Log("executing enemy move right away. target spot is " + targetSpot);
+            StartCoroutine(waitWhileEnemyMoveExecutes(move, targetSpot, chosenID, whoseTurn.PLAYER, false));
+            return;
+        }
+
         switch (move.get_phase())
         {
             case executionTime.INSTANT:
                 //execute immediately. 
                 enemyScheduledUnit = el[chosenID];
-                //Debug.Log("executing enemy move right away. target spot is " + targetSpot);
                 StartCoroutine(waitWhileEnemyMoveExecutes(move, targetSpot, chosenID, whoseTurn.PLAYER, false));
                 return;
             case executionTime.NEXTTURN:

@@ -15,6 +15,7 @@ public class TooltipManager : MonoBehaviour
 
 
     [SerializeField] private Text locationText; //goes at the very top of the event preview.
+    [SerializeField] private Text infoText; //between location text/title text and portrait slots. gives some information. 3 lines, but all are short.
     [SerializeField] private Image[] portraitSlots; //4 of them. the event's cast previews. 90x90. a -1 means no sprite.
     [SerializeField] private Canvas evCanvas;
 
@@ -47,8 +48,17 @@ public class TooltipManager : MonoBehaviour
     }
     public void show_dungeon_preview(Dungeon dun, float x, float y)
     {
+        //a few things are to be shown on a dungeon preview:
+        // -dungeon's title
+        // -current threat value and how much it will decrease
+        // -exploration state. explored/total non null tiles.
+
         handle_positioning(x, y);
         locationText.text = dun.get_dungeonTitle();
+        infoText.text = "Threat Level: " + dun.threat
+            + "\nExploration: " + dun.exploredTiles + "/" + dun.totalTiles
+            + "\n" + dun.expeditionCounter + " previous expeditions";
+
         for (int i = 0; i < 4; i++)
         {
             portraitSlots[i].gameObject.SetActive(false);
@@ -61,29 +71,11 @@ public class TooltipManager : MonoBehaviour
         //First, position yourself next to the actual event. 
         //x and y are the event's coords, so we'll set ourselves nearby with relation to them.
         //default on the right, but if x is too high, then we'll show up on the left, instead. :)
-
         handle_positioning(x, y);
 
         //Fill out event information, like location, event title, and charges consumed by it.
         locationText.text = ev.get_noteTitle();
-
-        /*
-        eventTitleText.text = ev.get_noteTitle();
-        //tell the player how many charges they will lose too.
-        eventTitleText.text += "\nConsumes ";
-        switch (ev.get_event_type())
-        {
-            case eventType.RED:
-                eventTitleText.text += "all charges.";
-                break;
-            case eventType.BLUE:
-                eventTitleText.text += "1 charge.";
-                break;
-            case eventType.GREEN:
-                eventTitleText.text += "no charges.";
-                break;
-        }
-        */
+        infoText.text = "sample info text\nline2\nline3";
 
         //for slots we have images for - fill them.
         for (int i = 0; i < ev.get_portraitPreviews().Length; i++)

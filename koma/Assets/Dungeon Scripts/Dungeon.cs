@@ -26,6 +26,9 @@ public class Dungeon : MonoBehaviour
     [SerializeField] private int threatDecay; //per day
     [SerializeField] private int unitLimit; //how many units can enter this dungeon in the party.
 
+    public int totalTiles { get; set; } //total number of non-null tiles.
+    public int exploredTiles { get; set; } //total number of explored tiles.
+    public int expeditionCounter { get; set; }
     public int threat { get; set; }
 
     //list of all enemies that can be encountered

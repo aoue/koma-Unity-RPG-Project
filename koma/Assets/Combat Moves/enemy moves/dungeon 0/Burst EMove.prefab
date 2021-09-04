@@ -66,6 +66,6 @@ MonoBehaviour:
   usesPatk: 0
   usesPdef: 0
   apDrain: 1
-  mpDrain: 0
+  mpDrain: 50
   flavour: burst flavour
-  targeting_preference: 7
+  targeting_preference: 8

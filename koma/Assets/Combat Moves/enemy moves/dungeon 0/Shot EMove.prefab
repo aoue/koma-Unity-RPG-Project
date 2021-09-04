@@ -68,4 +68,4 @@ MonoBehaviour:
   apDrain: 1
   mpDrain: 0
   flavour: shot flavour
-  targeting_preference: 1
+  targeting_preference: 4
