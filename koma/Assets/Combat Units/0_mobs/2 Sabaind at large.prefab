@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &16401279814749858
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3787903107778979818}
+  - component: {fileID: 8938778390824679403}
+  m_Layer: 0
+  m_Name: 2 Sabaind at large
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3787903107778979818
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16401279814749858}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 490.1051, y: 264.17627, z: -515}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8938778390824679403
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 16401279814749858}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 081b12efd40753d428fd913f350cf59e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSelectionPortrait: {fileID: 0}
+  boxImg: {fileID: 0}
+  exp: 38
+  level: 4
+  nom: Sabaind-At-Large
+  apMax: 1
+  hpMax: 500
+  affinity: 6
+  mpMax: 0
+  patk: 210
+  pdef: 70
+  matk: 30
+  mdef: 60
+  defendMove: {fileID: 0}
+  moveset:
+  - {fileID: 7570622779774209420, guid: 222679af41aca70498fed980f246143e, type: 3}
+  - {fileID: 5690172353454418009, guid: fc7adbd6cf042b34295ab5fc2a89c3f7, type: 3}
+  - {fileID: 5408471745153392735, guid: 922c88870487233408df44d2540b832b, type: 3}
+  doSpawningVariance: 0
+  default_priority: 6
+  discipline: 0
+  concerned_level: 0.2
+  concerned_priority: 0
+  isHealer: 0
+  isBuffer: 0
+  healer_priority: 0
+  mpRegen: 30

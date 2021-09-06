@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Part : MonoBehaviour
 {
@@ -30,6 +31,15 @@ public class Part : MonoBehaviour
         doneEvents.Clear();        
         //starts each part empty.
     }
+
+    public void ready_night()
+    {
+        //after withdrawing/losing (but not clearing) from a dungeon, this function is called.
+        dungeonToRepeat.SetActive(true);
+        dungeonToRepeat.gameObject.GetComponent<Button>().interactable = false;
+
+    }
+
     public void load_part(Overworld theWorld, bool repeatingPart)
     {
         //goes in and sets up all the part's events and other states. (passtime button, dungeons enabled, etc).
@@ -39,6 +49,7 @@ public class Part : MonoBehaviour
             //even if repeating, mandatory dungeon must be shown.
             //meaning we need a link to the mandatory dungeon.
             dungeonToRepeat.SetActive(true);
+            dungeonToRepeat.gameObject.GetComponent<Button>().interactable = true;
         }
 
         //set pass time button

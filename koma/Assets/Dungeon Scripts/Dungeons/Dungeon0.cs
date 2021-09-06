@@ -6,6 +6,11 @@ public class Dungeon0 : Dungeon
 {
     // a specific dungeon.
 
+    void Start()
+    {
+        totalTiles = 15;
+    }
+
     [SerializeField] private UsableTile fontOfHp; //restores some hp to all party units. starts visible.
     [SerializeField] private UsableTile fontOfStamina; //restores some stamina. starts visible.
     [SerializeField] private UsableTile fontOnMp; //restores some stamina. starts visible.
@@ -228,7 +233,10 @@ public class Dungeon0 : Dungeon
             }
             //set initial home tile to explored:
             explored_grid[1, 0] = Exploration.EXPLORED;
-            explored_grid[4, 3] = Exploration.EXPLORED;
+            //explored_grid[4, 3] = Exploration.EXPLORED;
+
+            //set exploredTiles equal to pre-explored tiles
+            exploredTiles = 1;
         }
 
         dungeonGrid = new Tile[9, 5]

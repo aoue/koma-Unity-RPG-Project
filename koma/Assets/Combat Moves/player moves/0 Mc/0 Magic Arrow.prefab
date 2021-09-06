@@ -53,11 +53,11 @@ MonoBehaviour:
   selfStatus: 0
   selfStatusTextColorGreen: 0
   statusText: 
-  phase: 0
+  phase: 1
   preferredRow: 2
   strikes: 1
   power: 30
-  break_mult: 1
+  break_mult: 0.75
   lowSpread: 0.9
   highSpread: 1
   xSize: 1
@@ -67,4 +67,4 @@ MonoBehaviour:
   usesPdef: 0
   apDrain: 1
   mpDrain: 0
-  flavour: Even a novice can force magical energy into a deadly point.
+  flavour: Even a novice can form magical energy into a deadly point. Poor break.

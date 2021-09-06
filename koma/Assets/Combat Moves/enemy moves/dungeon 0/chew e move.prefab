@@ -1,0 +1,71 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1017240890321828220
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1017240890321828222}
+  - component: {fileID: 1017240890321828223}
+  m_Layer: 0
+  m_Name: chew e move
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1017240890321828222
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1017240890321828220}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 490.1051, y: 264.17627, z: -515}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1017240890321828223
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1017240890321828220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c91f16c3eecc73840b3279218c39f91a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveID: 0
+  moveSound: {fileID: 0}
+  nom: Chew
+  targetsParty: 1
+  mustTargetSelf: 0
+  isHeal: 0
+  isStatus: 0
+  selfStatus: 0
+  selfStatusTextColorGreen: 0
+  statusText: Bleeding
+  phase: 1
+  preferredRow: 0
+  strikes: 1
+  power: 20
+  break_mult: 0.6
+  lowSpread: 0.9
+  highSpread: 1
+  xSize: 1
+  ySize: 1
+  affinity: 6
+  usesPatk: 1
+  usesPdef: 1
+  apDrain: 1
+  mpDrain: 70
+  flavour: starts a light bleeding.
+  targeting_preference: 1

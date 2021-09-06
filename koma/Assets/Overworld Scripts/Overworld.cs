@@ -54,7 +54,7 @@ public class Overworld : MonoBehaviour
         }
         
         active_events = new Dictionary<int, EventHolder>();
-        ExpManager.setup();        
+        ExpManager.setup();
     }
     void Start()
     {
@@ -277,14 +277,14 @@ public class Overworld : MonoBehaviour
     {
         //called when we get back from a dungeon and arrive back in the overworld.
         update_display();
+        set_background();
+        partHolders[actPart].ready_night();
 
         //setup background music. it's nightime, so it's a special track that gets played every night.
         SM.play_nightMusic();
 
-        //distribute exp
+        //distribute exp and heal party units.
         pdm.inc_exp();
-
-        set_background();
     }
     public void restore_charEvents_progress(Cart cart)
     {

@@ -81,64 +81,36 @@ the combat system is fine.
 	- on mainmenu screen; read player ic and name from a textfile in the saves folder.
 		- if read ic and name different from default values, then display them on the mainmenu so player can easily see.
 		- if textfile not found, then create it with default values.
-	- create prologue skeleton
-	- write events... bit by bit.
+	- create prologue skeleton.
+	- write events.
 ====
 
-- plan out story (for real this time.) and start writing the damn thing.
-	- start writing events proper. One a day is reasonable, there are more than 10, after all.
-		- feel free to work more than once a day to complete an event.
-		- no lollygagging; continue this good momentum.
 
-- filling out event hover:
-	- there's now info text too. add a field to events that fill this.
-
-- dungeon class:
-	to add: (these need to be preserved between runs and kept updated.)
-	- keep track of the number of tiles explored.
-	- keep track of the total number of tiles in the dungeon.
-	- keeps track of how many expeditions the player has made into this dungeon.
-	broken:
+- dungeon 0:
 	- mob formation random generation commands are commented out from last time.
-
-- dungeon manager: 
-	- when entering unexplored tile: increment dungeon's exploredTiles value.
-	- show exploration state when in dungeon crawler mode: explored tiles/non-null tiles (both whole numbers)
-		- update when moving onto a new tile. simply increase tiles found by 1.
-	on a withdrawal:
-	- if loss: you only keep half the exp and gold of the run.
-	- instead of abruptly ending, show the expedition summary popup.
-		- the popup has a confirm button and a cancel button.
-
-- expedition summary popup:
-	- confirm button: transfer gold, exp, and clear state to overworld. if loss then halve exp and gold.
-	- cancel button: return control to dungeon manager.
-	what is shows:
-	- as a title:
-		- Loss: Expedition retreats!
-		- Withdraw: Expedition withdraws!
-		- Clear: Expedition Clear!
-	- dungeon name and expedition #. (i.e. how many times you've entered the dungeon.)
-	- shows exp and gold the expedition has gathered, and then next to them how much of it will be returned.
-	- shows how much exploration you added to the dungeon. (in explored tiles/non null tiles, both whole numbers)
+	  fix em back up.
 
 - make dungeon units:
-	- dungeon0
 	- dungeon1
 
 - dungeon 0:
-	- fill out grid and place mobs
+	(remember, party is only mc and friday.)
+	- make grid and place mobs
+	- the patrol1 is good for a warmup fight. (2 mobs)
+	- then, patrol2 is good for a more serious fight. (4 mobs)
+	(the party should be pretty hurt by this point. use the heal button.)
+	- finally, face the boss. 
+	(the boss may need to be weakened to be doable with just friday and mc,
+	 but it's not a difficult boss. There is sort of a trick, too)
 
 - dungeon 1:
 	- fill out grid and place mobs
 
-
-
 - level tree:
 	- make sure exp and gold are carried back and stored properly.
 	- make a basic version of this with just a few moves learnable for prologue. 
-		- include it for mc and friday. for moth, it's not necessary.
-
+		- include it for mc and friday. for moth, it's not necessary (she won't have any exp).
+		  they'll only be able to afford a single move, probably.
 
 
 - main menu: (no need to worry about loading, dude. we're not going to implement that.)
@@ -148,6 +120,9 @@ the combat system is fine.
 		- load (not interactable for now)
 		- gallery (same scene as main menu. you click to load an event, which plays right there. post demo.)
 		- exit: Application.Quit()
+
+- save:
+	- can only save on the overworld, in between events. just save part, history, char progress, units, and gold. as little as possible.
 
 - sound manager:
 	- need footsteps sound.
@@ -208,7 +183,14 @@ the combat system is fine.
 
 ===== Post Demo
 
-- should we consider some kind of guard ability? yeah, i guess.
+- combat controls:
+	(low priority)
+	you should be able to play entirely with keyboard:
+	- order a unit: (by tile) numbers 1-6
+	- pick a move: 1-5, 0 for defend.
+	- pick a target: (by tile) numbers 1-6
+
+- should we consider some kind of guard ability? i guess.
 	(post demo)
 	here's how it would work:
 	- apply it as a status to a unit. set the user of the status move as the guarder field of the target.

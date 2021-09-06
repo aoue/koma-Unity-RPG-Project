@@ -14,11 +14,6 @@ public class CombatManager : MonoBehaviour
     [SerializeField] private DungeonManager dMan; //links us back to the dungeon when we're done.
     [SerializeField] private Sprite[] affOrbSprites;
 
-    //party: Unit[6]. blank spots represented by null.
-    //waves: we keep fighting until we run out of waves. Enemy[6]. blank spots represented by null.
-
-    //dummy stuff, for tests
-
     [SerializeField] private DungeonUnitBox[] partyBoxes; //boxes that hold the party. 0-5
     [SerializeField] private DungeonUnitBox[] enemyBoxes; //boxes that hold the enemies. 0-5
     [SerializeField] private Image activePortrait; //540x1080. show a portrait of the unit that's doing something; choosing a move, or executing one.
@@ -451,6 +446,8 @@ public class CombatManager : MonoBehaviour
         pTurn = playerTurnPhase.NOT;
         unhighlight_move(-1);
         highlighter.unhighlight_user(playerScheduledUnit.place, true);
+        string phase_words = "next turn...";
+        int para = 0; //default to player move. 
         switch (currentUnit.nextMove.get_phase())
         {
             case executionTime.INSTANT:
@@ -464,12 +461,39 @@ public class CombatManager : MonoBehaviour
                 break;
 
             case executionTime.ENDOFROUND:
+                phase_words = "at EOR...";
+                para = 1; //eor move
                 currentUnit.set_isScheduled(true);
                 eorScheduledMove = currentUnit.nextMove;
                 eorScheduledUnit = currentUnit;
                 eorScheduledMoveSpot = playerScheduledMoveSpot;
                 eorUserIsPlayer = true;
                 break;
+        }
+        //end_player_turn_p1(true);
+        StartCoroutine(pauseAfterPlayerLog(currentUnit.get_nom(), currentUnit.nextMove.get_nom(), phase_words, para, currentUnit.get_activePortrait()));
+        
+    }
+    IEnumerator pauseAfterPlayerLog(string unit_name, string move_name, string phase_words, int highlightPreviewMoveParam, Sprite toShow)
+    {
+        //mirrors the functionality of pauseAfterEnemyLog coroutine.
+
+        //skip the pause if the enemy is helpless until EOR. (i.e. elAP == 0 and enemyscheduledmove == null)
+        if ( !(elAp == 0 && enemyScheduledMove == null) )
+        {
+            //hide preview move slots
+            previews.hide();
+
+            plays.show(unit_name + " prepares " + move_name + " " + phase_words);
+
+            highlight_preview_move(highlightPreviewMoveParam);
+            show_active_portrait(toShow);
+
+            yield return new WaitForSeconds(1.5f);
+
+            //afterwards, unhighlight it.
+            hide_active_portrait();
+            unhighlight_preview_move(highlightPreviewMoveParam);
         }
         end_player_turn_p1(true);
     }
@@ -2024,8 +2048,8 @@ public class CombatManager : MonoBehaviour
         string phase_words = "";
         bool useEnemyScheduledUnit = true;
 
-        //if player has no ap remaining and move is not EOR, then execute immediately to save time.
-        if (plAp == 0 && move.get_phase() != executionTime.ENDOFROUND)
+        //if player has no ap remaining and no scheduled player move, and enemy move is not EOR, then execute immediately to save time.
+        if (plAp == 0 && playerScheduledMove == null && move.get_phase() != executionTime.ENDOFROUND)
         {
             //execute immediately. 
             enemyScheduledUnit = el[chosenID];
@@ -2159,6 +2183,7 @@ public class CombatManager : MonoBehaviour
         // -plays: unitname uses movename
         // -emap/pmap: highlight the target areas and user
         //once it's done, then continue to end_ai_turn_p1(true)
+        previews.hide();
         plays.show(unit_name + " prepares " + move_name + " " + phase_words);
         highlight_preview_move(highlightPreviewMoveParam);
         show_active_portrait(toShow);

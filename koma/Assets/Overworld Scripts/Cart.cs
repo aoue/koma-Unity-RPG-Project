@@ -14,6 +14,7 @@ public class Cart : MonoBehaviour
     public DungeonLibrary[] dungeonStates = new DungeonLibrary[1];
     public int dunID; //id of most recent dungeon, so we know which one to update.
     public int xp; //exp we're carrying back to the overworld.
+    public int gold; //gold we're carrying back to the overworld.
     public bool cleared; //cleared status which will update the dungeon.
 
     //current day stuff saved from overworld.
@@ -47,7 +48,7 @@ public class Cart : MonoBehaviour
         _instance.charEventsProgress = world.save_evProgress();
 
     }
-    public void dun_fill_cart(Dungeon d, int obtXP, LeavingState withdrawStatus)
+    public void dun_fill_cart(Dungeon d, int obtXP, int obtGold, LeavingState withdrawStatus)
     {
         //dungeon fills cart with information that is to be saved  and brought back
         //to the main dungeon info.
@@ -61,6 +62,7 @@ public class Cart : MonoBehaviour
         if (_instance.dungeonStates[_instance.dunID] == null) _instance.dungeonStates[_instance.dunID] = new DungeonLibrary();
         _instance.dungeonStates[_instance.dunID].pack(d);
         _instance.xp = obtXP;
+        _instance.gold = obtGold;
     }
 
     //RESTORING DATA
@@ -74,8 +76,8 @@ public class Cart : MonoBehaviour
         world.dungeonLeavingState = _instance.leaveState;
         Debug.Log(world.dungeonLeavingState);
 
-        //exp stuff
-        ExpManager.add_exp(xp);
+        //add exp and gold stuff
+        ExpManager.add_exp(_instance.xp, _instance.gold);
 
         //dungeon stuff
         world.update_dungeon_states(_instance);

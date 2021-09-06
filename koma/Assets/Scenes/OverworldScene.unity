@@ -1971,7 +1971,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 2, y: -86}
+  m_AnchoredPosition: {x: 2, y: -98}
   m_SizeDelta: {x: 378.90125, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &486640228
@@ -2000,11 +2000,11 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 0
     m_MaxSize: 40
-    m_Alignment: 3
+    m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
-    m_HorizontalOverflow: 1
-    m_VerticalOverflow: 0
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 1
     m_LineSpacing: 1
   m_Text: 'ln1
 
@@ -2050,6 +2050,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dunID: 0
   xp: 0
+  gold: 0
   cleared: 0
   leaveState: 0
   actPart: 0
@@ -4208,7 +4209,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -886, y: 277}
+  m_AnchoredPosition: {x: -694, y: -347}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &878224942
@@ -8081,9 +8082,10 @@ MonoBehaviour:
   threatDecay: -6
   unitLimit: 3
   enemyPool:
-  - {fileID: 5449128948853074042, guid: a162b8a223bce354cba831df1b266062, type: 3}
-  - {fileID: 5223941595695773110, guid: c70cf84c95c5e0449bb0d6a2e4f3e29a, type: 3}
-  - {fileID: 971611271344751275, guid: ac19959f0923385498d378e6b270bbc3, type: 3}
+  - {fileID: 2541981253866210664, guid: 908ace33e7d2e1840a2c6db95e001db7, type: 3}
+  - {fileID: 178685938101389518, guid: 6be48a18478a4f64697890007b793a04, type: 3}
+  - {fileID: 8938778390824679403, guid: 16fe08c068230664fb63fdbfde428240, type: 3}
+  - {fileID: 4914016089414917255, guid: a94e17483b17c9147b670785cbec6f03, type: 3}
   mobEventLibrary:
   - {fileID: 6866774867452236009, guid: 08ce727b27bf97643856a7b6ad8243cb, type: 3}
   tileEventLibrary:

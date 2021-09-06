@@ -80,7 +80,9 @@ public class Unit : MonoBehaviour
         }
         else
         {
-            break_level = break_level / 2;
+            //break_level = break_level / 2;
+            if (break_level == 100) break_level = 99;
+
             expired = status.decline(this);
         }
         return expired;
@@ -103,7 +105,10 @@ public class Unit : MonoBehaviour
     public void drain_ap(int amount) { ap -= amount; }
     public void break_ap() { ap = 0; }
     public void set_mp(int x) { mp = x; }
-    public void drain_mp(int amount) { mp = (int)(mp - (amount * status.trance)); }
+    public void drain_mp(int amount)
+    {
+        mp = Mathf.Max(0, (int)(mp - (amount * status.trance)));
+    }
     public void mp_heal(int amount) { if (!ooa) mp = Mathf.Min(get_mpMax(), mp + amount); }
     public bool damage(int amount, int breakAmount)
     {

@@ -26,13 +26,13 @@ public class BattleBrain
     float p_defenderPenalty(Enemy target)
     {
         //player version. returns 0.8f if the (enemy) target is in the back, 1f if not.
-        if (target.place < 3) return 0.75f;
+        if (target.place < 3) return 0.80f;
         return 1f;
     }
     float e_defenderPenalty(Unit target)
     {
         //enemy version. returns 0.8f if the (unit) target is in the back, 1f if not.
-        if (target.place > 2) return 0.75f;
+        if (target.place > 2) return 0.80f;
         return 1f;
     }
     float p_calculate_row_mod(Move move, int unitPosition)

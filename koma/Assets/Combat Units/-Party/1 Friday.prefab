@@ -46,22 +46,22 @@ MonoBehaviour:
   moveSelectionPortrait: {fileID: 21300000, guid: f184da805c6557d4b805ab3033f8559f,
     type: 3}
   boxImg: {fileID: 21300000, guid: cd8233b94ea6ad24cbf19a7f5dae0351, type: 3}
-  exp: 0
+  exp: 12
   level: 1
   nom: Friday
   apMax: 1
-  hpMax: 160
+  hpMax: 140
   affinity: 4
   mpMax: 30
-  patk: 90
-  pdef: 110
-  matk: 80
-  mdef: 80
+  patk: 95
+  pdef: 115
+  matk: 95
+  mdef: 90
   defendMove: {fileID: 4847647077466282067, guid: e08008df3aec39f469b5765c18f19e00,
     type: 3}
   moveset:
   - {fileID: 1738390688075259775, guid: 6a131bd5456e35c43ba5a5b1eae43532, type: 3}
   - {fileID: 256133302298382596, guid: 0a8f10670b686dc46af2846052b0127a, type: 3}
-  - {fileID: 3641029461688156835, guid: 234e58b599071bf4096b848be391eb10, type: 3}
-  - {fileID: 0}
+  - {fileID: 5133056019573839718, guid: d423ee424dca051439bac8e34892883a, type: 3}
+  - {fileID: 924583595960017764, guid: 74bd5575a0f85b8408e6c6f3b4468df4, type: 3}
   - {fileID: 0}

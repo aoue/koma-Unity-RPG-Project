@@ -8,19 +8,24 @@ public static class ExpManager
 
     //if you gain xp but are already at capXP, then you gain nothing.
 
+    public static int currentGold { get; set; } //the player's current gold total.
+
     public static int currentXP { get; set; } //the current amount of xp. never decreases.
     public static int distroXP { get; set; } //the amount gained during a dungeon. increased alongside currentXP. distributed to each unit upon return to overworld.
     public static int capXP { get; set; } //the cap. currentXP cannot go over this.
 
     public static void setup()
     {
+        currentGold = 0;
         currentXP = 0;
         distroXP = 0;
         capXP = 1000;
     }
 
-    public static void add_exp(int toAdd)
+    public static void add_exp(int toAdd, int addGold)
     {
+        currentGold += addGold;
+
         int difference = capXP - currentXP;
 
         if (toAdd > difference) toAdd = difference;
@@ -36,6 +41,7 @@ public static class ExpManager
         {
             p.inc_exp(distroXP);
         }
+        distroXP = 0;
     }
 
 

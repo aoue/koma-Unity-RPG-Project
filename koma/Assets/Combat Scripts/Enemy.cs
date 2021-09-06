@@ -99,7 +99,9 @@ public class Enemy : Unit
         }
         else
         {
-            break_level = break_level / 2;
+            //break_level = break_level / 2;
+            if (break_level == 100) break_level = 99;
+
             expired = status.decline(this);
         }
         return expired;
@@ -138,9 +140,13 @@ public class Enemy : Unit
         //we have roll.
         //we know whether we can pick EOR moves: canPickEOR
         //we know whether we must pick a heal  : useHealIfPicked
+        //lastly: as long as not move0, enemies will ignore a move that is not in their row.
 
-        //TODO: buff picking (mimic heal picking)
-        Debug.Log("roll is " + roll);
+        preferredRow userRow;
+        if (place > 2) userRow = preferredRow.FRONT;
+        else userRow = preferredRow.BACK;
+
+
         EnemyMove chosenMove = null;
         if ( useHealIfPicked == true )
         {
@@ -149,6 +155,13 @@ public class Enemy : Unit
             {
                 //Debug.Log("H. looking at move " + i);
                 //valid move requiremets:
+
+                // if not last move, then unit must be in the move's preferred row
+                if (i != 0 && moveset[i].get_preferredRow() != preferredRow.AMBI && moveset[i].get_preferredRow() != userRow)
+                {
+                    break;
+                }
+
                 // ap >= apDrain, stam drain < roll, does not conflict with EOR, isHeal is true.               
                 if ( moveset[i].get_mpDrain() <= roll && moveset[i].get_isHeal() == true && !(moveset[i].get_phase() == executionTime.ENDOFROUND && canPickEOR == false) && ap >= moveset[i].get_apDrain())
                 {
@@ -163,8 +176,15 @@ public class Enemy : Unit
         {
             //then we couldn't find a healing move we liked. go through and look again, but this time, it cannot be a healing move.
             for (int i = moveset.Length - 1; i >= 0; i--)
-            {                
+            {
                 //valid move requiremets:
+
+                // if not last move, then unit must be in the move's preferred row
+                if (i != 0 && moveset[i].get_preferredRow() != preferredRow.AMBI && moveset[i].get_preferredRow() != userRow)
+                {
+                    break;
+                }
+
                 // stam drain < roll, does not conflict with EOR, isHeal is false.
                 if (moveset[i].get_mpDrain() <= roll && moveset[i].get_isHeal() == false && !(moveset[i].get_phase() == executionTime.ENDOFROUND && canPickEOR == false) && ap >= moveset[i].get_apDrain())
                 {
@@ -175,7 +195,9 @@ public class Enemy : Unit
                 }
             }
         }
-        
+
+        if (chosenMove == null) chosenMove = (EnemyMove)moveset[0]; //last ditch effort
+
         mp -= Mathf.Max(0, chosenMove.get_mpDrain());
         return chosenMove;
     }

@@ -17,11 +17,23 @@ public class DungeonLibrary
     private bool cleared;
     private bool[] uniqueMobStatus; //does not yet exist in dungeons, though.
 
+    //save some more stuff too:
+    //-threat
+    //-expediton counter
+    //-explored tiles
+    private int threat;
+    private int expeditonCounter;
+    private int exploredTiles;
+
+
     public void pack(Dungeon dun)
     {
         //scoops up info from the dungeon in question and saves it.
         //exploration info.       
         explorationStatus = dun.explored_grid;
+        threat = dun.threat;
+        expeditonCounter = dun.expeditionCounter;
+        exploredTiles = dun.exploredTiles;
         //tileUsed info.
         usedStatus = dun.tileUsedGrid;
     }
@@ -29,6 +41,9 @@ public class DungeonLibrary
     {
         //returns info to the dungeon in question.
         dun.cleared = cleared;
+        dun.threat = threat;
+        dun.exploredTiles = exploredTiles;
+        dun.expeditionCounter = expeditonCounter;
         dun.explored_grid = explorationStatus;
         dun.tileUsedGrid = usedStatus;
     }

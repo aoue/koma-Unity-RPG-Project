@@ -34,6 +34,12 @@ public class PrepDungeonManager : MonoBehaviour
        
     public void inc_exp()
     {
+        foreach (Unit partyMember in reserveParty)
+        {
+            partyMember.set_hp(partyMember.get_hpMax());
+            partyMember.set_mp(partyMember.get_mpMax());
+        }
+        
         ExpManager.distribute_xp(reserveParty);
     }
 
@@ -42,7 +48,7 @@ public class PrepDungeonManager : MonoBehaviour
     {
         unitPreviewGO.SetActive(false);
         DungeonManager.heldDun = dun;
-        stamina = 30; //in the future we'll actually read this value from somewhere instead of setting it to 20.
+        stamina = 30; //in the future we'll actually read this value instead of just setting it to dummy.
         stamText.text = "Stamina: " + stamina;
 
         //take necessary info from dun

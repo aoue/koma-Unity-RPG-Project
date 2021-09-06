@@ -50,18 +50,18 @@ MonoBehaviour:
   level: 1
   nom: Moth
   apMax: 1
-  hpMax: 95
+  hpMax: 90
   affinity: 4
   mpMax: 40
   patk: 60
   pdef: 65
   matk: 85
-  mdef: 90
+  mdef: 105
   defendMove: {fileID: 4847647077466282067, guid: e08008df3aec39f469b5765c18f19e00,
     type: 3}
   moveset:
   - {fileID: 3635603842113465811, guid: bb9045e0b68a0614082ca4adbc9667fb, type: 3}
   - {fileID: 6463100206085023854, guid: 956ff4ab1bfb6954b993f9a247218b22, type: 3}
-  - {fileID: 924583595960017764, guid: 74bd5575a0f85b8408e6c6f3b4468df4, type: 3}
+  - {fileID: 3557969058673008688, guid: 913290447572d1b4290df53bcb9c9cc2, type: 3}
   - {fileID: 0}
   - {fileID: 0}

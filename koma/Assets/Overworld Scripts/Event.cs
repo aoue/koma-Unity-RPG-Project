@@ -22,12 +22,14 @@ public class Event : MonoBehaviour
 
     //post event and preview
     [SerializeField] private bool useNotifierOnEnd; //if true, we will use the notifier at the end of the event. if false, we will just return to overworld directly.
+    [SerializeField] private string eventPreviewLines; //three lines shown in the event preview.
     [SerializeField] private string noteTitle; //notifier title title
     [SerializeField] private string noteBody; //notifier body
     [SerializeField] private string noteSummary; //notifier summary
     [SerializeField] private int[] portraitPreviews; //the cast preview shown in tooltip preview. size <= 4.
 
     //getters
+    public string get_eventPreviewLines() { return eventPreviewLines; }
     public bool get_hasHaich() { return hasHaich; }
     public string get_noteTitle() { return noteTitle; }
     public int[] get_portraitPreviews() { return portraitPreviews; }

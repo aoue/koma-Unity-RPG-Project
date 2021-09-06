@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class TooltipManager : MonoBehaviour
 {
@@ -55,9 +56,10 @@ public class TooltipManager : MonoBehaviour
 
         handle_positioning(x, y);
         locationText.text = dun.get_dungeonTitle();
-        infoText.text = "Threat Level: " + dun.threat
-            + "\nExploration: " + dun.exploredTiles + "/" + dun.totalTiles
-            + "\n" + dun.expeditionCounter + " previous expeditions";
+        infoText.text = "Threat: " + dun.threat + " (" + dun.get_threatDecay() + " decay)"
+            + "\nExplored: " + dun.exploredTiles + "/" + dun.totalTiles
+            + "\n" + dun.expeditionCounter + " prior foray";
+        if (dun.expeditionCounter != 1) infoText.text += "s";
 
         for (int i = 0; i < 4; i++)
         {
@@ -75,7 +77,8 @@ public class TooltipManager : MonoBehaviour
 
         //Fill out event information, like location, event title, and charges consumed by it.
         locationText.text = ev.get_noteTitle();
-        infoText.text = "sample info text\nline2\nline3";
+
+        infoText.text = ev.get_eventPreviewLines(); //ayy
 
         //for slots we have images for - fill them.
         for (int i = 0; i < ev.get_portraitPreviews().Length; i++)

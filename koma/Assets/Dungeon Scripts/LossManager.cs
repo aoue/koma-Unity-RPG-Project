@@ -99,7 +99,7 @@ public class LossManager : MonoBehaviour
     public void click_withdraw()
     {
         hide();
-        theBoss.withdraw(LeavingState.LOSS);
+        theBoss.reporter_shortcut();
     }
 
 

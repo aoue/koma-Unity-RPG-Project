@@ -74,6 +74,7 @@ public class DungeonManager : MonoBehaviour
     [SerializeField] private PlayByPlay pbp; //dungeon play by play text: shows tile type name, stam drain, and vision.
     [SerializeField] private LossManager loser; //handles when we lose a battle.
     [SerializeField] private DungeonHealer healer; //handles the dungeon healing interface
+    [SerializeField] private ExpeditionSummaryManager reporter; //handles the showing of the report when the player withdraws.
 
     private List<MobParty> lambs; //to the slaughter. the group of enemies the player is going to have to fight.
     private List<NeutralParty> neutralParties;
@@ -94,7 +95,7 @@ public class DungeonManager : MonoBehaviour
             Destroy(_instance.gameObject);
         }
         _instance = this;
-
+        coordText.text = "";
         xParty = 0;
         yParty = 0;
 
@@ -118,6 +119,8 @@ public class DungeonManager : MonoBehaviour
         healCharges = 1;
         healPercentage = 0.5f;
         healChargesText.text = "Heal (" + healCharges + " left)";
+
+        reporter.set_beginningExploration(heldDun.exploredTiles);
 
         fill_dungeon();
         allow_pick_starting_position();
@@ -693,6 +696,7 @@ public class DungeonManager : MonoBehaviour
         {
             //tile not explored; heal hp and mp of each party unit.
             unexplored_tile();
+            
 
             //decrement stamina
             stamina = System.Math.Max(0, stamina - heldDun.get_tile(xParty, yParty).get_tileDrain());
@@ -722,8 +726,8 @@ public class DungeonManager : MonoBehaviour
         {
             move_ai_parties();
         }
-        
-        
+        update_coord_text();
+
     }
     
     //AI
@@ -960,7 +964,12 @@ public class DungeonManager : MonoBehaviour
     }
     void update_coord_text()
     {
-        coordText.text = "X " + xParty + "\nY " + yParty;
+        //coordText.text = "X " + xParty + "\nY " + yParty;
+        //doesn't show ^ anymore. now shows threat and exploration level.
+
+        coordText.text = "Threat: " + heldDun.threat
+            + "\nExploration:\n        "
+            + heldDun.exploredTiles + "/" + heldDun.totalTiles;
     }
     public void swap_active_units(int slotID)
     {
@@ -1102,8 +1111,7 @@ public class DungeonManager : MonoBehaviour
             case Direction.WEST:
                 xParty -= 1;
                 break;
-        }
-        update_coord_text();
+        }        
 
         //update_forward_arrow();
 
@@ -1115,7 +1123,6 @@ public class DungeonManager : MonoBehaviour
         //move party flag to the new location.
         place_partyFlag();
         
-
         enter_new_tile();
     }
     void change_direction(int direct)
@@ -1238,15 +1245,18 @@ public class DungeonManager : MonoBehaviour
     //ENTER UNEXPLORED TILE EFFECTS
     public void unexplored_tile()
     {
+        //increase the number of explored tiles by 1!
+        heldDun.exploredTiles++;
+        
         //heal each party unit's mp and hp when entering an unexplored tile.
         for (int i = 0; i < party.Length; i++)
         {
             if (party[i] != null)
             {
-                int heal = Mathf.Max(1, (int)((hpPercentHealedPerNewTile / 100f) * party[i].get_hpMax()));
+                int heal = Mathf.Max(1, (int)Mathf.Ceil(((hpPercentHealedPerNewTile / 100f) * party[i].get_hpMax())));
                 party[i].heal(heal);
 
-                int mpHeal = Mathf.Max(1, (int)((mpPercentHealedPerNewTile / 100f) * party[i].get_mpMax()));
+                int mpHeal = Mathf.Max(1, (int)Mathf.Ceil(((mpPercentHealedPerNewTile / 100f) * party[i].get_mpMax())));
                 party[i].mp_heal(mpHeal);
             }
         }
@@ -1267,11 +1277,11 @@ public class DungeonManager : MonoBehaviour
         else
         {
             canHeal = true;
-            prompt += ", leaving us with " + (healCharges - 1).ToString();
+            prompt += ", leaving you with " + (healCharges - 1).ToString() + " charge";
 
-            if (healCharges - 1 > 1)
+            if (healCharges - 1 == 1)
             {
-                prompt += "s.\nWould you like to proceed?";
+                prompt += ".\nWould you like to proceed?";
             }
             else
             {
@@ -1318,6 +1328,10 @@ public class DungeonManager : MonoBehaviour
     public void set_canDragScreen(bool v) { canDragScreen = v; }
 
     //WITHDRAW
+    public void reporter_shortcut()
+    {
+        reporter.show(LeavingState.LOSS); //used by loss manager only.
+    }
     public void press_withdraw_button()
     {
         //if we're on a CLEAR type home tile
@@ -1326,12 +1340,14 @@ public class DungeonManager : MonoBehaviour
         {
             //Debug.Log("withdraw button pressed - 1");
             heldDun.cleared = true;
-            withdraw(LeavingState.CLEAR);
+            //withdraw(LeavingState.CLEAR);
+            reporter.show(LeavingState.CLEAR);
         }
         else
         {
             //Debug.Log("withdraw button pressed - 2");
-            withdraw(LeavingState.WITHDRAW);
+            //withdraw(LeavingState.WITHDRAW);
+            reporter.show(LeavingState.WITHDRAW);
         }
     }
     public void withdraw(LeavingState leaving)
@@ -1349,8 +1365,14 @@ public class DungeonManager : MonoBehaviour
         //we use a Cart object to ferry this information back.
         //in overworld's Awake, the state will be set to Returning, so the first thing it will do 
         //is unload the cart.
+        heldDun.expeditionCounter++;
 
-        cart.dun_fill_cart(heldDun, obtainedXP, leaving);
+        if (leaving == LeavingState.LOSS)
+        {
+            obtainedXP /= 2;
+            obtainedGold /= 2;
+        }
+        cart.dun_fill_cart(heldDun, obtainedXP, obtainedGold, leaving);
 
         SceneManager.LoadScene("OverworldScene");
     }

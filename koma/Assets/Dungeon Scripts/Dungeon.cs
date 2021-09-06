@@ -28,8 +28,8 @@ public class Dungeon : MonoBehaviour
 
     public int totalTiles { get; set; } //total number of non-null tiles.
     public int exploredTiles { get; set; } //total number of explored tiles.
-    public int expeditionCounter { get; set; }
-    public int threat { get; set; }
+    public int expeditionCounter { get; set; } //total number of expeditons into dungeon.
+    public int threat { get; set; } //current threat level. higher means more dangerous/leveled mobs and better loot.
 
     //list of all enemies that can be encountered
     [SerializeField] protected Enemy[] enemyPool; //arranged from lowest to highest. enemyPool[0] must have deployChance = 100.
