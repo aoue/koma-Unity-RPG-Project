@@ -87,13 +87,6 @@ the combat system is fine.
 
 
 - dungeon 0:
-	- mob formation random generation commands are commented out from last time.
-	  fix em back up.
-
-- make dungeon units:
-	- dungeon1
-
-- dungeon 0:
 	(remember, party is only mc and friday.)
 	- make grid and place mobs
 	- the patrol1 is good for a warmup fight. (2 mobs)
@@ -104,6 +97,7 @@ the combat system is fine.
 	 but it's not a difficult boss. There is sort of a trick, too)
 
 - dungeon 1:
+	- copying from dungeon0, make the dungeon 1 random mob creation formations.
 	- fill out grid and place mobs
 
 - level tree:
@@ -111,15 +105,6 @@ the combat system is fine.
 	- make a basic version of this with just a few moves learnable for prologue. 
 		- include it for mc and friday. for moth, it's not necessary (she won't have any exp).
 		  they'll only be able to afford a single move, probably.
-
-
-- main menu: (no need to worry about loading, dude. we're not going to implement that.)
-	- read file to get ic and playername. if no file, then create it.
-	Just make a fresh scene for mainmenu.
-		- start: scenemanager.load("overworld scene")
-		- load (not interactable for now)
-		- gallery (same scene as main menu. you click to load an event, which plays right there. post demo.)
-		- exit: Application.Quit()
 
 - save:
 	- can only save on the overworld, in between events. just save part, history, char progress, units, and gold. as little as possible.
@@ -178,8 +163,15 @@ the combat system is fine.
 		- you can retry at no penalty as many times as you'd like. 
 		- if you feel the battle is unwinnable, then you should hit the withdraw option instead. 
 
-- dungeon transfer:
-	- transfer obtainedExp and obtainedGold from dungeon back to overworld.
+- main menu: (no need to worry about loading, dude. we're not going to implement that.)
+	- read file to get ic and playername. if no file, then create it.
+		- if either ic or playername is different from default, then display them in the bottom right corner of the screen.
+		- grad mc unit prefab and set nom to playername.
+	Just make a fresh scene for mainmenu.
+		- start: scenemanager.load("overworld scene")
+		- load (not interactable for now)
+		- gallery (same scene as main menu. you click to load an event, which plays right there. post demo.)
+		- exit: Application.Quit()
 
 ===== Post Demo
 
