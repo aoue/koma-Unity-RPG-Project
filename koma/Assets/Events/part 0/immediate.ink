@@ -25,8 +25,7 @@ VAR player = "playerCharName"
 //(after many hundred years of war, the humans learned evil like the monsters.)
 
 //for the bg: something ancient greek looking, stylised with angels and demons and stuff. gratuity too, in the images. it's art, cuz it's like statues.
-~n("Woman's voice")
-~talk(1)
+~n("")
 
 //show creator at top. just eyes and outline.
 //bg of ancients and golems
@@ -71,127 +70,79 @@ The monsters hunt the humans as they did before, but rely on them for their own 
 
 //snap bg to current day. bg should be like a lightly wooded dirt road through plains.
 //show friday smiling, she's enjoying the attention.
-n("Woman")
-Of course, that was all a long time ago. These days, we just try to stay out of each other's way. Maybe they'll be thoughtful and just die on their own, you know?
-
-n("Me")
-There's something that bothers me about that story.
-
-n("Woman")
-What is it?
-
-n("Me")
-WHY are you telling it to me now?
-
-//show friday shocked
-n("Woman")
-What? I thought you liked that story.
-
-n("Me")
-I used to, at least before I heard it a thousand and one times at the academy. It gets old fast.
-
-//show friday neutral
-n("Woman")
-That's too bad.
-
-//show friday mad
-Those bastards at the academy! I send them my only son and they send him back three years older and tired of his old bedtime stories.
-n("")
-She shakes her head.
-n("Woman")
-I won't forgive them.
-
-n("Me")
-Well... they did teach me some other useful things. And I was there for three years; it's not their fault time passes.
-It's not like I didn't come home during breaks, Mom.
-
-//show friday sad
-~n("Mom")
-Whatever they taught you, it wasn't worth it.
-//show friday mad
-At least I have you now. I won't let those creepy professors take you away again.
-
-~n("Me")
-Instead you'll just bring me everywhere with you for the rest of forever.
-
-~n("Mom")
-That's right. It's my right as your mother to monopolize you.
-//show friday neutral
-Besides, it'll be fun. Haven't you always wondered what it is I do? Now's your big chance.
-
-~n("Me")
-Mother... you wouldn't let us go to bed until you finished telling us about your work. You were always really open about it.
-
-~n("Mom")
-I guess I was. That's where I went wrong, then. I should have kept it more mysterious so you dreamed of following in my footsteps.
-
-~n("Me")
-No one can follow in your footsteps, Mom.
-
-~n("Mom")
-Flatterer, but that's okay, I don't mind. Maybe one of your sisters will be able to manage it.
+~n("Woman")
+Of course, that was all a long time ago. These days, we just try to stay out of their way. Maybe they'll be considerate and just wait to die on their own, you know?
 
 ~n("")
-Despite her joking around, Mom's footsteps and her larger path in life are extraordinary by any standards. She's the type of person to live only once in a generation and leave her fingerprints all over history. For some reason, she insists that part of that is through her children.
-I don't know the details of exactly everything she did before I was born, but these days she does things for the well-connected; nobles, cardinals, even the king sometimes.
-Even though she's just the Countess Friday Cenparas, a minor noble without much land, she has influence far exceeding what you might expect. I imagine it's a long story.
-
-
-//retry from here
+The two of us walk down the new dirt road towards Agairy Settlement, right on the edge of civilization and the kingdom's influence. Inhabited by the desperate and enterprising, it's also a vital outpost for the kingdom's eyes into the wider world.
 
 ~n("Me")
-I admit, I am a little curious to see you in action.
+I don't think that will happen.
 
-~n("Mom")
-Of course you are, it's only natural.
-This is a personal favour to Cardinal Parvenu from the Virginal Order, so I'll be relying on you as my assistant.
+~n("Woman")
+No, but it would be nice.
 
 ~n("")
-I nod
+The woman walking with me is just an inch or two shorter than I am; tall for a woman. She's wearing a fashionable city-style dress in defiance of the countryside we now find ourselves in.
+She's also an expert in Light Magic, exorcism in particular, and that's the reason we've come all the way out here.
+The Abbess directing Agairy Settlement (one of the settlements sponsored by the Order) reported that one of the sisters under her has been possessed. Apparently the exact circumstances were quite unusual, too.
+Oh, and she's also my mother, called in full "the Countess Friday Cenparas", or "Mom" for short.
+
+~n("Friday")
+What are you thinking about all seriously over there?
+
 ~n("Me")
-Cardinal Parvenu? You've mentioned him before, I think.
+Oh, just that this wasn't how I was imagining performing an exorcism would be.
 
-~n("Mom")
-That's right, he was one of my teachers way back when I was still with the Order, though he wasn't a cardinal ten. He's the only one of them that still talks to me.
-That's why when he asked me, I couldn't bring myself to say no. He's a decent man, for someone in the Order. Said he would have done it himself if he could make the trip.
+//show friday smile
+~n("Friday")
+No?  Well, sorry to disappoint. Most of it is just walking around, and half the time it turns out someone just had stomachache. The other half are deadly dangerous, though.
 
 ~n("Me")
-It's just an exorcism, right? I thought that was the kind of thing the order was supposed to specialise in.
+What does this one feel like?
 
-~n("Mom")
-Not that many of them, I'm afraid.
+//show friday neutral
+~n("Friday")
+Hmmm, I wonder. Maybe somewhere in the middle?
+You know, normally I wouldn't come all the way to the middle of nowhere, at least for a small-time patient like this sister, but it was an old friend of mine from the order. My old teacher, Cardinal Parvenu. Not that he was a cardinal back then.
+You know, he's the only one who still speaks to me.
 
+~n("")
+I know that Mother was educated and trained in the Order, like some daughters of the nobility, and eventually had a falling out with them. Something to do with her children, I think.
+I mean, it is called the Virginal Order.
 
+~n("Friday")
+He asked me specifically to do this for him, as a favor, so it's probably not just a waste of time. He said it would have been the sort of thing he'd have done himself, if he were still young.
+//show friday smile
+When he put it that way, how could I say no.
 
+~n("Me")
+It's not so bad, then. If he's one of your old friends, he must be a decent person.
+Besides, I want to see you in action, Mom. I feel like there'll be a lot I can learn from this.
 
+~n("Friday")
+Oh, you're just saying that, you flatterer.
 
-//okay, fine up to here. next:
-// -resettlement era
-// -the present: friday, mc.
+~n("Me")
+No, really. And if there's trouble, you know, like a real demon, then I've got your back.
 
-//turns out friday was telling the story to mc. mc says why are you telling me this story ugh ive heard it too many times
-//friday frowns, you liked it when you were a kid... you were so sweet, etc. oh... you're okay now too, i suppose.
+//show friday stern
+~n("Friday")
+IF we happen into a serious possession and there IS a real live demon, then you'll do exactly as I say.
+You may have been taught fancy magic from your poncy tutors at the academy, but there's a lot to the world outside of books and incantations that you know nothing about; demons being one of these.
+//show friday neutral
+By the way, it's just as likely we're dealing with a demoness rather than a demon. More likely really, since demonesses prefer to target females. Of course a desperate demon will take anything.
 
+~n("Me")
+What's the difference?
 
+~n("Friday")
+Same as the ones between you and me.
+In all seriousness, a demon would try to possess you and attack me, while a demoness would do the reverse. At the end of the day, it doesn't matter; I won't let them possess either one of us.
+//show friday smile
+So don't worry, okay?
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+//event ends. next event will start with some time later, them walking into town.
 
 -> END
 //end of file.

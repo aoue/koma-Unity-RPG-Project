@@ -85,6 +85,10 @@ the combat system is fine.
 	- write events.
 ====
 
+- dialogue canvas:
+	- the auto wait time should be dependent on how long the currently displayed sentence actually is, so that it
+	  can try to give the player enough, but not too much time to read.
+	- the auto wait time scaler will just multiply the calculated time to be faster or slower by the player's preference.
 
 - dungeon 0:
 	(remember, party is only mc and friday.)
