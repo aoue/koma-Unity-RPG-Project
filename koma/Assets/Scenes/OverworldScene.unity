@@ -8013,10 +8013,12 @@ MonoBehaviour:
   - {fileID: 8938778390824679403, guid: 16fe08c068230664fb63fdbfde428240, type: 3}
   - {fileID: 4914016089414917255, guid: a94e17483b17c9147b670785cbec6f03, type: 3}
   mobEventLibrary:
-  - {fileID: 6866774867452236009, guid: 08ce727b27bf97643856a7b6ad8243cb, type: 3}
+  - {fileID: 8082327438600324202, guid: ec05f14325fe99843bfc791a0750c260, type: 3}
   tileEventLibrary:
-  - {fileID: 1441936239414014235, guid: 228521c9f68a8e54a800a612556ebad9, type: 3}
-  eventLibraryKeys: 64000000
+  - {fileID: 3481641750430911046, guid: fc837d3e6be754845aa36a9d0044c496, type: 3}
+  eventLibraryKeys: fa010000
+  treasureTile: {fileID: 980776756015513249, guid: dafbba8e3514f4a46a7ee5a1b9807c10,
+    type: 3}
   fontOfHp: {fileID: 6600544739704046168, guid: b16d7a259990fc346812316c5e953687,
     type: 3}
   fontOfStamina: {fileID: 980776756015513249, guid: dafbba8e3514f4a46a7ee5a1b9807c10,
@@ -9845,7 +9847,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b91e240d36680264ca8c46508fda0694, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  immediateEvent: {fileID: 0}
+  immediateEvent: {fileID: 2822253942419985019, guid: af4a16e466adff84598f7304ce8c0609,
+    type: 3}
   partName: Prologue
   dungeonToRepeat: {fileID: 878224940}
   hasMandatoryDungeon: 1
@@ -10112,6 +10115,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Fade canvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 703103422699584549, guid: 6bb9f466d90b3b44eb09e18d15d689c8,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6bb9f466d90b3b44eb09e18d15d689c8, type: 3}

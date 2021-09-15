@@ -8,6 +8,12 @@ for prologue, we need:
 OVERWORLD
 - single overworld image for the town (Agairy?) is fine.
 
+EVENTS BACKGROUNDS
+- lightly wooded plains road (part1 immediate)
+- agairy town square (part 1 event 1). church and other buildings are visible in the bg.
+- agairy church. pews, stone building. there's a visible door to the back room.
+- agairy church back room. A bed in there and moth laying in in, asleep.
+
 DUNGEON TILES
 - a unique image for each tile prefab
 
@@ -15,23 +21,22 @@ PARTY UNITS
 - friday portrait + variants
 - mc portrait (combat only)
 - moth portrait + variants. Note, in prologue moth will be wearing sister clothes.
-- hunter portrait + variants
 
 ENEMY UNITS
 - sabaind-at-large
 - sabaind warrior
 - sabaind skirmisher
-- wolf
+- forest wolv
 - qegmer
 - settler
 
 NPCS
-- deaconess portrait + variants
+- abbess portrait + variants
 
-SCENES: (see notes, scattered)
+SCENES: (see day by day)
 - sc0: sabaind-at-large + Moth, at cave
 - sc1: friday + mc, at festival
-- sc2: artifact's tentacles + two settler girls? (one unconscious, one who wakes up during)
+- sc2: artifact's tentacles + abbess, two settler girls 
 
 
 

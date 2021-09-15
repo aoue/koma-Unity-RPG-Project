@@ -63,6 +63,7 @@ public class Dungeon : MonoBehaviour
         {
             eventDict.Add(eventLibraryKeys[i], tileEventLibrary[i]);
         }
+        Debug.Log("dungeon start() called");
     }
 
 
@@ -87,22 +88,7 @@ public class Dungeon : MonoBehaviour
             {
                 retrieve_uniqueFormation(allWaves[i], mobPartyInfo[i]);
             }
-            //check here
         }
-        /*
-        for (int i = 0; i < allWaves.Length; i++)
-        {
-            Debug.Log("(finished) allWaves[" + i + "]:");
-            for (int j = 0; j < 6; j++)
-            {
-                Debug.Log(j + " = " + allWaves[i][j]);
-            }
-        }
-        */
-
-        //try checking enemy pool.
-        //no, that wasn't it.
-
         return allWaves;
     }
     public Enemy[] generate_formation(int threat)
@@ -156,7 +142,7 @@ public class Dungeon : MonoBehaviour
     }
     
 
-    //VIRTUAL THINGS
+    //VIRTUALS
     public virtual int specify_grid()
     {
         //nothing. only exists to be overriden
@@ -184,6 +170,7 @@ public class Dungeon : MonoBehaviour
     public Event retrieve_TileEvent(int x, int y)
     {
         int key = (x * 100) + y;
+        Debug.Log("trying to retrieve tile event, key = " + key);
         return get_eventDict_event(key);
     }
     public Tile get_tile(int x, int y)

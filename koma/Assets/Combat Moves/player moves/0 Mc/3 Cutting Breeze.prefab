@@ -66,5 +66,5 @@ MonoBehaviour:
   usesPatk: 0
   usesPdef: 0
   apDrain: 1
-  mpDrain: 4
+  mpDrain: 5
   flavour: Magic that increases velocity of air to buffet targets. Poor break.

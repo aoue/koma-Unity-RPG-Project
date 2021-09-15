@@ -823,7 +823,7 @@ public class CombatManager : MonoBehaviour
                                 plays.add("Deals " + dmgList[i] + " damage!");
 
                                 //check here for break
-                                int breakAmount = (int)((dmgList[i] * move.get_breakMult() / el[i].get_hpMax_actual()) * 150);
+                                int breakAmount = Mathf.Min(100, (int)((dmgList[i] * move.get_breakMult() / el[i].get_hpMax_actual()) * 150));
                                 bool didBreak = el[i].damage(dmgList[i], breakAmount);
 
                                 //display dmg numbers or break
@@ -1010,7 +1010,7 @@ public class CombatManager : MonoBehaviour
                                 plays.add("Deals " + dmgList[i] + " damage!");
 
                                 //check here for break
-                                int breakAmount = (int)((dmgList[i] * move.get_breakMult() / pl[i].get_hpMax_actual()) * 150);
+                                int breakAmount = Mathf.Min(100, (int)((dmgList[i] * move.get_breakMult() / pl[i].get_hpMax_actual()) * 150));
                                 bool didBreak = pl[i].damage(dmgList[i], breakAmount);
 
                                 //display dmg numbers or break

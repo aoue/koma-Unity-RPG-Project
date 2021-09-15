@@ -17,99 +17,46 @@ MonoBehaviour:
     inkAsset: {fileID: 102900000, guid: 9e945be139035ca418fb84d8a14d0aab, type: 3}
     jsonAssetDirectory: {fileID: 0}
     jsonAsset: {fileID: 4900000, guid: 93ac62c67c7562c48851a56f3f8a835e, type: 3}
-    unhandledCompileErrors:
-    - "Ink Compiler threw exception \nError: Index was outside the bounds of the
-      array.\n---- Trace ----\n  at System.Collections.Generic.HashSet`1[T].AddIfNotPresent
-      (T value) [0x000d9] in <351e49e2a5bf4fd6beabb458ce2255f3>:0 \r\n  at System.Collections.Generic.HashSet`1[T].Add
-      (T item) [0x00000] in <351e49e2a5bf4fd6beabb458ce2255f3>:0 \r\n  at Ink.CharacterRange.ToCharacterSet
-      () [0x00032] in C:\\Users\\Aaja\\Documents\\unity games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\CharacterRange.cs:32
-      \r\n  at Ink.InkParser.ExtendIdentifierCharacterRanges (Ink.CharacterSet identifierCharSet)
-      [0x00013] in C:\\Users\\Aaja\\Documents\\unity games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\InkParser\\InkParser_CharacterRanges.cs:36
-      \r\n  at Ink.InkParser.get_identifierCharSet () [0x00040] in C:\\Users\\Aaja\\Documents\\unity
-      games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\InkParser\\InkParser_Logic.cs:412
-      \r\n  at Ink.InkParser.Identifier () [0x00001] in C:\\Users\\Aaja\\Documents\\unity
-      games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\InkParser\\InkParser_Logic.cs:384
-      \r\n  at Ink.InkParser.IdentifierWithMetadata () [0x00001] in C:\\Users\\Aaja\\Documents\\unity
-      games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\InkParser\\InkParser_Logic.cs:372
-      \r\n  at Ink.StringParser.Parse[T] (Ink.StringParser+SpecificParseRule`1[T]
-      rule) [0x00008] in C:\\Users\\Aaja\\Documents\\unity games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\StringParser\\StringParser.cs:267
-      \r\n  at Ink.InkParser.AuthorWarning () [0x00008] in C:\\Users\\Aaja\\Documents\\unity
-      games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\InkParser\\InkParser_AuthorWarning.cs:11
-      \r\n  at Ink.StringParser.ParseObject (Ink.StringParser+ParseRule rule) [0x00014]
-      in C:\\Users\\Aaja\\Documents\\unity games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\StringParser\\StringParser.cs:250
-      \r\n  at Ink.InkParser+<>c__DisplayClass146_0.<Line>b__0 () [0x00001] in C:\\Users\\Aaja\\Documents\\unity
-      games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\InkParser\\InkParser_Statements.cs:147
-      \r\n  at Ink.StringParser.ParseObject (Ink.StringParser+ParseRule rule) [0x00014]
-      in C:\\Users\\Aaja\\Documents\\unity games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\StringParser\\StringParser.cs:250
-      \r\n  at Ink.StringParser.OneOf (Ink.StringParser+ParseRule[] array) [0x0000d]
-      in C:\\Users\\Aaja\\Documents\\unity games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\StringParser\\StringParser.cs:280
-      \r\n  at Ink.InkParser.StatementAtLevel (Ink.InkParser+StatementLevel level)
-      [0x0000a] in C:\\Users\\Aaja\\Documents\\unity games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\InkParser\\InkParser_Statements.cs:38
-      \r\n  at Ink.InkParser+<>c__DisplayClass141_0.<StatementsAtLevel>b__0 () [0x00000]
-      in C:\\Users\\Aaja\\Documents\\unity games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\InkParser\\InkParser_Statements.cs:30
-      \r\n  at Ink.StringParser.ParseObject (Ink.StringParser+ParseRule rule) [0x00014]
-      in C:\\Users\\Aaja\\Documents\\unity games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\StringParser\\StringParser.cs:250
-      \r\n  at Ink.StringParser.Interleave[T] (Ink.StringParser+ParseRule ruleA,
-      Ink.StringParser+ParseRule ruleB, Ink.StringParser+ParseRule untilTerminator,
-      System.Boolean flatten) [0x00063] in C:\\Users\\Aaja\\Documents\\unity games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\StringParser\\StringParser.cs:393
-      \r\n  at Ink.InkParser.StatementsAtLevel (Ink.InkParser+StatementLevel level)
-      [0x0004e] in C:\\Users\\Aaja\\Documents\\unity games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\InkParser\\InkParser_Statements.cs:28
-      \r\n  at Ink.InkParser.Parse () [0x00001] in C:\\Users\\Aaja\\Documents\\unity
-      games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\InkParser\\InkParser.cs:46
-      \r\n  at Ink.Compiler.Parse () [0x00034] in C:\\Users\\Aaja\\Documents\\unity
-      games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\Compiler.cs:35 \r\n 
-      at Ink.Compiler.Compile () [0x00001] in C:\\Users\\Aaja\\Documents\\unity games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\Compiler.cs:41
-      \r\n  at Ink.UnityIntegration.InkCompiler.CompileInkThreaded (System.Object
-      itemObj) [0x00094] in C:\\Users\\Aaja\\Documents\\unity games\\koma\\koma\\Assets\\Ink\\Editor\\Core\\Compiler\\InkCompiler.cs:419
-      \n--------\n"
-    - "Ink Compiler threw exception \nError: length\n---- Trace ----\n  at System.Array.Copy
-      (System.Array sourceArray, System.Int32 sourceIndex, System.Array destinationArray,
-      System.Int32 destinationIndex, System.Int32 length) [0x000c3] in <fb001e01371b4adca20013e0ac763896>:0
-      \r\n  at System.Collections.Generic.HashSet`1[T].SetCapacity (System.Int32
-      newSize) [0x0000f] in <351e49e2a5bf4fd6beabb458ce2255f3>:0 \r\n  at System.Collections.Generic.HashSet`1[T].IncreaseCapacity
-      () [0x00020] in <351e49e2a5bf4fd6beabb458ce2255f3>:0 \r\n  at System.Collections.Generic.HashSet`1[T].AddIfNotPresent
-      (T value) [0x000b3] in <351e49e2a5bf4fd6beabb458ce2255f3>:0 \r\n  at System.Collections.Generic.HashSet`1[T].Add
-      (T item) [0x00000] in <351e49e2a5bf4fd6beabb458ce2255f3>:0 \r\n  at Ink.CharacterRange.ToCharacterSet
-      () [0x00032] in C:\\Users\\Aaja\\Documents\\unity games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\CharacterRange.cs:32
-      \r\n  at Ink.InkParser.ExtendIdentifierCharacterRanges (Ink.CharacterSet identifierCharSet)
-      [0x00013] in C:\\Users\\Aaja\\Documents\\unity games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\InkParser\\InkParser_CharacterRanges.cs:36
-      \r\n  at Ink.InkParser.get_identifierCharSet () [0x00040] in C:\\Users\\Aaja\\Documents\\unity
-      games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\InkParser\\InkParser_Logic.cs:412
-      \r\n  at Ink.InkParser.Identifier () [0x00001] in C:\\Users\\Aaja\\Documents\\unity
-      games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\InkParser\\InkParser_Logic.cs:384
-      \r\n  at Ink.InkParser.IdentifierWithMetadata () [0x00001] in C:\\Users\\Aaja\\Documents\\unity
-      games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\InkParser\\InkParser_Logic.cs:372
-      \r\n  at Ink.StringParser.Parse[T] (Ink.StringParser+SpecificParseRule`1[T]
-      rule) [0x00008] in C:\\Users\\Aaja\\Documents\\unity games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\StringParser\\StringParser.cs:267
-      \r\n  at Ink.InkParser.AuthorWarning () [0x00008] in C:\\Users\\Aaja\\Documents\\unity
-      games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\InkParser\\InkParser_AuthorWarning.cs:11
-      \r\n  at Ink.StringParser.ParseObject (Ink.StringParser+ParseRule rule) [0x00014]
-      in C:\\Users\\Aaja\\Documents\\unity games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\StringParser\\StringParser.cs:250
-      \r\n  at Ink.InkParser+<>c__DisplayClass146_0.<Line>b__0 () [0x00001] in C:\\Users\\Aaja\\Documents\\unity
-      games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\InkParser\\InkParser_Statements.cs:147
-      \r\n  at Ink.StringParser.ParseObject (Ink.StringParser+ParseRule rule) [0x00014]
-      in C:\\Users\\Aaja\\Documents\\unity games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\StringParser\\StringParser.cs:250
-      \r\n  at Ink.StringParser.OneOf (Ink.StringParser+ParseRule[] array) [0x0000d]
-      in C:\\Users\\Aaja\\Documents\\unity games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\StringParser\\StringParser.cs:280
-      \r\n  at Ink.InkParser.StatementAtLevel (Ink.InkParser+StatementLevel level)
-      [0x0000a] in C:\\Users\\Aaja\\Documents\\unity games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\InkParser\\InkParser_Statements.cs:38
-      \r\n  at Ink.InkParser+<>c__DisplayClass141_0.<StatementsAtLevel>b__0 () [0x00000]
-      in C:\\Users\\Aaja\\Documents\\unity games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\InkParser\\InkParser_Statements.cs:30
-      \r\n  at Ink.StringParser.ParseObject (Ink.StringParser+ParseRule rule) [0x00014]
-      in C:\\Users\\Aaja\\Documents\\unity games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\StringParser\\StringParser.cs:250
-      \r\n  at Ink.StringParser.Interleave[T] (Ink.StringParser+ParseRule ruleA,
-      Ink.StringParser+ParseRule ruleB, Ink.StringParser+ParseRule untilTerminator,
-      System.Boolean flatten) [0x00063] in C:\\Users\\Aaja\\Documents\\unity games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\StringParser\\StringParser.cs:393
-      \r\n  at Ink.InkParser.StatementsAtLevel (Ink.InkParser+StatementLevel level)
-      [0x0004e] in C:\\Users\\Aaja\\Documents\\unity games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\InkParser\\InkParser_Statements.cs:28
-      \r\n  at Ink.InkParser.Parse () [0x00001] in C:\\Users\\Aaja\\Documents\\unity
-      games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\InkParser\\InkParser.cs:46
-      \r\n  at Ink.Compiler.Parse () [0x00034] in C:\\Users\\Aaja\\Documents\\unity
-      games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\Compiler.cs:35 \r\n 
-      at Ink.Compiler.Compile () [0x00001] in C:\\Users\\Aaja\\Documents\\unity games\\koma\\koma\\Assets\\Ink\\InkLibs\\InkCompiler\\Compiler.cs:41
-      \r\n  at Ink.UnityIntegration.InkCompiler.CompileInkThreaded (System.Object
-      itemObj) [0x00094] in C:\\Users\\Aaja\\Documents\\unity games\\koma\\koma\\Assets\\Ink\\Editor\\Core\\Compiler\\InkCompiler.cs:419
-      \n--------\n"
+    unhandledCompileErrors: []
+    errors: []
+    warnings: []
+    todos: []
+    parents: []
+    masterInkAssets: []
+    masterInkAsset: {fileID: 0}
+    includePaths: []
+    includes: []
+  - compileAutomatically: 0
+    inkAsset: {fileID: 102900000, guid: 573b8241c65f9634885e778a364ed2e7, type: 3}
+    jsonAssetDirectory: {fileID: 0}
+    jsonAsset: {fileID: 4900000, guid: 1c2b37d8148eb594fb177358b24a641e, type: 3}
+    unhandledCompileErrors: []
+    errors: []
+    warnings: []
+    todos: []
+    parents: []
+    masterInkAssets: []
+    masterInkAsset: {fileID: 0}
+    includePaths: []
+    includes: []
+  - compileAutomatically: 0
+    inkAsset: {fileID: 102900000, guid: e7c77ecc8c111104b97d518f14bbe1b6, type: 3}
+    jsonAssetDirectory: {fileID: 0}
+    jsonAsset: {fileID: 4900000, guid: 150c8ef4cc0a0d345bbb96b59be3d404, type: 3}
+    unhandledCompileErrors: []
+    errors: []
+    warnings: []
+    todos: []
+    parents: []
+    masterInkAssets: []
+    masterInkAsset: {fileID: 0}
+    includePaths: []
+    includes: []
+  - compileAutomatically: 0
+    inkAsset: {fileID: 102900000, guid: 74c8ae04146028d4ca4eb54521688217, type: 3}
+    jsonAssetDirectory: {fileID: 0}
+    jsonAsset: {fileID: 4900000, guid: b6132110dc02c7547b39a165e356e3be, type: 3}
+    unhandledCompileErrors: []
     errors: []
     warnings: []
     todos: []

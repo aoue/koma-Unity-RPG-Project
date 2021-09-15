@@ -520,7 +520,21 @@ public class DungeonManager : MonoBehaviour
                 break;
             case DungeonState.EVENT:
                 //Debug.Log("returning after dungeon event");
-                adjust_ui_after_event();
+
+                //remember -- there could also be a mob party on the tile that needs to be fought too. 
+                //so, only enable movement arrows if no mob parties are on the player's tile.
+
+                bool enableMovementAfter = true;
+                foreach (MobParty mp in activeParties)
+                {
+                    if (mp.get_x() == xParty && mp.get_y() == yParty)
+                    {
+                        enableMovementAfter = false;
+                        break;
+                    }
+                }
+                adjust_ui_after_event(enableMovementAfter);
+                
                 move_ai_parties();
                 break;
         }
@@ -707,7 +721,6 @@ public class DungeonManager : MonoBehaviour
 
             //then, update our knowledge of the map with this new information
             heldDun.set_tileExplored(xParty, yParty);
-
             if ( heldDun.get_tile(xParty, yParty).hasEvent == true )
             {
                 //then retrieve its event, based on its coordinates.
@@ -727,7 +740,6 @@ public class DungeonManager : MonoBehaviour
             move_ai_parties();
         }
         update_coord_text();
-
     }
     
     //AI
@@ -920,13 +932,17 @@ public class DungeonManager : MonoBehaviour
         //set alpha of the party to transparent
         
     }
-    void adjust_ui_after_event()
+    void adjust_ui_after_event(bool enableMovement = true)
     {
         //adjust some elements of the ui while an event is playing.
         state = DungeonState.OOC;
-        enable_movement_arrows();
-        update_forward_arrow();
-        recenterCameraButton.interactable = true;
+        if (enableMovement == true)
+        {
+            enable_movement_arrows();
+            update_forward_arrow();
+            recenterCameraButton.interactable = true;
+        }
+        
         //
         canSwapUnits = true;
 

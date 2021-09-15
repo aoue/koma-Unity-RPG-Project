@@ -53,9 +53,9 @@ MonoBehaviour:
   affinity: 6
   mpMax: 0
   patk: 90
-  pdef: 70
+  pdef: 55
   matk: 45
-  mdef: 70
+  mdef: 60
   defendMove: {fileID: 0}
   moveset:
   - {fileID: 8654440792014388304, guid: 47a2605d3a42e024dbba58628699f9fa, type: 3}

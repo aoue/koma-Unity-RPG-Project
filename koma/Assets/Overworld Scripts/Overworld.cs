@@ -42,8 +42,9 @@ public class Overworld : MonoBehaviour
     
     void Awake()
     {
-        //fade from black, if you please.
-        fader.fade_from_black();
+        //fader.fade_from_black();
+        //^we don't use this here because it interferes with immediate loading.
+
         if (_instance != null && _instance != this)
         {
             Destroy(this.gameObject);
@@ -213,7 +214,6 @@ public class Overworld : MonoBehaviour
         {
             // false tells ev manager not to do its pre-event pause
             EventManager.event_triggered(partHolders[actPart].get_immediateEvent(), false);
-            fader.hide();
         }
     }
     public void add_active_event(EventHolder evholder, int id)

@@ -36,11 +36,21 @@ public class FadeManager : MonoBehaviour
         StartCoroutine(fade(false, time));
     }
 
+    public void fade_from_black_cheat(float time = 0.5f)
+    {
+        //sets to dark, then fades to light.
+        Color objectColor = blackOutSquare.GetComponent<Image>().color;
+        objectColor = new Color(objectColor.r, objectColor.g, objectColor.b, 1f);
+        blackOutSquare.GetComponent<Image>().color = objectColor;
+
+        gameObject.SetActive(true);
+        StartCoroutine(fade(false, time));
+    }
+
     IEnumerator fade(bool fadeToBlack, float fadeSpeed = 0.5f)
     {
         Color objectColor = blackOutSquare.GetComponent<Image>().color;
         float fadeAmount;
-      
         if (fadeToBlack == true)
         {
             while ( blackOutSquare.GetComponent<Image>().color.a < 1)

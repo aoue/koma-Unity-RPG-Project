@@ -27,6 +27,10 @@ VAR player = "playerCharName"
 //for the bg: something ancient greek looking, stylised with angels and demons and stuff. gratuity too, in the images. it's art, cuz it's like statues.
 ~n("")
 
+part 0 immediate.
+
+-> END
+
 //show creator at top. just eyes and outline.
 //bg of ancients and golems
 
@@ -74,7 +78,7 @@ The monsters hunt the humans as they did before, but rely on them for their own 
 Of course, that was all a long time ago. These days, we just try to stay out of their way. Maybe they'll be considerate and just wait to die on their own, you know?
 
 ~n("")
-The two of us walk down the new dirt road towards Agairy Settlement, right on the edge of civilization and the kingdom's influence. Inhabited by the desperate and enterprising, it's also a vital outpost for the kingdom's eyes into the wider world.
+The two of us walk down the new dirt road towards Agairy Settlement, right on the edge of civilization and the kingdom's influence. Inhabited by the desperate and enterprising alike, it's also one the kingdom's fingertips into the wider world.
 
 ~n("Me")
 I don't think that will happen.
@@ -85,8 +89,8 @@ No, but it would be nice.
 ~n("")
 The woman walking with me is just an inch or two shorter than I am; tall for a woman. She's wearing a fashionable city-style dress in defiance of the countryside we now find ourselves in.
 She's also an expert in Light Magic, exorcism in particular, and that's the reason we've come all the way out here.
-The Abbess directing Agairy Settlement (one of the settlements sponsored by the Order) reported that one of the sisters under her has been possessed. Apparently the exact circumstances were quite unusual, too.
 Oh, and she's also my mother, called in full "the Countess Friday Cenparas", or "Mom" for short.
+The Abbess directing Agairy Settlement (one of the settlements sponsored by the Order) reported that one of the sisters under her has been possessed. Apparently the exact circumstances were quite unusual, too.
 
 ~n("Friday")
 What are you thinking about all seriously over there?
@@ -96,7 +100,7 @@ Oh, just that this wasn't how I was imagining performing an exorcism would be.
 
 //show friday smile
 ~n("Friday")
-No?  Well, sorry to disappoint. Most of it is just walking around, and half the time it turns out someone just had stomachache. The other half are deadly dangerous, though.
+No? The world's a big place, most of any job is just walking around. With exorcism, half the time it turns out someone just had stomachache. The other half are deadly dangerous, though.
 
 ~n("Me")
 What does this one feel like?
@@ -104,45 +108,69 @@ What does this one feel like?
 //show friday neutral
 ~n("Friday")
 Hmmm, I wonder. Maybe somewhere in the middle?
-You know, normally I wouldn't come all the way to the middle of nowhere, at least for a small-time patient like this sister, but it was an old friend of mine from the order. My old teacher, Cardinal Parvenu. Not that he was a cardinal back then.
-You know, he's the only one who still speaks to me.
+You know, normally I wouldn't come all the way to the middle of nowhere; like you said it's too much travel time. But it was an old friend of mine from the Order who asked me.
+My old teacher, Cardinal Parvenu. Not that he was a cardinal back then. Do you know, he's the only one who still speaks to me.
+
+~n("Me")
+I think you've mentioned him before.
 
 ~n("")
-I know that Mother was educated and trained in the Order, like some daughters of the nobility, and eventually had a falling out with them. Something to do with her children, I think.
+I know that Mother was educated and trained in the Order like some daughters of the nobility, but eventually had a falling out with them. Something to do with me and my sisters, I think.
 I mean, it is called the Virginal Order.
 
 ~n("Friday")
 He asked me specifically to do this for him, as a favor, so it's probably not just a waste of time. He said it would have been the sort of thing he'd have done himself, if he were still young.
 //show friday smile
-When he put it that way, how could I say no.
+When he put it that way, how could I refuse. It's a wonderful thing to be relied on.
+And I'll be relying on ~you~ too, so don't disappoint me.
 
-~n("Me")
-It's not so bad, then. If he's one of your old friends, he must be a decent person.
-Besides, I want to see you in action, Mom. I feel like there'll be a lot I can learn from this.
-
-~n("Friday")
-Oh, you're just saying that, you flatterer.
-
-~n("Me")
-No, really. And if there's trouble, you know, like a real demon, then I've got your back.
-
-//show friday stern
-~n("Friday")
-IF we happen into a serious possession and there IS a real live demon, then you'll do exactly as I say.
-You may have been taught fancy magic from your poncy tutors at the academy, but there's a lot to the world outside of books and incantations that you know nothing about; demons being one of these.
-//show friday neutral
-By the way, it's just as likely we're dealing with a demoness rather than a demon. More likely really, since demonesses prefer to target females. Of course a desperate demon will take anything.
-
-~n("Me")
-What's the difference?
+~n("")
+When Mother first got this request, I had just gotten back from the end third year at the academy. Since the students are entirely made up from the children of nobles, the academy understands its students have other obligations and offer instruction only half the year.
+Anyway, Mother decided I should come with her and that was that.
 
 ~n("Friday")
-Same as the ones between you and me.
-In all seriousness, a demon would try to possess you and attack me, while a demoness would do the reverse. At the end of the day, it doesn't matter; I won't let them possess either one of us.
-//show friday smile
-So don't worry, okay?
+We'll see if that academy learning is everything it's cracked up to be.
 
-//event ends. next event will start with some time later, them walking into town.
+~n("Me")
+I learned useful things at the academy, Mom.
+
+~n("Friday")
+Whatever it was, it can't have been worth it. Don't you think about your mother's poor heart?
+
+~n("Me")
+You're a dramatist, Mom.
+
+~n("")
+She shakes her head in faux-disappointment.
+
+~n("Friday")
+You really didn't learn anything, did you?
+
+~n("Me")
+I learned about irony.
+
+~n("Friday")
+Ohh, how terrifying.
+It's not like you need to know magic, in any case. I'll protect you.
+
+~n("Me")
+I know, but you don't want to have to worry about me forever.
+
+~n("Friday")
+Where did you get that idea? Of course I do, silly boy.
+I let you go to your precious academy and learn your fancy magic, that should entitle me to you for at least ten or twenty years.
+
+~n("Me")
+Ten or twenty? The academy only lasts 4... and for only half of each of those years.
+
+~n("Friday")
+Each year felt more like a hundred. Besides, as your mother monopolizing you is my right. So stop complaining.
+
+~n("Me")
+... Sure, Mom.
+
+~n("")
+We continue walking.
 
 -> END
 //end of file.

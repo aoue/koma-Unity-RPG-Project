@@ -56,8 +56,8 @@ MonoBehaviour:
   phase: 0
   preferredRow: 2
   strikes: 1
-  power: 20
-  break_mult: 2
+  power: 15
+  break_mult: 2.25
   lowSpread: 0.8
   highSpread: 1.2
   xSize: 1
@@ -66,5 +66,5 @@ MonoBehaviour:
   usesPatk: 0
   usesPdef: 0
   apDrain: 1
-  mpDrain: 3
+  mpDrain: 4
   flavour: A quick shock that travels through the earth. Good break.

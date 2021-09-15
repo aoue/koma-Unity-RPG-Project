@@ -53,7 +53,7 @@ MonoBehaviour:
   selfStatus: 1
   selfStatusTextColorGreen: 1
   statusText: HP Regen+
-  phase: 1
+  phase: 0
   preferredRow: 2
   strikes: 1
   power: 0
@@ -67,4 +67,5 @@ MonoBehaviour:
   usesPdef: 0
   apDrain: 1
   mpDrain: 10
-  flavour: Light magic dedicated to regenerating your own wounds.
+  flavour: Light magic dedicated to regenerating your own wounds. Applies healing
+    over time.

@@ -19,6 +19,8 @@ VAR player = "playerCharName"
 //Welcome to part X event X. It ...
 //=============
 
+base event. don't you worry about the contents, it's just here as a reference.
+
 /*
 ~show(0, 0)
 ~n("Friday")
@@ -29,8 +31,8 @@ I think I did a good job...
 ~n("")
 */
 
-base event. don't you worry about the contents, it's just here as a reference.
 
+/*
 [player] is how you display the valuable of the player variable.
 an if statement is like this:
 { ic > 0:
@@ -41,6 +43,7 @@ an if statement is like this:
 
 
 }
+*/
 
 /*
 ~toggle_font()

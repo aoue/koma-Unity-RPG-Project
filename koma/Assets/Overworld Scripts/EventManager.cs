@@ -44,7 +44,7 @@ public class EventManager : MonoBehaviour
 
     //typing speed controllers
     private float textWait = 0.035f; //how many seconds to wait after a non-period character in typesentence
-    private float autoWait = 1.0f; //when auto is on, time waited when a sentence is fully written out before playing the next one
+    private float autoWait = 1.75f; //when auto is on, time waited when a sentence is fully written out before playing the next one
     private bool skipOn = false; //when true, don't wait at all between textWaits, just display one after another.
     private bool autoOn = false; //when true, the player can't continue the text, but it will continue automatically.
     private bool historyOn = false; //when true, viewing history and cannot continue the story.
@@ -328,7 +328,7 @@ public class EventManager : MonoBehaviour
         autoOn = false;
         skipOn = false;
         historyOn = false;
-        currentSpeakerName = "NO NAME";
+        currentSpeakerName = "NO SPEAKER";
         if (historyList == null) historyList = new List<HistoryEntry>();
         else historyList.Clear();
         for (int i = 0; i < textControlButtons.Length; i++)
@@ -393,9 +393,8 @@ public class EventManager : MonoBehaviour
         else
         {
             //end of story.
-            end_event(heldEv);
-            return;
-        }       
+            end_event(heldEv);            
+        }
     }
     Button CreateChoiceView(string text)
     {
@@ -430,6 +429,7 @@ public class EventManager : MonoBehaviour
         ev.post_event();
         ev.check_notifier(notifier);
         canProceed = false;
+        fader.fade_from_black_cheat();
     }
 
     void recalibrate_portrait_positions()

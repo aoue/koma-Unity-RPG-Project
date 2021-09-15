@@ -59,7 +59,7 @@ grow up? as if he did.
 
 the combat system is fine. 
 =====
-- the overworld bgs should have some animation. (even just weather, like rain or wind.)
+- the overworld bgs should have some animation. (even just weather, like rain, snow, or wind, flags blowing, chimney smoke, fog, clouds, etc)
 - Note: specific events in character chains may also be locked to the world's part level. 
 	(- No chains are available in the prologue.)
 
@@ -85,36 +85,38 @@ the combat system is fine.
 	- write events.
 ====
 
-- dialogue canvas:
-	- the auto wait time should be dependent on how long the currently displayed sentence actually is, so that it
-	  can try to give the player enough, but not too much time to read.
-	- the auto wait time scaler will just multiply the calculated time to be faster or slower by the player's preference.
+- write events up through the end of part 1. the skeleton is formed.
 
-- dungeon 0:
-	(remember, party is only mc and friday.)
-	- make grid and place mobs
-	- the patrol1 is good for a warmup fight. (2 mobs)
-	- then, patrol2 is good for a more serious fight. (4 mobs)
-	(the party should be pretty hurt by this point. use the heal button.)
-	- finally, face the boss. 
-	(the boss may need to be weakened to be doable with just friday and mc,
-	 but it's not a difficult boss. There is sort of a trick, too)
+- party:
+	- moth's defendmove changed to barrier.
+
+- level tree:
+	- make a basic version of this with just a few moves learnable for prologue for friday and mc.
+		- include it for mc and friday. for moth, it's not necessary (she won't have any exp).
+		  they'll only be able to afford a single move, probably.
+
+- unit box layout:
+	(see paper design)
+	- hp and mp are two narrow bars along the bottom of the unit box, going the whole length of it.
+		- both bars must have: value / value max.
+	- break% is a vertical bar starting from top of hp bar and stopping at bottom of aff orb
+		- must have the number in it. e.g. '35%'
+	- aff orb placement is unchanged
+	- in a vertical line below aff orb are ap dot images (4 total) which correspond to the unit's remaining ap
+		- always present, but we hide/show them corresponding to the unit's current ap. apMax is 4.		
 
 - dungeon 1:
 	- copying from dungeon0, make the dungeon 1 random mob creation formations.
 	- fill out grid and place mobs
 
-- level tree:
-	- make sure exp and gold are carried back and stored properly.
-	- make a basic version of this with just a few moves learnable for prologue. 
-		- include it for mc and friday. for moth, it's not necessary (she won't have any exp).
-		  they'll only be able to afford a single move, probably.
-
 - save:
 	- can only save on the overworld, in between events. just save part, history, char progress, units, and gold. as little as possible.
 
 - sound manager:
-	- need footsteps sound.
+	- footsteps sound.
+	- move sounds
+	- overworld music
+	- dungeon music
 
 - when we include assets (at the end):
 	- moves sounds, music, sound effects, etc.
@@ -172,12 +174,37 @@ the combat system is fine.
 		- if either ic or playername is different from default, then display them in the bottom right corner of the screen.
 		- grad mc unit prefab and set nom to playername.
 	Just make a fresh scene for mainmenu.
+		- background image. (see bookmarked image. slowly scroll the image up.) 
 		- start: scenemanager.load("overworld scene")
 		- load (not interactable for now)
 		- gallery (same scene as main menu. you click to load an event, which plays right there. post demo.)
 		- exit: Application.Quit()
 
+- overworld menu options:
+	- next to pass time button section, have these buttons: save, load, party(level trees)
+	- only appear when the mouse is in the top section of the screen.
+
+- dialogue canvas:
+	- it doesn't look very good. go and copy the layout of a good looking vn style dia canvas.
+	VISUALS
+	- the dialogue box image needs a frame image.
+	- the name plate image needs a frame image too.
+
+- dungeon 0:
+	VISUALS:
+	- tile image types: plains and trees, cave.
+	- a wider background image that the grid is displayed overtop. Should be visually obvious that is not part of the map.
+
+
+
 ===== Post Demo
+
+- dialogue canvas:
+	- increase the number of portraits. 5? that's probably good enough.
+	portrait placement:
+	- show function takes 2 additionnal arguments: 
+		- float (0f - 1f) which determines where the image is shown on the x axis of the canvas screen.
+		- z order, so we can control showing. e.g. luci stands in front of ganat (and a bit to the side, too)
 
 - combat controls:
 	(low priority)

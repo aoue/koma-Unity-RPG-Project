@@ -6,11 +6,11 @@ public class Dungeon0 : Dungeon
 {
     // a specific dungeon.
 
-    void Start()
+    void Awake()
     {
         totalTiles = 15;
     }
-
+    [SerializeField] private UsableTile treasureTile; //used to acquire a bit of treasure
     [SerializeField] private UsableTile fontOfHp; //restores some hp to all party units. starts visible.
     [SerializeField] private UsableTile fontOfStamina; //restores some stamina. starts visible.
     [SerializeField] private UsableTile fontOnMp; //restores some stamina. starts visible.
@@ -23,9 +23,10 @@ public class Dungeon0 : Dungeon
     [SerializeField] private MobParty partyTemplate;
 
     //ENEMY POOL
-    //0: sentinel (melee unit)
-    //1: sentry (ranged unit)
-    //2: Mr A (boss, caster unit)
+    //0: sabaind (melee unit)
+    //1: bow sabaind (ranged unit)
+    //2: sabaind at large (boss, ambi unit)
+    //3: forest wolf
 
     protected override int pick_front(int points)
     {
@@ -147,71 +148,69 @@ public class Dungeon0 : Dungeon
         Debug.Log("retrieve unique formation called, id = " + id);
         switch (id)
         {
-            case 0: //first fight
-                formation[3] = enemyPool[0];
-                formation[5] = enemyPool[0];
+            case 0: //first fight, warmup.
+                //2 forest wolvs
+                formation[3] = enemyPool[3]; 
+                formation[5] = enemyPool[3];
                 break;
-            case 1: //first ambush wave
-                formation[1] = enemyPool[1];
-                formation[3] = enemyPool[0];
-                formation[4] = enemyPool[0];
-                formation[5] = enemyPool[0];
-                break;
-            case 2: //second ambush wave
-                formation[4] = enemyPool[0];
-                formation[0] = enemyPool[1];
-                formation[1] = enemyPool[1];
+            case 1: //second fight.
+                //1 forest wolv and 1 sabaind in front, 1 bow sabaind in back.
                 formation[2] = enemyPool[1];
+                formation[3] = enemyPool[3];
+                formation[4] = enemyPool[0];
                 break;
-            case 3: //mr a boss fight
-                formation[1] = enemyPool[2];
-                formation[3] = enemyPool[0];
-                formation[5] = enemyPool[0];
+            case 2: //third fight.    
+                //1 sabaind in front, 2 bow sabaind and 1 sabaind in back.
+                formation[0] = enemyPool[1];
+                formation[1] = enemyPool[0];
+                formation[2] = enemyPool[1];
+                formation[4] = enemyPool[0];
+                break;
+            case 3: //fourth fight, boss.
+                //1 sabaind in front. 1 sabaind at large in back.
+                //formation[1] = enemyPool[2];
+                formation[4] = enemyPool[0];
                 break;
         }
     }
 
     public override void spawn_mob_parties(List<MobParty> activeParties)
     {
-        //must instantiate the parties from partyTemplate, then customize them.
-        //first: instantiate all the bosses (unless the boss is dead)
-        //       this type doesn't go far.
-        //next: instantiate wandering monsters based on zoning in the map. e.g. 1 monsters in the zone, 1 in this zone, but the actual position can vary.
-        //      this type is content to just wander.
-        //finally: instantiate monsters near dens.
-        //         this type is the most aggressive, and they head for known villages, etc.
         //FORMAT:
         //movement, vision, x, y, name, unique formation id, post battle event id.
-
+        
         MobParty enc1 = Instantiate(partyTemplate, Vector2.zero, Quaternion.identity);
-        enc1.fill(1, 1, 4, 1, "Patrol 1", 0, -1);
+        enc1.fill(1, 1, 0, 3, generate_partyName(), 0, -1);
         activeParties.Add(enc1);
-
+        
         MobParty enc2 = Instantiate(partyTemplate, Vector2.zero, Quaternion.identity);
-        enc2.fill(1, 1, 3, 4, "Patrol 2", 1, -1);
+        enc2.fill(1, 1, 3, 3, generate_partyName(), 1, -1);
         activeParties.Add(enc2);
 
         MobParty enc3 = Instantiate(partyTemplate, Vector2.zero, Quaternion.identity);
-        enc3.fill(1, 1, 5, 4, "Patrol 3", 2, -1);
+        enc3.fill(1, 1, 2, 6, generate_partyName(), 2, -1);
         activeParties.Add(enc3);
 
         MobParty clearBoss = Instantiate(partyTemplate, Vector2.zero, Quaternion.identity);
-        clearBoss.fill(0, 0, 7, 4, "Mr A", 3, 0);
+        clearBoss.fill(0, 0, 5, 6, generate_partyName(), 3, 0);
         activeParties.Add(clearBoss);
+        
     }
 
+    const int xDimension = 7;
+    const int yDimension = 7;
     public override int specify_grid()
     {
         //create grid explicitly from specified tile types.
         //when the dungeon manager gets its hands on these, it'll instantiate a tile based on the type.
-
+     
         //set tileUsedGrid. all false on new.
         if ( tileUsedGrid == null)
         {
-            tileUsedGrid = new bool[9, 5];
-            for (int i = 0; i < 9; i++)
+            tileUsedGrid = new bool[xDimension, yDimension];
+            for (int i = 0; i < xDimension; i++)
             {
-                for (int j = 0; j < 5; j++)
+                for (int j = 0; j < yDimension; j++)
                 {
                     tileUsedGrid[i, j] = false;
                 }
@@ -221,39 +220,41 @@ public class Dungeon0 : Dungeon
         //resets to null on new game, but not within one game.
         if (explored_grid == null)
         {
-            explored_grid = new Exploration[9, 5];
+            explored_grid = new Exploration[xDimension, yDimension];
 
-            for (int i = 0; i < 9; i++)
+            for (int i = 0; i < xDimension; i++)
             {
-                for (int j = 0; j < 5; j++)
+                for (int j = 0; j < yDimension; j++)
                 {
-                    //explored_grid[i, j] = Exploration.EXPLORED;
+                    //default
                     explored_grid[i, j] = Exploration.UNKNOWN;
+
+                    //for testing
+                    //explored_grid[i, j] = Exploration.EXPLORED;                    
                 }
             }
             //set initial home tile to explored:
-            explored_grid[1, 0] = Exploration.EXPLORED;
-            //explored_grid[4, 3] = Exploration.EXPLORED;
+            explored_grid[0, 0] = Exploration.EXPLORED;
+            explored_grid[4, 6] = Exploration.EXPLORED;
 
             //set exploredTiles equal to pre-explored tiles
-            exploredTiles = 1;
+            exploredTiles = 2;
         }
 
-        dungeonGrid = new Tile[9, 5]
+        dungeonGrid = new Tile[xDimension, yDimension]
         {
-            { null, blankTile, null, null, null },
-            { homeTileWithExit, blankTile, null, null, null },
-            { null, blankTile, null, null, null },
-            { null, blankTile, null, null, blankTile },
-            { null, blankTile, blankTile, homeTileWithExit, blankTile },
-            { null, blankTile, null, null, blankTile },
-            { null, null, null, null, blankTile },
-            { null, null, null, null, blankTile },
-            { null, null, null, null, ClearTile }
+            { homeTile, blankTile, blankTile, blankTile, null, null, null },
+            { null, null, null, blankTile, null, null, treasureTile },
+            { null, null, null, blankTile, blankTile, blankTile, blankTile },
+            { null, null, null, fontOfHp, null, null, blankTile },
+            { null, null, null, null, null, null, homeTile },
+            { null, null, null, null, null, null, eventTile },
+            { null, null, null, null, null, null, ClearTile }
+            //the last two tiles in the final array should have cave-type backgrounds. All the rest should be a mix of forest and plains.
         };
 
         //can add all kinds of checks in here or whatever you want, you know.
-        return 905;
+        return (xDimension * 100) + yDimension;
     }
 
     //Names and stuff
