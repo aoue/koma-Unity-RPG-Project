@@ -1,0 +1,7 @@
+fool you haven't added any of the music cues to the ink scripts! 
+Oh well, can do it later.
+
+sounds scheduled: (somewhere in the scripts)
+
+some kind of monster r sounds (dun 0 tile event 2).
+monster howl (dun 0 tile event 2).
