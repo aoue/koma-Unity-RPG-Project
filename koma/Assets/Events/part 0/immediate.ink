@@ -8,6 +8,7 @@ EXTERNAL hide(whichSlot)
 EXTERNAL stop_music()
 EXTERNAL play_music(whichTrack)
 EXTERNAL play_sound(whichTrack)
+EXTERNAL shake(intensity, duration) //camera shake. both parameters are ints. actual duration = 0.05f seconds * duration
 //end functions
 
 //variable controllers here. set by EventManager at scene start.

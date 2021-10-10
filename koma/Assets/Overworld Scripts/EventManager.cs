@@ -16,6 +16,8 @@ public class EventManager : MonoBehaviour
     private int useIC;
     private string pName;
 
+    [SerializeField] private GameObject shakeObject;
+
     [SerializeField] private Font ancientsFont;
     [SerializeField] private Font defaultFont;
 
@@ -525,23 +527,13 @@ public class EventManager : MonoBehaviour
         {
             this.hide_portrait_slot(which);
         });
+        script.BindExternalFunction("shake", (int intensity, float duration) =>
+        {
+            this.camera_shake(intensity, duration);
+        });
 
         //game (e.g. rel increased, set flag, etc.)
 
-    }
-    void stop_music()
-    {
-        //stops a song from SM.
-        SM.stop_playing();
-    }
-    void play_music(int whichTrack)
-    {
-        SM.play_loop(whichTrack);
-    }
-    void play_sound(int whichTrack)
-    {
-        //plays a song/sound from SM.
-        SM.play_once(whichTrack);
     }
     void set_name(string s)
     {
@@ -590,4 +582,47 @@ public class EventManager : MonoBehaviour
         bg.sprite = pLibrary.retrieve_eventBg(id);
     }
 
+    //effects
+    void stop_music()
+    {
+        //stops a song from SM.
+        SM.stop_playing();
+    }
+    void play_music(int whichTrack)
+    {
+        SM.play_loop(whichTrack);
+    }
+    void play_sound(int whichTrack)
+    {
+        //plays a song/sound from SM.
+        SM.play_once(whichTrack);
+    }
+    void camera_shake(int intensity, float duration)
+    {
+        // -currently not working.
+        //intensity determines how much the camera shakes
+        //duration determines how long the shake lasts.
+        //at the end of the time elapsed, returns back to normal.
+
+        StartCoroutine(trigger_camera_shake(intensity, duration));
+    }
+    IEnumerator trigger_camera_shake(int intensity, float duration)
+    {
+        //save initial position.
+        Vector3 initial_position = shakeObject.transform.localPosition;
+
+        //zoom in so we don't see the edges fraying
+        shakeObject.transform.localScale = new Vector3(1.15f, 1.15f, 1.15f);
+
+        //shake
+        while (duration > 0f)
+        {
+            shakeObject.transform.localPosition = initial_position + (Random.insideUnitSphere * intensity);
+            duration -= Time.deltaTime;
+            yield return null;
+        }
+        //reset initial position
+        shakeObject.transform.localPosition = initial_position;
+        shakeObject.transform.localScale = new Vector3(1f, 1f, 1f);
+    }
 }

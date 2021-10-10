@@ -2468,6 +2468,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0680c0c9fa8a9414397a458947150566, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shakeObject: {fileID: 1031386819}
   ancientsFont: {fileID: 12800000, guid: 1b67cefbb36168b4e8a01dc696cb8f2f, type: 3}
   defaultFont: {fileID: 12800000, guid: 3bc2ee0ec6678884a8eb2ca28199892e, type: 3}
   SM: {fileID: 470963628}
@@ -4934,6 +4935,12 @@ MonoBehaviour:
   charEventsList:
   - {fileID: 1864781094}
   - {fileID: 248623513}
+--- !u!1 &1031386819 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1550432929743200188, guid: d37b9aff764680b4aad486c2d191bf9e,
+    type: 3}
+  m_PrefabInstance: {fileID: 1578289971}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1031712706
 GameObject:
   m_ObjectHideFlags: 0
@@ -8016,7 +8023,8 @@ MonoBehaviour:
   - {fileID: 8082327438600324202, guid: ec05f14325fe99843bfc791a0750c260, type: 3}
   tileEventLibrary:
   - {fileID: 3481641750430911046, guid: fc837d3e6be754845aa36a9d0044c496, type: 3}
-  eventLibraryKeys: fa010000
+  - {fileID: 566068898562655031, guid: 01a1814926ec28646809687ec3a483ff, type: 3}
+  eventLibraryKeys: 01000000fa010000
   treasureTile: {fileID: 980776756015513249, guid: dafbba8e3514f4a46a7ee5a1b9807c10,
     type: 3}
   fontOfHp: {fileID: 6600544739704046168, guid: b16d7a259990fc346812316c5e953687,

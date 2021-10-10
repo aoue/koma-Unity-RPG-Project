@@ -56,7 +56,7 @@ MonoBehaviour:
   phase: 0
   preferredRow: 2
   strikes: 1
-  power: 0
+  power: 10
   break_mult: 0
   lowSpread: 0
   highSpread: 0

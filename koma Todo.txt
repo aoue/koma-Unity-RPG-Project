@@ -60,6 +60,8 @@ grow up? as if he did.
 the combat system is fine. 
 =====
 - the overworld bgs should have some animation. (even just weather, like rain, snow, or wind, flags blowing, chimney smoke, fog, clouds, etc)
+	- flag blowing: single animated sprite
+	- wind/rain/snow/etc: use a single image and have it continually loop past the screen.
 - Note: specific events in character chains may also be locked to the world's part level. 
 	(- No chains are available in the prologue.)
 
@@ -72,7 +74,6 @@ the combat system is fine.
 	  e.g. early: friday insists on keeping all her kids with her during a large-scale mission. late: friday assigns each of her kids to lead one of the teams in a large-scale mission.
 	- yve: i think i have some good notes for this in the drive. stuff to do with her being passed over and blindness.
 	- luci: awkward with her family -> reconciled with her family. feelings that she'd been abandoned, etc.
-
 
 - when going into a dungeon, even though only certain party members may have been put in the party, we act like
 	  all (recruited) party members are there in events and stuff. Otherwise, it's just too much work.
@@ -97,31 +98,6 @@ the combat system is fine.
 ====
 
 - write events up through the end of part 1. the skeleton is formed.
-
-- camera shake script:
-	- two parameters: intensity (range, -pos to +pos); duration (in seconds)
-	- follow a tutorial in df bookmark folder. 
-	- make it an ink-linked function from eventManager
-
-- change font size command:
-	- one param: font size. -1 for set to default.
-	- sets the default font size to the argument size. used for like by monster shouts or smth.
-
-- story:
-	- moth is short for something; what?
-	- after it comes out that moth is gone, then go to a mystery section? progress through dialogues (and talking to people, thru different events)
-	  until mc can figure where moth has gone. then back to the main event (which unlocks the dungeon) and the player is tested on their theory of how
-	  moth got away; where she is now. reward exp based on the theory.
-	- this would be a chance to get to see mc on his own a bit. is it worth anything? or just a waste of time?
-
-- dungeon0:
-	- remember it should have a tile event right near the start
-
-- dialogue canvas:
-	- ink cue function to change font size. use: a character mutters or says something under their breath.
-
-- party:
-	- moth's defendmove changed to barrier.
 
 - level tree:
 	- make a basic version of this with just a few moves learnable for prologue for friday and mc.

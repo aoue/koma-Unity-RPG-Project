@@ -150,7 +150,8 @@ public class Dungeon0 : Dungeon
         {
             case 0: //first fight, warmup.
                 //2 forest wolvs
-                formation[3] = enemyPool[3]; 
+                formation[1] = enemyPool[3];
+                formation[3] = enemyPool[3];     
                 formation[5] = enemyPool[3];
                 break;
             case 1: //second fight.
@@ -243,7 +244,7 @@ public class Dungeon0 : Dungeon
 
         dungeonGrid = new Tile[xDimension, yDimension]
         {
-            { homeTile, blankTile, blankTile, blankTile, null, null, null },
+            { homeTile, eventTile, blankTile, blankTile, null, null, null },
             { null, null, null, blankTile, null, null, treasureTile },
             { null, null, null, blankTile, blankTile, blankTile, blankTile },
             { null, null, null, fontOfHp, null, null, blankTile },
