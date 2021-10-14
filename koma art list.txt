@@ -41,7 +41,7 @@ NPCS
 
 SCENES: (see day by day)
 - sc0: sabaind-at-large + Moth, at cave
-	- states: full | partial | inflated
+	- states: full [hands on hips] | partial [hands on hips] | inflated [hands over shoulders/chest]
 - sc1: friday + mc
 	- states: dress | loosely pressed | pressed together | lactating + loose | ejac + milk burst + loose
 - sc2: artifact's tentacles + abbess, two settler girls 

@@ -39,7 +39,7 @@ At least we're headed in the right direction. But I wonder... is our demon in th
 A taunt, maybe.
 
 ~n("")
-She weighs the options a moment before shrugging.
+She makes a show of weighs the options for a moment.
 
 //~show friday neutral
 ~n("Friday")
@@ -49,18 +49,18 @@ It doesn't change anything, I guess.
 It would taunt us? It doesn't even know we're coming.
 
 ~n("Friday")
-Who knows, they're individuals.
-I am a bit worried though. There's signs of wildlife around here. Monsters, too.
-Big enough to cause our demon trouble if they run into each other.
+They're individuals. And even if they weren't it'd be impossible to understand every action they do. Their minds are the wrong shape.
+But this is worrying. There's signs of wildlife around here. Monsters, too.
+Big enough to cause our demon trouble if it has the misfortune.
 
 ~n("Me")
-But at least the demon will protect its host.
+But the demon will protect its host.
 
 ~n("Friday")
 To a point. At least until a better one doesn't come along. But They're individuals, like I said. They're imperfect. I should know, the job of an exorcist is to take advantage of that.
 
 ~n("Me")
-A better host? That us, doesn't it?
+A better host? That's us, isn't it?
 
 //~show friday worried
 ~n("Friday")
