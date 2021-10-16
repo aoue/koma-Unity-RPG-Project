@@ -97,26 +97,31 @@ the combat system is fine.
 	- write events.
 ====
 
-- hey did you make a thing for night events? I don't recall. Well, if they're implemented
+- there are NO such thing as night events. >:|
 
-- dialogue canvas:
-	changing between portraits or changing between bgs:
-	- probably doesn't look too good with instant changes.
-	- try instead to use a coroutine in the following manner:
-		- fade current img alpha
-		- switch image to new img
-		- unfade current img alpha
-	whole process should probably be fast though.
 
-- write events up through the end of part 1. the skeleton is formed.
+- skeleton formed to the end of dungeon 0.
+
 PART 0 
 - immediate (DONE)
 - event 1 (DONE)
-- event 2 (...) [night evet/post clear event]
-DUN 0
+DUNGEON 0
 - dun 0 event 1 (DONE)
 - dun 0 event 2 (DONE)
 - dun 0 mobEvent 1 (...)
+PART 1 ------------------------(part 1 gameobject, event folder and events need to be made)
+- immediate (...)
+- event 1 (...)
+- event 2, 3, 4 (...)
+- event 5 (...)
+PART 2
+- immediate (...)
+- event 1 (...)
+- event 2 (...)
+DUNGEON 1
+- (...)
+PART 3
+- immediate (...)
 
 - level tree:
 	- make a basic version of this with just a few moves learnable for prologue for friday and mc.

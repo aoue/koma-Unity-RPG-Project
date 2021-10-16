@@ -535,6 +535,8 @@ public class EventManager : MonoBehaviour
         //game (e.g. rel increased, set flag, etc.)
 
     }
+
+    //text effects
     void set_name(string s)
     {
         if ( s == "" )
@@ -565,45 +567,14 @@ public class EventManager : MonoBehaviour
         }
         usingDefaultFont = !usingDefaultFont;
     }
-    void set_portrait_slot(int whichSlot, int index)
-    {
-        portraitSlots[whichSlot].GetComponent<Image>().sprite = pLibrary.retrieve_fullp(index);
-        portraitSlots[whichSlot].SetActive(true);
-        recalibrate_portrait_positions();
-    }
-    void hide_portrait_slot(int whichSlot)
-    {
-        portraitSlots[whichSlot].SetActive(false);
-        recalibrate_portrait_positions();
-    }
-    void set_bg(int id)
-    {
-        if (skipOn == false) fader.fade_to_black();
-        bg.sprite = pLibrary.retrieve_eventBg(id);
-    }
 
-    //effects
-    void stop_music()
-    {
-        //stops a song from SM.
-        SM.stop_playing();
-    }
-    void play_music(int whichTrack)
-    {
-        SM.play_loop(whichTrack);
-    }
-    void play_sound(int whichTrack)
-    {
-        //plays a song/sound from SM.
-        SM.play_once(whichTrack);
-    }
+    //visual effects
     void camera_shake(int intensity, float duration)
     {
         // -currently not working.
         //intensity determines how much the camera shakes
         //duration determines how long the shake lasts.
         //at the end of the time elapsed, returns back to normal.
-
         StartCoroutine(trigger_camera_shake(intensity, duration));
     }
     IEnumerator trigger_camera_shake(int intensity, float duration)
@@ -625,4 +596,100 @@ public class EventManager : MonoBehaviour
         shakeObject.transform.localPosition = initial_position;
         shakeObject.transform.localScale = new Vector3(1f, 1f, 1f);
     }
+    void set_portrait_slot(int whichSlot, int index)
+    {
+        //if skip is on, then show directly.
+        //two methods: 
+        //1. if already showing an image: fade to half alpha, switch image, fade back to full alpha.
+        //2. if not showing an image: set half alpha, switch image, show image, fade to full alpha.
+
+        if (skipOn == false)
+        {
+            StartCoroutine(handle_image_switch_fade(1f, portraitSlots[whichSlot].activeSelf, whichSlot, pLibrary.retrieve_fullp(index)));
+        }
+        else
+        {
+            portraitSlots[whichSlot].GetComponent<Image>().sprite = pLibrary.retrieve_fullp(index);
+            portraitSlots[whichSlot].SetActive(true);
+            recalibrate_portrait_positions();
+        }
+    }
+    void hide_portrait_slot(int whichSlot)
+    {
+        StartCoroutine(handle_image_hide_fade(1f, whichSlot));
+        recalibrate_portrait_positions();
+    }
+    void set_bg(int id)
+    {
+        if (skipOn == false) fader.fade_to_black(); //automatic fading behaviour
+        bg.sprite = pLibrary.retrieve_eventBg(id);
+    }
+    IEnumerator handle_image_switch_fade(float speed, bool fadeOutFirst, int whichSlot, Sprite switchSprite)
+    {
+        Color objectColor = portraitSlots[whichSlot].GetComponent<Image>().color;
+        float fadeAmount;
+
+        //if fadeOutFirst is true, then first fade the image to half alpha, then assign switchSprite to portraitSlots[whichSlot].
+        if (fadeOutFirst == true)
+        {
+            speed *= 2; //makes each img switch faster, so it matches the same total duration as the other method.
+            while ( objectColor.a > 0.25f )
+            {
+                fadeAmount = objectColor.a - (speed * Time.deltaTime);
+
+                objectColor = new Color(objectColor.r, objectColor.g, objectColor.b, fadeAmount);
+                portraitSlots[whichSlot].GetComponent<Image>().color = objectColor;
+                yield return null;
+            }
+        }
+        else
+        {
+            objectColor = new Color(objectColor.r, objectColor.g, objectColor.b, 0.25f);
+            portraitSlots[whichSlot].SetActive(true);
+        }
+        portraitSlots[whichSlot].GetComponent<Image>().sprite = switchSprite;
+
+        //fade the image back to full alpha.
+        while ( objectColor.a < 1f )
+        {
+            fadeAmount = objectColor.a + (speed * Time.deltaTime);
+
+            objectColor = new Color(objectColor.r, objectColor.g, objectColor.b, fadeAmount);
+            portraitSlots[whichSlot].GetComponent<Image>().color = objectColor;
+            yield return null;
+        }
+
+    }
+    IEnumerator handle_image_hide_fade(float speed, int whichSlot)
+    {
+        Color objectColor = portraitSlots[whichSlot].GetComponent<Image>().color;
+        float fadeAmount;
+        while (objectColor.a > 0.25f)
+        {
+            fadeAmount = objectColor.a - (speed * 2 * Time.deltaTime);
+
+            objectColor = new Color(objectColor.r, objectColor.g, objectColor.b, fadeAmount);
+            portraitSlots[whichSlot].GetComponent<Image>().color = objectColor;
+            yield return null;
+        }
+        portraitSlots[whichSlot].gameObject.SetActive(false);
+    }
+
+    //sound effects
+    void stop_music()
+    {
+        //stops a song from SM.
+        SM.stop_playing();
+    }
+    void play_music(int whichTrack)
+    {
+        SM.play_loop(whichTrack);
+    }
+    void play_sound(int whichTrack)
+    {
+        //plays a song/sound from SM.
+        SM.play_once(whichTrack);
+    }
+    
+    
 }

@@ -34,7 +34,9 @@ public class Part : MonoBehaviour
 
     public void ready_night()
     {
-        //after withdrawing/losing (but not clearing) from a dungeon, this function is called.
+        //after returning from a dungeon (regardless of how we returned), this function is called.
+
+        //continue to show dungeon, but it's not interactable
         dungeonToRepeat.SetActive(true);
         dungeonToRepeat.gameObject.GetComponent<Button>().interactable = false;
 
