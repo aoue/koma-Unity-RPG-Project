@@ -100,20 +100,23 @@ the combat system is fine.
 - there are NO such thing as night events. >:|
 
 
-- skeleton formed to the end of dungeon 0.
 
+========================================
+skeleton extends to the end of dungeon 0
 PART 0 
 - immediate (DONE)
 - event 1 (DONE)
 DUNGEON 0
 - dun 0 event 1 (DONE)
 - dun 0 event 2 (DONE)
-- dun 0 mobEvent 1 (...)
+- dun 0 mobEvent 1 (DONE)
 PART 1 ------------------------(part 1 gameobject, event folder and events need to be made)
-- immediate (...)
-- event 1 (...)
-- event 2, 3, 4 (...)
-- event 5 (...)
+- immediate (DONE)
+[remember, short. just walking about.]
+- event 1 (next) 
+- event 2 (...)
+- event 3 (...)
+- event 4 (...)
 PART 2
 - immediate (...)
 - event 1 (...)
@@ -122,26 +125,11 @@ DUNGEON 1
 - (...)
 PART 3
 - immediate (...)
+========================================
 
-- level tree:
-	- make a basic version of this with just a few moves learnable for prologue for friday and mc.
-		- include it for mc and friday. for moth, it's not necessary (she won't have any exp).
-		  they'll only be able to afford a single move, probably.
-	- units can learn new defend moves too. not many though.
-
-- unit box layout:
-	(see paper design)
-	- hp and mp are two narrow bars along the bottom of the unit box, going the whole length of it.
-		- both bars must have: value / value max.
-	- break% is a vertical bar starting from top of hp bar and stopping at bottom of aff orb
-		- must have the number in it. e.g. '35%'
-	- aff orb placement is unchanged
-	- in a vertical line below aff orb are ap dot images (4 total) which correspond to the unit's remaining ap
-		- always present, but we hide/show them corresponding to the unit's current ap. apMax is 4.		
 
 - dungeon 1:
-	- copying from dungeon0, make the dungeon 1 random mob creation formations.
-	- fill out grid and place mobs
+	- grid, mobs, tile events, etc.
 
 - save:
 	- can only save on the overworld, in between events. just save part, history, char progress, units, and gold. as little as possible.
@@ -232,6 +220,18 @@ PART 3
 
 
 ===== Post Demo
+
+
+- unit box layout: maybe.
+	(see paper design)
+	- hp and mp are two narrow bars along the bottom of the unit box, going the whole length of it.
+		- both bars must have: value / value max.
+	- break% is a vertical bar starting from top of hp bar and stopping at bottom of aff orb
+		- must have the number in it. e.g. '35%'
+	- aff orb placement is unchanged
+	- in a vertical line below aff orb are ap dot images (4 total) which correspond to the unit's remaining ap
+		- always present, but we hide/show them corresponding to the unit's current ap. apMax is 4.		
+
 
 - one character's defend move:
 	- dodge: -ap (i.e. next turn no ap.) totally immune to dmg.

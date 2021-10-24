@@ -28,13 +28,6 @@ VAR player = "playerCharName"
 //for the bg: something ancient greek looking, stylised with angels and demons and stuff. gratuity too, in the images. it's art, cuz it's like statues.
 ~n("")
 
-testing image fade. should fade a char portrait in and out. start:
-~show(0, 0)
-fade next.
-~show(0, 100)
-now hiding it.
-~hide(0)
-
 part 0 immediate.
 
 -> END

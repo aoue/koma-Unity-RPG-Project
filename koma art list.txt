@@ -18,10 +18,15 @@ note, outdoors backgrounds should be reuseable.
 note, agairy backgrounds have the emblem and other icons of the virginal order present. what's the emblem? a woman's thighs closed together.
 - agairy town square (part 1 event 1). church and other buildings are visible in the bg.
 - agairy church. pews, stone building. there's a visible door to the back room.
-- agairy church back room. A bed in there and moth laying in in, asleep.
+- agairy church room. A bed in there, with adj chair, and moth is laying in in, asleep. stone walls, same as rest of church.
+(CITIES)
+- inn room. a basic room, we'll be using it in like every city. bed, dresser, etc.
 
 DUNGEON TILES
 - a unique image for each tile prefab
+
+CUT-INS (the unit fighting or something all badass. bg images.)
+- Friday
 
 PARTY UNITS
 - friday portrait + variants (smirk, smile, sad, frown, fake-smile, fake-smile level2, worry, resolute)
