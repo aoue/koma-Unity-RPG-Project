@@ -30,6 +30,12 @@ VAR player = "playerCharName"
 
 part 0 immediate.
 
+//testing choice stuff
+//*choice 1
+//ya hit choice 1
+//*choice 2
+//ya hit choice 2
+
 -> END
 
 //show creator at top. just eyes and outline.

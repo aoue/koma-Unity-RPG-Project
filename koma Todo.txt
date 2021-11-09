@@ -58,6 +58,15 @@ grow up? as if he did.
 ===== end story dependent stuff
 
 the combat system is fine. 
+could maybe use: (future additions)
+- hit, dodge
+- passives.eg:
+	- suri? composure: brk% halved at round start
+	- mc, elemental authority: dmg of attacks with affinity bonused multiplied by a futher 5/4
+	- ganat, clear body: at round start, all status effects expire regardless of duration.
+	- friday, matriarch: pdef, mdef increased by 10% for each adj non-ooa ally
+	- sincy, charm: 50% chance to take 50% dmg from an attack. 
+
 =====
 - the overworld bgs should have some animation. (even just weather, like rain, snow, or wind, flags blowing, chimney smoke, fog, clouds, etc)
 	- flag blowing: single animated sprite
@@ -105,18 +114,18 @@ the combat system is fine.
 skeleton extends to the end of dungeon 0
 PART 0 
 - immediate (DONE)
-- event 1 (DONE)
+- event 1 (DONE) loc: square
 DUNGEON 0
 - dun 0 event 1 (DONE)
 - dun 0 event 2 (DONE)
 - dun 0 mobEvent 1 (DONE)
 PART 1 ------------------------(part 1 gameobject, event folder and events need to be made)
 - immediate (DONE)
-[remember, short. just walking about.]
-- event 1 (next) 
-- event 2 (...)
-- event 3 (...)
-- event 4 (...)
+[remember, keep these short.]
+- event 1 (DONE) abbess, loc: church
+- event 2 (DONE) sister, loc: one edge of town, doing laundry or something
+- event 3 (DONE) settler,loc: near square
+- event 4 (...) [haich id]
 PART 2
 - immediate (...)
 - event 1 (...)
@@ -127,12 +136,11 @@ PART 3
 - immediate (...)
 ========================================
 
-
 - dungeon 1:
 	- grid, mobs, tile events, etc.
 
 - save:
-	- can only save on the overworld, in between events. just save part, history, char progress, units, and gold. as little as possible.
+	- can only save on the overworld, in between events. just save part, history (choices, not text), char progress, units, and gold. as little as possible.
 
 - sound manager:
 	- footsteps sound.

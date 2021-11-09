@@ -407,10 +407,6 @@ public class EventManager : MonoBehaviour
         Text choiceText = choice.GetComponentInChildren<Text>();
         choiceText.text = text;
 
-        // Make the button expand to fit the text
-        HorizontalLayoutGroup layoutGroup = choice.GetComponent<HorizontalLayoutGroup>();
-        layoutGroup.childForceExpandHeight = false;
-
         return choice;
     }
     void OnClickChoiceButton(Choice choice)

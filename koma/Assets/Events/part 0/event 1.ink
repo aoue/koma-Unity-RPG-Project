@@ -172,6 +172,7 @@ You're too kind.
 //~hide abbess
 //~show friday smirk
 ~n("Friday")
+...
 Bitch.
 
 ~n("")
