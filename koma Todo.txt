@@ -61,13 +61,20 @@ the combat system is fine.
 could maybe use: (future additions)
 - hit, dodge
 - passives.eg:
+	ofc, they should only work when the unit is not ooa.
 	- suri? composure: brk% halved at round start
-	- mc, elemental authority: dmg of attacks with affinity bonused multiplied by a futher 5/4
+	- mc, elemental authority: affinity atk multipliers increased (+) by a further 0.25? 0.5?
 	- ganat, clear body: at round start, all status effects expire regardless of duration.
-	- friday, matriarch: pdef, mdef increased by 10% for each adj non-ooa ally
+	- friday, matriarch: all stats increased by 10% for each adj ally
 	- sincy, charm: 50% chance to take 50% dmg from an attack. 
 
 =====
+
+- duplicate some changes i made in alt lab game:
+	- variable text speed w/ a slider
+	- code to make sure we don't have any empty lines
+	- copy in an ink example that shows how removing choices works.
+
 - the overworld bgs should have some animation. (even just weather, like rain, snow, or wind, flags blowing, chimney smoke, fog, clouds, etc)
 	- flag blowing: single animated sprite
 	- wind/rain/snow/etc: use a single image and have it continually loop past the screen.
@@ -118,7 +125,7 @@ PART 0
 DUNGEON 0
 - dun 0 event 1 (DONE)
 - dun 0 event 2 (DONE)
-- dun 0 mobEvent 1 (DONE)
+- dun 0 mobEvent 1 (DONE) ; change to be made: make mc help friday with the takedown. he can bless her or something, so that the monster's strike just slides off her.
 PART 1 ------------------------(part 1 gameobject, event folder and events need to be made)
 - immediate (DONE)
 [remember, keep these short.]
@@ -138,6 +145,11 @@ PART 3
 
 - dungeon 1:
 	- grid, mobs, tile events, etc.
+
+- portrait slots: todo only when images are ready
+	these 540x1080 size ones may not be enough to do everything i want.
+	- allow portrait slots x and y positions, and ordering, to be set. (set x and y as percentages along the screen: 0.1 - 1.0)
+	- make the portrait slots expand to the size of their image component	
 
 - save:
 	- can only save on the overworld, in between events. just save part, history (choices, not text), char progress, units, and gold. as little as possible.
@@ -298,6 +310,7 @@ PART 3
 
 - unit trees:
 	these let you customize and level up each unit. can: increase level, exchange moves, and do gear(?).
+	- some kind of way to increase the number of moveslots a unit has? buy with exp or auto unlock at certain lvls?
 	MOVE TREE
 	the unit's name is in the center of the screen and each of their starting moves goes in a direction. four move paths by default.
 	- to learn a move, you must click it, then click learn move. 
