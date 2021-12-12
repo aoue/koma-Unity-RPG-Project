@@ -25,6 +25,29 @@ VAR player = "playerCharName"
 //creation: ancients (they were evil) -> humans (they were weak) -> monsters (they were failures in all regards because the being tried to make them do everything).
 //(after many hundred years of war, the humans learned evil like the monsters.)
 
+~n("Friday")
+~talk(1)
+~show(0, 0)
+Hi, I'm Friday Cenparas and welcome to the world of Koma!
+We've met before-- but you know that of course. After all, I'm someone very important to you~
+
+~show(0, 2)
+And you to me~
+
+~show(0, 1)
+But do you know what?
+
+~show(0, 3)
+Sometimes I get really angry at the world!
+
+~show(0, 0)
+Anyway, listen to me about to go off. Forget about it.
+
+~show(0, 1)
+Or I'll kill you. Ahaha.
+
+
+
 //for the bg: something ancient greek looking, stylised with angels and demons and stuff. gratuity too, in the images. it's art, cuz it's like statues.
 ~n("")
 

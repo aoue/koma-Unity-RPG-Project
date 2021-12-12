@@ -75,6 +75,9 @@ could maybe use: (future additions)
 	- code to make sure we don't have any empty lines
 	- copy in an ink example that shows how removing choices works.
 
+- events:
+	- when changing portraits of the same character, no fade.
+
 - the overworld bgs should have some animation. (even just weather, like rain, snow, or wind, flags blowing, chimney smoke, fog, clouds, etc)
 	- flag blowing: single animated sprite
 	- wind/rain/snow/etc: use a single image and have it continually loop past the screen.
@@ -132,8 +135,9 @@ PART 1 ------------------------(part 1 gameobject, event folder and events need 
 - event 1 (DONE) abbess, loc: church
 - event 2 (DONE) sister, loc: one edge of town, doing laundry or something
 - event 3 (DONE) settler,loc: near square
-- event 4 (...) [haich id]
 PART 2
+- event 1 (in progress) [haich]. loc: room.
+PART 3
 - immediate (...)
 - event 1 (...)
 - event 2 (...)
@@ -142,6 +146,12 @@ DUNGEON 1
 PART 3
 - immediate (...)
 ========================================
+
+- test made backgrounds ingame to sort out problems before spending time making more
+
+- moves:
+	- Friday: +heal, -exemplar
+	- Moth: +exemplar
 
 - dungeon 1:
 	- grid, mobs, tile events, etc.

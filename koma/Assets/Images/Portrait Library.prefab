@@ -43,13 +43,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ec88bfab8601a54aabaaef1b3516ae6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  eventBgs: []
   boxSprites:
   - {fileID: 21300000, guid: 0964fe523a50db04fbd4bb0a891aee63, type: 3}
   - {fileID: 21300000, guid: cd8233b94ea6ad24cbf19a7f5dae0351, type: 3}
   - {fileID: 21300000, guid: f56f78292ffe0ee4eb0e9259b634e9dc, type: 3}
   - {fileID: 21300000, guid: b7c0d69d922f9ba4baad9c62a8629337, type: 3}
   yve:
-  - {fileID: 21300000, guid: d692c2a687c50db43be207e5eafe7ceb, type: 3}
+  - {fileID: 21300000, guid: 6943f11f0c83aa54daa753f9d00819ac, type: 3}
+  - {fileID: 21300000, guid: cf732ab86f96d1c48b92789adc3476f6, type: 3}
+  - {fileID: 21300000, guid: 033069aeb52fc0547bf6cb293419b77d, type: 3}
+  - {fileID: 21300000, guid: 8e3b93fba845b314eaf0d76f44187e92, type: 3}
   friday:
   - {fileID: 21300000, guid: f184da805c6557d4b805ab3033f8559f, type: 3}
   mueler:

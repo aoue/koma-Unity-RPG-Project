@@ -44,6 +44,9 @@ public class EventManager : MonoBehaviour
     private bool hideOn = false; //when true, hide the dialogue box. also, stop the text from advancing.
     [SerializeField] private CanvasGroup diaBoxGroup; //the thing we hide/show.
 
+    //image swap speed
+    private float imgFadeSpeed = 1.5f; //higher is faster. controls the speed at which char imgs are replaced/shown/hidden during events.
+
     //typing speed controllers
     private float textWait = 0.035f; //how many seconds to wait after a non-period character in typesentence
     private float autoWait = 1.75f; //when auto is on, time waited when a sentence is fully written out before playing the next one
@@ -601,7 +604,7 @@ public class EventManager : MonoBehaviour
 
         if (skipOn == false)
         {
-            StartCoroutine(handle_image_switch_fade(1f, portraitSlots[whichSlot].activeSelf, whichSlot, pLibrary.retrieve_fullp(index)));
+            StartCoroutine(handle_image_switch_fade(imgFadeSpeed, portraitSlots[whichSlot].activeSelf, whichSlot, pLibrary.retrieve_fullp(index)));
         }
         else
         {
@@ -612,7 +615,7 @@ public class EventManager : MonoBehaviour
     }
     void hide_portrait_slot(int whichSlot)
     {
-        StartCoroutine(handle_image_hide_fade(1f, whichSlot));
+        StartCoroutine(handle_image_hide_fade(imgFadeSpeed, whichSlot));
         recalibrate_portrait_positions();
     }
     void set_bg(int id)
