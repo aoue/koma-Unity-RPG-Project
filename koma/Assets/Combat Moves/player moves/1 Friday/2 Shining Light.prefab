@@ -1,0 +1,70 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &256133302298382599
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 256133302298382597}
+  - component: {fileID: 256133302298382596}
+  m_Layer: 0
+  m_Name: 2 Shining Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &256133302298382597
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 256133302298382599}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 475.92722, y: 261.40085, z: -246.86285}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &256133302298382596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 256133302298382599}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 653d3062586801b48acfea91bed4ec2b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveID: 2
+  moveSound: {fileID: 0}
+  nom: Shining Light
+  targetsParty: 0
+  mustTargetSelf: 0
+  isHeal: 0
+  isStatus: 1
+  selfStatus: 0
+  selfStatusTextColorGreen: 0
+  statusText: Offense-
+  phase: 1
+  preferredRow: 2
+  strikes: 1
+  power: 30
+  break_mult: 1
+  lowSpread: 0.9
+  highSpread: 1
+  xSize: 2
+  ySize: 1
+  affinity: 4
+  usesPatk: 0
+  usesPdef: 0
+  apDrain: 1
+  mpDrain: 3
+  flavour: Blinding light that lowers target's offensive abilities.

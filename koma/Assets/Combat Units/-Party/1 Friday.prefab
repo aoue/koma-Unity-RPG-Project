@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba42b37bc7aa8744c844abe1c58e792a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSelectionPortrait: {fileID: 21300000, guid: f184da805c6557d4b805ab3033f8559f,
+  moveSelectionPortrait: {fileID: 21300000, guid: 6943f11f0c83aa54daa753f9d00819ac,
     type: 3}
   boxImg: {fileID: 21300000, guid: cd8233b94ea6ad24cbf19a7f5dae0351, type: 3}
   exp: 12
@@ -63,5 +63,5 @@ MonoBehaviour:
   - {fileID: 1738390688075259775, guid: 6a131bd5456e35c43ba5a5b1eae43532, type: 3}
   - {fileID: 256133302298382596, guid: 0a8f10670b686dc46af2846052b0127a, type: 3}
   - {fileID: 5133056019573839718, guid: d423ee424dca051439bac8e34892883a, type: 3}
-  - {fileID: 924583595960017764, guid: 74bd5575a0f85b8408e6c6f3b4468df4, type: 3}
+  - {fileID: 6463100206085023854, guid: 956ff4ab1bfb6954b993f9a247218b22, type: 3}
   - {fileID: 0}

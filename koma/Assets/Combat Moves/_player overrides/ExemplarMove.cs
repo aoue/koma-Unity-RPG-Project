@@ -14,7 +14,11 @@ public class ExemplarMove : Move
         //should be an int; equal to hp restored per friday's action.
 
         //calc here. formula is hpmax/20 + matk/10
-        int toHeal = (pl[userIndex].get_hpMax_actual() / 20) + (pl[userIndex].get_matk_actual() / 10);
+        //int toHeal = (pl[userIndex].get_hpMax_actual() / 20) + (pl[userIndex].get_matk_actual() / 10);
+
+        //to weak, new formula is hpmax/15 + matk/5.
+        //lvl 1 friday: heals (140/10 + 95/5) =  14 + 19 = 33
+        int toHeal = (pl[userIndex].get_hpMax_actual() / 10) + (pl[userIndex].get_matk_actual() / 5);
         pl[userIndex].status.apply_dot(toHeal, toHeal, 5, 5);
 
     }

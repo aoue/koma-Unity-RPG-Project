@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 using Ink.Runtime;
 
 public class EventManager : MonoBehaviour
@@ -67,6 +68,7 @@ public class EventManager : MonoBehaviour
     private Event heldEv;
     private Story script;
     [SerializeField] private GameObject[] portraitSlots; //3 total. dimensions are 540 x 1080 | 1 : 2 ratio
+    private int[] portraitSlotIDs = new int[3]; //3 total, parallel to portraitSlots. used to save the current id of image in the slot, or -1 if none.
 
     void Awake()
     {
@@ -99,12 +101,12 @@ public class EventManager : MonoBehaviour
         {
             toggle_hide();
         }
-        if (hideOn == true && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)))
+        else if (hideOn == true && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)))
         {
             toggle_hide();
         }
 
-        //press 'spacebar' to continue, only if canProceed if true, we aren't showing history, and we aren't hiding dialogue box
+        //press 'spacebar' or 'enter' or 'LeftClick' to continue, only if canProceed if true, we aren't showing history, and we aren't hiding dialogue box
         if (canProceed == true && historyOn == false)
         {
             if (skipOn == false && autoOn == false && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)))
@@ -346,6 +348,7 @@ public class EventManager : MonoBehaviour
         for (int i = 0; i < 3; i++)
         {
             portraitSlots[i].gameObject.SetActive(false);
+            portraitSlotIDs[i] = -1;
         }
         dialogueCanvas.SetActive(true);
 
@@ -375,15 +378,23 @@ public class EventManager : MonoBehaviour
         {
             string sentence = script.Continue().Trim();
 
-            //add name, sentence pair to history
-            HistoryEntry entry = new HistoryEntry(currentSpeakerName, sentence);
-            if (historyList.Count == historyLimit) //history limit is here.
+            //if sentence is blank; then don't type sentence on it. call DisplayNextSentence again.
+            if ( sentence.Length > 0)
             {
-                historyList.RemoveAt(0);
-            }
-            historyList.Add(entry);
+                //add name, sentence pair to history
+                HistoryEntry entry = new HistoryEntry(currentSpeakerName, sentence);
+                if (historyList.Count == historyLimit) //history limit is here.
+                {
+                    historyList.RemoveAt(0);
+                }
+                historyList.Add(entry);
 
-            StartCoroutine(TypeSentence(sentence));
+                StartCoroutine(TypeSentence(sentence));
+            }
+            else
+            {
+                DisplayNextSentence();
+            }
         }
         else if (script.currentChoices.Count > 0)
         {
@@ -455,17 +466,17 @@ public class EventManager : MonoBehaviour
         switch (showing)
         {
             case 1:
-                showingList[0].transform.localPosition = new Vector2(0f, 0f);
+                showingList[0].transform.localPosition = new Vector2(0f, showingList[0].transform.localPosition.y);
                 break;
             case 2:
-                showingList[0].transform.localPosition = new Vector2(-410f, 0f);
-                showingList[1].transform.localPosition = new Vector2(410f, 0f);
+                showingList[0].transform.localPosition = new Vector2(-410f, showingList[0].transform.localPosition.y);
+                showingList[1].transform.localPosition = new Vector2(410f, showingList[1].transform.localPosition.y);
 
                 break;
             case 3:
-                showingList[0].transform.localPosition = new Vector2(-615f, 0f);
-                showingList[1].transform.localPosition = new Vector2(0f, 0f);
-                showingList[2].transform.localPosition = new Vector2(615f, 0f);
+                showingList[0].transform.localPosition = new Vector2(-615f, showingList[0].transform.localPosition.y);
+                showingList[1].transform.localPosition = new Vector2(0f, showingList[1].transform.localPosition.y);
+                showingList[2].transform.localPosition = new Vector2(615f, showingList[2].transform.localPosition.y);
                 break;
         }
     }
@@ -602,7 +613,12 @@ public class EventManager : MonoBehaviour
         //1. if already showing an image: fade to half alpha, switch image, fade back to full alpha.
         //2. if not showing an image: set half alpha, switch image, show image, fade to full alpha.
 
-        if (skipOn == false)
+
+        //only do the fade if:
+        // - we're not skipping and
+        // - the slot is empty OR the slot is same char as current slot
+        //(current slot means: divide both by 100 and they give the same answer)
+        if (skipOn == false && (portraitSlotIDs[whichSlot] == -1 || index / 100 != portraitSlotIDs[whichSlot] / 100) )
         {
             StartCoroutine(handle_image_switch_fade(imgFadeSpeed, portraitSlots[whichSlot].activeSelf, whichSlot, pLibrary.retrieve_fullp(index)));
         }
@@ -612,9 +628,12 @@ public class EventManager : MonoBehaviour
             portraitSlots[whichSlot].SetActive(true);
             recalibrate_portrait_positions();
         }
+        portraitSlotIDs[whichSlot] = index;
+
     }
     void hide_portrait_slot(int whichSlot)
     {
+        portraitSlotIDs[whichSlot] = -1;
         StartCoroutine(handle_image_hide_fade(imgFadeSpeed, whichSlot));
         recalibrate_portrait_positions();
     }

@@ -1,27 +1,30 @@
 Welcome to the (M ver.) Dear Friday to do list.
 ===========================================
 ASSETS
-NOTE: draw at desired image dimensions on the tablet (or at some factor) and fill the whole image.
-NOTE: draw a skeleton as one layer, then copy it as the base for each drawing.
 screen dimensions: 1920x1080
-full portrait dimensions: 540x1080 (1x2)
-event preview portrait dimensions: 90x90 (1x1)
+event/move select portrait dimensions: (normal: 956x1599 | closeups: 650x1300) (1x2)
+prepdungeonmenu unit icon/event preview portrait dimensions: 90x90 (1x1)
 pdm/playerdungeon portrait dimensions: 500x250/450x225 (2x1) maybe enenacle for design? those are good.
 enemy dungeon portrait dimensions: 450x200 (9x4)
-move select portrait: 540x1080. reuse full portrait.
 
-use a thick brush, it looks better.
+
+SOME UI TO ADD:
 - dungeon scene ui bg for the bottom of the screen box. should be somber, with like, carved angels in it.
 - find a custom mouse pointer to use. they're fun.
-- new sprites for the new cast. full portrait and box portraits too. use the exact size drawing canvas for the image.
-	confirm dimensions before starting. make a template so that everyone is on the same scale.
-	- 540x1080 full portraits can be waist up (just check some vns, see what they do.) 
-	- 90x90 box portraits can be minimalist. (include an unknown one, with a ?)
-	- 250x500 combat portraits should have the face over more on the left side.
-- make notifier background image. (should look like a wooden notice board, with thick borders. maybe there's one free online.)
-- make event icons; red, blue, and green.
+- make notifier background image. 
+	- like a wooden notice board? like a banner hanging down?
+- make event icons; 
+	- little flags: red, blue, and green.
 - make proper 173x173 tiles. set ppu to 173x173 for them too.
-- compass image for the dungeon. rotate the compass image just like the other sprites. how cool it is.
+
+GAME ART:
+	- portraits for 
+		- events (+expressions) and move selection
+		- dungeon boxes
+		- event previews/pdm selection(<- i think)
+	- prologue overworld background; see notes
+	- tile art
+	- dungeon background image that goes behind the tiles
 
 ===========================================
 PROGRAMMING
@@ -38,23 +41,6 @@ OGA licenses:
 
 grow up? as if he did.
 
-- visuals:
-	(combat box portraits should have mostly clear backgrounds, maybe. not pure white, but like an opaque blue.)
-	finish planning before starting to draw something.
-	once the plan is done, then we can start making all the visuals. we will need:
-	- overworld background, complete with all the buildings we'll need.
-	- dungeon bar background. it needs something, not just the plain gray background. darkest dungeon has something like it i think.
-	- full portraits and expressions.
-	- combat portraits for party units and for enemy units.
-	- scene backgrounds.
-	- scene images.
-	- unique tile images for dungeon tiles.
-	- event icons. make them flags that stick out of the buildings or something.
-	- event preview portraits
-
-- figure out what drawings are needed:
-	- do this once all events are written and all mobs are created.)
-
 ===== end story dependent stuff
 
 the combat system is fine. 
@@ -69,14 +55,9 @@ could maybe use: (future additions)
 	- sincy, charm: 50% chance to take 50% dmg from an attack. 
 
 =====
+last part of notes
 
-- duplicate some changes i made in alt lab game:
-	- variable text speed w/ a slider
-	- code to make sure we don't have any empty lines
-	- copy in an ink example that shows how removing choices works.
-
-- events:
-	- when changing portraits of the same character, no fade.
+- there are NO such thing as night events. >:|
 
 - the overworld bgs should have some animation. (even just weather, like rain, snow, or wind, flags blowing, chimney smoke, fog, clouds, etc)
 	- flag blowing: single animated sprite
@@ -114,11 +95,6 @@ could maybe use: (future additions)
 		- if textfile not found, then create it with default values.
 	- create prologue skeleton.
 	- write events.
-====
-
-- there are NO such thing as night events. >:|
-
-
 
 ========================================
 skeleton extends to the end of dungeon 0
@@ -147,19 +123,15 @@ PART 3
 - immediate (...)
 ========================================
 
-- test made backgrounds ingame to sort out problems before spending time making more
-
-- moves:
-	- Friday: +heal, -exemplar
-	- Moth: +exemplar
+- image testing:
+	- fabricated backgrounds
+		- too low resolution? try a higher resolution image for comparison
+	- base images for mc and friday, import them into the game
+		- test them in event scenes (close ups)
+		- test them as combat move select portraits (tested; closeups, once again)
 
 - dungeon 1:
 	- grid, mobs, tile events, etc.
-
-- portrait slots: todo only when images are ready
-	these 540x1080 size ones may not be enough to do everything i want.
-	- allow portrait slots x and y positions, and ordering, to be set. (set x and y as percentages along the screen: 0.1 - 1.0)
-	- make the portrait slots expand to the size of their image component	
 
 - save:
 	- can only save on the overworld, in between events. just save part, history (choices, not text), char progress, units, and gold. as little as possible.

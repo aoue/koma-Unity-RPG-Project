@@ -54,14 +54,14 @@ MonoBehaviour:
   affinity: 4
   mpMax: 40
   patk: 60
-  pdef: 65
+  pdef: 75
   matk: 85
-  mdef: 105
+  mdef: 95
   defendMove: {fileID: 1817192110456301059, guid: a5804e98675f85c4a9c3b49c95391048,
     type: 3}
   moveset:
   - {fileID: 3635603842113465811, guid: bb9045e0b68a0614082ca4adbc9667fb, type: 3}
   - {fileID: 6463100206085023854, guid: 956ff4ab1bfb6954b993f9a247218b22, type: 3}
   - {fileID: 3557969058673008688, guid: 913290447572d1b4290df53bcb9c9cc2, type: 3}
-  - {fileID: 0}
+  - {fileID: 924583595960017764, guid: 74bd5575a0f85b8408e6c6f3b4468df4, type: 3}
   - {fileID: 0}

@@ -62,7 +62,11 @@ public class DungeonManager : MonoBehaviour
     [SerializeField] private Text coordText;
     [SerializeField] private Camera cammy;
     [SerializeField] private GameObject partyFlag;
+
     [SerializeField] private Button[] movementArrows; //array of 3. 0:left, 1:forward, 1:right.
+    private bool[] movementArrowsEnabled = new bool[3] { false, false, false }; //parrallel list to movementArrows. true=can press. used to move with arrow keys/wad
+    private bool acceptingArrowMovement = false;
+
     [SerializeField] private Button useTileButton;
     [SerializeField] private Button useHealButton;
     [SerializeField] private Button withdrawButton;
@@ -125,6 +129,26 @@ public class DungeonManager : MonoBehaviour
         fill_dungeon();
         allow_pick_starting_position();
         SM.play_background_music(heldDun.get_bgTheme());
+    }
+    void Update()
+    {
+        if (acceptingArrowMovement == false) return;
+
+        //allows player to move in the dungeon by pressing arrow keys or WAD (-S) instead
+        //of using the buttons.
+        if (Input.GetKeyDown(KeyCode.LeftArrow) && movementArrowsEnabled[0] == true) //left
+        {
+            hit_movement_arrow(-1);
+        }
+        else if (Input.GetKeyDown(KeyCode.UpArrow) && movementArrowsEnabled[1] == true) //forward
+        {
+            hit_movement_arrow(0);
+        }
+        else if (Input.GetKeyDown(KeyCode.RightArrow) && movementArrowsEnabled[2] == true) //right
+        {
+            hit_movement_arrow(1);
+        }
+
     }
 
     //SETUP
@@ -1033,78 +1057,96 @@ public class DungeonManager : MonoBehaviour
                 if (yParty == yDungeon - 1)
                 {
                     movementArrows[1].interactable = false;
+                    movementArrowsEnabled[1] = false;
                 }                
                 else if (heldDun.dungeonGrid[xParty, yParty + 1] == null)
                 {
                     movementArrows[1].interactable = false;
+                    movementArrowsEnabled[1] = false;
                 }
                 else if (stamina == 0 && heldDun.explored_grid[xParty, yParty + 1] != Exploration.EXPLORED)
                 {
                     movementArrows[1].interactable = false;
+                    movementArrowsEnabled[1] = false;
                 }
                 else
                 {
                     movementArrows[1].interactable = true;
+                    movementArrowsEnabled[1] = true;
                 }
                 break;
             case Direction.SOUTH:
                 if (yParty == 0)
                 {
                     movementArrows[1].interactable = false;
+                    movementArrowsEnabled[1] = false;
                 }
                 else if (heldDun.dungeonGrid[xParty, yParty - 1] == null)
                 {
                     movementArrows[1].interactable = false;
+                    movementArrowsEnabled[1] = false;
                 }
                 else if (stamina == 0 && heldDun.explored_grid[xParty, yParty - 1] != Exploration.EXPLORED)
                 {
                     movementArrows[1].interactable = false;
+                    movementArrowsEnabled[1] = false;
                 }
                 else
                 {
                     movementArrows[1].interactable = true;
+                    movementArrowsEnabled[1] = true;
                 }
                 break;
             case Direction.WEST:
                 if (xParty == 0)
                 {
                     movementArrows[1].interactable = false;
+                    movementArrowsEnabled[1] = false;
                 }
                 else if (heldDun.dungeonGrid[xParty - 1, yParty] == null)
                 {
                     movementArrows[1].interactable = false;
+                    movementArrowsEnabled[1] = false;
                 }
                 else if (stamina == 0 && heldDun.explored_grid[xParty - 1, yParty] != Exploration.EXPLORED)
                 {
                     movementArrows[1].interactable = false;
+                    movementArrowsEnabled[1] = false;
                 }
                 else
                 {
                     movementArrows[1].interactable = true;
+                    movementArrowsEnabled[1] = true;
                 }
                 break;
             case Direction.EAST:
                 if (xParty == xDungeon - 1)
                 {
                     movementArrows[1].interactable = false;
+                    movementArrowsEnabled[1] = false;
                 }
                 else if (heldDun.dungeonGrid[xParty + 1, yParty] == null)
                 {
                     movementArrows[1].interactable = false;
+                    movementArrowsEnabled[1] = false;
                 }
                 else if (stamina == 0 && heldDun.explored_grid[xParty + 1, yParty] != Exploration.EXPLORED)
                 {
                     movementArrows[1].interactable = false;
+                    movementArrowsEnabled[1] = false;
                 }
                 else
                 {
                     movementArrows[1].interactable = true;
+                    movementArrowsEnabled[1] = true;
                 }
                 break;
         }
     }
     public void hit_movement_arrow(int direct)
     {
+        acceptingArrowMovement = false;
+
         //arg legend: -1=sinister, 0=forward, 1=dexter.
         if (direct == 0) party_advance();
         else change_direction(direct);
@@ -1219,9 +1261,11 @@ public class DungeonManager : MonoBehaviour
     }
     void disable_movement_arrows()
     {
-        foreach (Button but in movementArrows)
+        acceptingArrowMovement = false;
+        for (int i = 0; i < movementArrows.Length; i++)
         {
-            but.interactable = false;
+            movementArrows[i].interactable = false;
+            movementArrowsEnabled[i] = false;
         }
         recenterCameraButton.interactable = false;
         withdrawButton.interactable = false;
@@ -1230,9 +1274,11 @@ public class DungeonManager : MonoBehaviour
     }
     void enable_movement_arrows()
     {
-        foreach(Button but in movementArrows)
+        acceptingArrowMovement = true;
+        for (int i = 0; i < movementArrows.Length; i++)
         {
-            but.interactable = true;
+            movementArrows[i].interactable = true;
+            movementArrowsEnabled[i] = true;
         }
         recenterCameraButton.interactable = true;
 
@@ -1413,7 +1459,6 @@ public class DungeonManager : MonoBehaviour
     }
 
     
-
     //MUSIC
     public AudioClip get_combatTheme()
     {
