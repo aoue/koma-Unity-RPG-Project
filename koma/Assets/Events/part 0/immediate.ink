@@ -25,6 +25,12 @@ VAR player = "playerCharName"
 //creation: ancients (they were evil) -> humans (they were weak) -> monsters (they were failures in all regards because the being tried to make them do everything).
 //(after many hundred years of war, the humans learned evil like the monsters.)
 
+~n("")
+
+part 0 immediate.
+-> END
+
+//SOME TESTING
 ~n("Friday")
 ~talk(1)
 ~show(0, 0)
@@ -46,20 +52,16 @@ Anyway, listen to me about to go off. Forget about it.
 ~show(0, 1)
 Or I'll kill you. Ahaha.
 
-
-
-//for the bg: something ancient greek looking, stylised with angels and demons and stuff. gratuity too, in the images. it's art, cuz it's like statues.
-~n("")
-
-part 0 immediate.
-
 //testing choice stuff
 //*choice 1
 //ya hit choice 1
 //*choice 2
 //ya hit choice 2
+//OVER
 
--> END
+
+//for the bg: something ancient greek looking, stylised with angels and demons and stuff. gratuity too, in the images. it's art, cuz it's like statues.
+
 
 //show creator at top. just eyes and outline.
 //bg of ancients and golems

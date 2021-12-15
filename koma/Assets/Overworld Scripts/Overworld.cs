@@ -42,8 +42,8 @@ public class Overworld : MonoBehaviour
     
     void Awake()
     {
-        //fader.fade_from_black();
-        //^we don't use this here because it interferes with immediate loading.
+        fader.fade_from_black();
+        //for game start + returning from dungeons.
 
         if (_instance != null && _instance != this)
         {
@@ -104,16 +104,28 @@ public class Overworld : MonoBehaviour
     }
 
     //NEXT DAY BUTTON
-    IEnumerator passTime_visuals(int a, bool b)
+    IEnumerator passTime_visuals(int addToActPart, bool repeating)
     {
         //controls the visual effects when the pass time button is pressed.
         //fade to black and back and play the pass time song.
 
-        fader.fade_to_black(0.5f);
+        //don't fade if next part has an immediate (the immediate will handle the fade for us)
+        /*
+        if (addToActPart > 0 && partHolders[actPart].has_immediateEvent() == true)
+        {
+
+        }
+        else
+        {
+            fader.fade_to_black(0.5f);
+        }
+        */
+
         SM.play_passTime();
 
+        fader.fade_to_black(0.5f);
         yield return new WaitForSeconds(2f);
-        do_part(a, b);
+        do_part(addToActPart, repeating);
     }
     public void passTime_pressed()
     {
@@ -154,7 +166,7 @@ public class Overworld : MonoBehaviour
         a_new_part(toAddToPart, toPassToPart);
     }
 
-    //MANAGING EVENTS  
+    //MANAGING EVENTS
     public static void progress_charEvent(int whichCharID)
     {
         _instance.charHolders[whichCharID].progress++;
@@ -166,7 +178,6 @@ public class Overworld : MonoBehaviour
         if (repeating == false) //stop the player from repeating events.
         {
             partHolders[actPart].reset_doneEvents();
-            
         }
 
         //wipes the slate clean for a new day.
@@ -205,7 +216,7 @@ public class Overworld : MonoBehaviour
         dungeonLeavingState = LeavingState.WITHDRAW;
 
         //update display
-        update_display(); 
+        update_display();
         set_background();
         SM.play_background_music(partHolders[actPart].get_dayAudio());
 
@@ -213,7 +224,10 @@ public class Overworld : MonoBehaviour
         if (partHolders[actPart].get_immediateEvent() != null)
         {
             // false tells ev manager not to do its pre-event pause
-            EventManager.event_triggered(partHolders[actPart].get_immediateEvent(), false);
+            //EventManager.event_triggered(partHolders[actPart].get_immediateEvent(), false);
+
+            //special immediate event call
+            EventManager.immediate_triggered(partHolders[actPart].get_immediateEvent());
         }
     }
     public void add_active_event(EventHolder evholder, int id)

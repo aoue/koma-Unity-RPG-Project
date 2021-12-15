@@ -32,7 +32,7 @@ VAR player = "playerCharName"
 
 ~n("")
 part 1 event 3.
--> END﻿
+-> END
 
 //scene agairy square
 I come across a pair of men weatherproofing one of the buildings at the edge of the settlement.

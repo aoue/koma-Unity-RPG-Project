@@ -97,31 +97,44 @@ last part of notes
 	- write events.
 
 ========================================
-skeleton extends to the end of dungeon 0
-PART 0 
+
+PART 0 (skele done)
 - immediate (DONE)
 - event 1 (DONE) loc: square
-DUNGEON 0
+- pass time
+
+DUNGEON 0 (skele done)
 - dun 0 event 1 (DONE)
 - dun 0 event 2 (DONE)
-- dun 0 mobEvent 1 (DONE) ; change to be made: make mc help friday with the takedown. he can bless her or something, so that the monster's strike just slides off her.
-PART 1 ------------------------(part 1 gameobject, event folder and events need to be made)
+- dun 0 mobEvent 1 (DONE)
+
+PART 1 (skele done)
 - immediate (DONE)
 [remember, keep these short.]
 - event 1 (DONE) abbess, loc: church
 - event 2 (DONE) sister, loc: one edge of town, doing laundry or something
 - event 3 (DONE) settler,loc: near square
-PART 2
-- event 1 (in progress) [haich]. loc: room.
-PART 3
-- immediate (...)
+once all cleared, unlock:
+- event 4 (DONE) friday, loc: aptmt
+- pass time
+
+PART 2 (needs skele)
+- immediate (next)
 - event 1 (...)
 - event 2 (...)
-DUNGEON 1
+- pass time
+
+DUNGEON 1 (needs skele)
 - (...)
-PART 3
+
+PART 3 (needs skele)
 - immediate (...)
+
+End of prologue
 ========================================
+
+- review plan for rest of prologue:
+	- part 2 onwards
 
 - image testing:
 	- fabricated backgrounds
@@ -131,7 +144,8 @@ PART 3
 		- test them as combat move select portraits (tested; closeups, once again)
 
 - dungeon 1:
-	- grid, mobs, tile events, etc.
+	plan out:
+	- grid, tile events, enemies, and mobparties
 
 - save:
 	- can only save on the overworld, in between events. just save part, history (choices, not text), char progress, units, and gold. as little as possible.
@@ -158,6 +172,17 @@ PART 3
 	- sound effect for passing time. should be ~4 seconds long. doo doo doo doooooo ... doooo
 	- footsteps sound: no good, it's too slow and is only 1 tap.
 		- find a sound with multiple steps, 1 second long (or just over)
+
+- main menu:
+	- read file to get ic and playername. if no file, then create it.
+		- if either ic or playername is different from default, then display them in the bottom right corner of the screen.
+		- grad mc unit prefab and set nom to playername.
+	Just make a fresh scene for mainmenu.
+		- background image. (see bookmarked image. slowly scroll the image up.) 
+		- start: scenemanager.load("overworld scene")
+		- load (not interactable for now)
+		- gallery (same scene as main menu. you click to load an event, which plays right there. post demo.)
+		- exit: Application.Quit()
 
 - help sheet:
 	Do last because things may change.
@@ -191,18 +216,7 @@ PART 3
 			- a dungeon is only cleared when you withdraw through a cleartile. (show it)	
 	- losing combat:
 		- you can retry at no penalty as many times as you'd like. 
-		- if you feel the battle is unwinnable, then you should hit the withdraw option instead. 
-
-- main menu: (no need to worry about loading, dude. we're not going to implement that.)
-	- read file to get ic and playername. if no file, then create it.
-		- if either ic or playername is different from default, then display them in the bottom right corner of the screen.
-		- grad mc unit prefab and set nom to playername.
-	Just make a fresh scene for mainmenu.
-		- background image. (see bookmarked image. slowly scroll the image up.) 
-		- start: scenemanager.load("overworld scene")
-		- load (not interactable for now)
-		- gallery (same scene as main menu. you click to load an event, which plays right there. post demo.)
-		- exit: Application.Quit()
+		- if you feel the battle is unwinnable, then you should hit the withdraw option instead.
 
 - overworld menu options:
 	- next to pass time button section, have these buttons: save, load, party(level trees)

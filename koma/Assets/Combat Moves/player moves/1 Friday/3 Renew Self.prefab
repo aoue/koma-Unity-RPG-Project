@@ -53,13 +53,13 @@ MonoBehaviour:
   selfStatus: 1
   selfStatusTextColorGreen: 1
   statusText: HP Regen+
-  phase: 0
+  phase: 1
   preferredRow: 2
   strikes: 1
   power: 10
   break_mult: 0
-  lowSpread: 0
-  highSpread: 0
+  lowSpread: 0.9
+  highSpread: 1
   xSize: 1
   ySize: 1
   affinity: 4

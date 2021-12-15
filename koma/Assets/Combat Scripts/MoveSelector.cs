@@ -93,8 +93,10 @@ public class MoveSelector : MonoBehaviour
         int mpToSpare = unit.get_mp();
         for (int i = 0; i < 5; i++)
         {
-            if ( unit.get_moveset()[i] != null)
+            if ( unit.get_moveset()[i] != null )
             {
+                //Debug.Log("move selector: mpToSpare = " + mpToSpare + " | move " + i + ".mpdrain = " + unit.get_moveset()[i].get_mpDrain() + " | trance mod = " + unit.status.trance);
+                //Debug.Log("move " + i + " total cost = " + (int)(unit.get_moveset()[i].get_mpDrain() * unit.status.trance));
                 if (mpToSpare >= (int)(unit.get_moveset()[i].get_mpDrain() * unit.status.trance) && unit.get_ap() >= unit.get_moveset()[i].get_apDrain())
                 {
                     if (unit.get_moveset()[i].get_phase() != executionTime.ENDOFROUND)
@@ -107,9 +109,12 @@ public class MoveSelector : MonoBehaviour
                     }
                     else
                     {
-                        moveButtons[i].interactable = false;
-                        
+                        moveButtons[i].interactable = false;                       
                     }
+                }
+                else
+                {
+                    moveButtons[i].interactable = false;
                 }
                 moveButtons[i].GetComponent<Image>().color = AffKeyWords.get_aff_color(unit.get_moveset()[i].get_affinity()); //colour based on move's affinity
                 moveButtons[i].transform.GetChild(1).gameObject.GetComponent<Text>().text = unit.get_moveset()[i].get_nom();
@@ -160,7 +165,6 @@ public class MoveSelector : MonoBehaviour
         //clears the affmult text from highlighters.
         highlighter.move_unhovered();
     }
-
     public void hide()
     {
         gameObject.SetActive(false);

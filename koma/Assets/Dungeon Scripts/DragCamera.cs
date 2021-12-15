@@ -4,18 +4,16 @@ using UnityEngine;
 
 public class DragCamera : MonoBehaviour
 {
-    //don't mess with this file lol.
-
     //used to drag the camera to view more portions of the map.
     //but: do not drag if the player is dragging ui stuff, though.
-
-    //also: camera is clamped to the game world, you cannot keep dragging forever.
+    //there's a recenter camera over party button if you get lost.
 
     [SerializeField] private DungeonManager dMan;
     [SerializeField] private Camera cam;
-    [SerializeField] private float minZoom;
-    [SerializeField] private float maxZoom;
-    [SerializeField] private float zoomStep;
+
+    private float minZoom = 6;
+    private float maxZoom = 12;
+    private float zoomStep = 1;
 
     private Vector3 dragOrigin;
 

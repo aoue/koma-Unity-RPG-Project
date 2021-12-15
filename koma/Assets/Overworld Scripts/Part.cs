@@ -25,6 +25,12 @@ public class Part : MonoBehaviour
     public bool get_hasMandatoryDungeon() { return hasMandatoryDungeon; }
     public AudioClip get_dayAudio() { return dayAudio; }
 
+    public bool has_immediateEvent()
+    {
+        if (immediateEvent == null) return false;
+        else return true;
+    }
+
     public void reset_doneEvents()
     {
         if (doneEvents == null) doneEvents = new List<int>();

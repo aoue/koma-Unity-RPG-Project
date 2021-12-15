@@ -210,11 +210,7 @@ MonoBehaviour:
     jsonAssetDirectory: {fileID: 0}
     jsonAsset: {fileID: 4900000, guid: 355e3d34ed3c8a84f8c2e02856b3dad3, type: 3}
     unhandledCompileErrors: []
-    errors:
-    - type: 2
-      content: "Expected end of line but saw '\uFEFF'"
-      fileName: event 3.ink
-      lineNumber: 35
+    errors: []
     warnings: []
     todos: []
     parents: []
@@ -227,11 +223,7 @@ MonoBehaviour:
     jsonAssetDirectory: {fileID: 0}
     jsonAsset: {fileID: 4900000, guid: 46f906a9594dde3428d16574ddb8a400, type: 3}
     unhandledCompileErrors: []
-    errors:
-    - type: 2
-      content: "Expected end of line but saw '\uFEFF\uFEFF'"
-      fileName: event 4.ink
-      lineNumber: 94
+    errors: []
     warnings: []
     todos: []
     parents: []

@@ -496,7 +496,7 @@ public class DungeonManager : MonoBehaviour
                     {
                         //play event.
                         StartCoroutine(healthy_pause(2.0f, false));
-                        evManager.begin_event(heldDun.retrieve_mobEvent(mp.get_eventID()));
+                        evManager.begin_event(heldDun.retrieve_mobEvent(mp.get_eventID()), true);
                         mp.did_event(); //mark so we don't play this mp's event again.                        
                         return;
                     }
@@ -614,7 +614,7 @@ public class DungeonManager : MonoBehaviour
     {
         //passes control to eventManager, who is gonna pass it back to us later. 
         StartCoroutine(healthy_pause(2.0f, false));
-        evManager.begin_event(heldDun.retrieve_TileEvent(xParty, yParty));
+        evManager.begin_event(heldDun.retrieve_TileEvent(xParty, yParty), true);
     }
     void update_map()
     {

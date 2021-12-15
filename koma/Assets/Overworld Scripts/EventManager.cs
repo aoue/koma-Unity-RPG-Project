@@ -241,7 +241,11 @@ public class EventManager : MonoBehaviour
     }
 
     //MANAGE EVENT RUNNING
-    public static void event_triggered(Event ev, bool doPause = true)
+    public static void immediate_triggered(Event ev)
+    {
+        _instance.begin_immediate(ev);
+    }
+    public static void event_triggered(Event ev, bool doPause)
     {
         //called from eventHolder when an event is mouse clicked.       
         _instance.begin_event(ev, doPause);
@@ -311,7 +315,12 @@ public class EventManager : MonoBehaviour
         canProceed = true;
     }
 
-    public void begin_event(Event ev, bool doPause = true)
+    public void begin_immediate(Event ev)
+    {
+        heldEv = ev;
+        setup_event();
+    }
+    public void begin_event(Event ev, bool doPause)
     {
         fader.fade_to_black();
         heldEv = ev;

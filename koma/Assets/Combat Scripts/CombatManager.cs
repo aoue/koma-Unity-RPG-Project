@@ -46,6 +46,7 @@ public class CombatManager : MonoBehaviour
     private int round;
     private bool targetingDefendMove; //if true, then player is targeting with a defend move and it target the unit's own tile.
     private bool battleOver;
+    private bool playerGoesFirst;
 
     public playerTurnPhase get_pTurn() { return pTurn; }
     public Unit[] get_pl() { return pl; }
@@ -126,6 +127,10 @@ public class CombatManager : MonoBehaviour
 
         fill_party_slots();
         fill_enemy_slots();
+
+        //randomly choose whether player or enemy goes first in round 1.
+        if (UnityEngine.Random.Range(0, 2) == 0) playerGoesFirst = true;
+        else playerGoesFirst = false;
 
         //start up the battle.
         SM.play_background_music(dMan.get_combatTheme());
@@ -277,7 +282,8 @@ public class CombatManager : MonoBehaviour
             }
         }
 
-        if (elCount >= plCount)
+        //sides take turns acting first.
+        if (playerGoesFirst == true)
         {
             turn = whoseTurn.PLAYER;
         }
@@ -285,6 +291,7 @@ public class CombatManager : MonoBehaviour
         {
             turn = whoseTurn.AI;
         }
+        playerGoesFirst = !playerGoesFirst;
 
         //wait for a second here.
         StartCoroutine(rounderWait(1.5f, startOfBattle));

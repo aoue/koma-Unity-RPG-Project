@@ -169,8 +169,8 @@ public class Dungeon0 : Dungeon
                 break;
             case 3: //fourth fight, boss.
                 //1 sabaind in front. 1 sabaind at large in back.
-                //formation[1] = enemyPool[2];
-                formation[4] = enemyPool[0];
+                formation[1] = enemyPool[2];
+                //formation[4] = enemyPool[0];
                 break;
         }
     }
@@ -236,6 +236,8 @@ public class Dungeon0 : Dungeon
             }
             //set initial home tile to explored:
             explored_grid[0, 0] = Exploration.EXPLORED;
+
+            //for fast passing
             explored_grid[4, 6] = Exploration.EXPLORED;
 
             //set exploredTiles equal to pre-explored tiles
@@ -266,7 +268,7 @@ public class Dungeon0 : Dungeon
         "bv", "drf", "yii", "ntf", "o", "a", "gah", "e", "i", "y", "mat", "mmu",
         "muk", "zs", "dq"
     };
-    private string[] suffixArray = new string[]
+    private string[] suffixArray = new string[] //not currently being used in name generations
     {
         "band", "marauders", "mob", "posse", "hanger-ons", "gang", "choppers", "cohort", "followers", "sycophants",
         "lumpers", "thumpers", "breakers", "busters", "killers", "robbers", "wreckers", "mummers", "gutters", "stabbers",

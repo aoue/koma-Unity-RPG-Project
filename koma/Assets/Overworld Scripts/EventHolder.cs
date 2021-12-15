@@ -19,7 +19,7 @@ public class EventHolder : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     public void begin_event()
     {
         //on button click. you know, the button attached to this object.
-        EventManager.event_triggered(ev);
+        EventManager.event_triggered(ev, true);
 
         //mark that this event is done for Part's tracking. :)
         //adds ev.get_id() to done events list.

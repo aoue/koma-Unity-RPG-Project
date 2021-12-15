@@ -35,63 +35,15 @@ VAR player = "playerCharName"
 
 //SCENE OUTLINE
 //Welcome to part 1 event 4 (haich icon)
-// -mc is laying in darkness in the room they've been put up in.  just can't seem to sleep.
-// -runs through the events of the past days; shock, disturbing things, uncertainty.
-//    -he's worried about moth and her future. (guilt, they should have been faster. they could have risked helping her before the monster was done.)
-//    -he's worried about friday retroactively (he didn't realize how dangerous her work was all this time)
-// -mc supposes since he cant sleep he might as well work. he starts at the spellwork he brought with him. casts a light spell and brings out spellwork.
-// -......... ....... ...
-// SCENE 1 haich part
-// -later, as mc is still working (he doesn't know what time it is), friday arrives back. he hears her coming and extinguishes the light, hides spellwork, etc.
-// -he listens to her prepare for bed for a few moments and then slowly come closer... until suddenly she moves down into his bed with him.
-//SWITCH TO SCENE 1 HAICH view. Using the special cgs. dress on.
-//    -you're not sleeping, she says accusingly. how did she know? she's his mother, of course she knew.
-//    -tell me what's wrong, she says. mc tries to be strong, but there's the overpowering urge to collapse and fall into her arms. Finally, he does.
-//    -i'm still such a child, mc says.
-//    -of course you are, you're my little boy, friday says, but that's not what's bothering you.
-// -so a little heart to heart. then friday says, shh, i understand. Here...
-// -wha? mom?
-// -Let your mommy take care of you. i promise you'll like it.
-//UPDATE SCENE 1 HAICH view. remove dress + breastfeeding and head stroking
-// -all at once, she hugs my face down to her chest. "there, there," she coos.
-// -she guides me to her heavy breast and breathlessly pushes her nipple into my lips.
-// -hmmmm, hmmmmm. she starts humming to me gently and running her hand through my hair.
-// -this always calmed you down when you were little..., she says.
-// -mom, isn't this wrong? ...
-// -monologue: but my heart isn't in it. even as i say that, i suck hungrily at her. i inhale her, her soft smell, the gentle, yet firm, yield of her flesh. i absorb this moment and push it down deep within myself to be part of me always.
-//    -the things ive heard, that people say, condemning this between mother and son... it seems funny now. How could anyone say that, how could this be wrong. It feels like the most natural thing in the world.
-// -friday smiles gently. how could it be wrong for me to care for my son? who else in all the world could possibly have more of a claim to you than I?
-// -Now, relax. Everything is going to be okay, I promise. I'll protect you. I'm here for you. I love you. Always.
-// -mc: ...momm... he groans out.
-// -fri: shhh. you're alright. Now, talk to me.
-// -with mc's thinking: it all pours out. the this, the that. fear and worry long buried, from months and years ago;
-//    -the loneliness from my first days at the academy; from when i was lost as a child, from every small thing that had ever happened.
-// -fri: i see. that's more serious than i was imagining. you poor thing, this might not be enough.
-// -one second...
-//UPDATE SCENE 1 HAICH view. sandwiched.
-// -...there.
-// -how's that, any better?
-// -monologue: this is a level further.
-// DO HAICH STUFF [...]
-// THEN IT ENDS.
-// -there, says friday, stroking mc's face and chest. feel any better?
-// -...yeah.
-// -good. remember, im here for you anytime... but this sort of thing is special, you know it's not always possible.
-// -i know. Just the sound of your voice is enough, mom.
-// -Oh, just that? the other part isn't necessary?
-// -i didn't mean-
-// -go to sleep, you charmer. Goodnight.
-// -monologue: friday starts to move away and into her own bed, but mc grabs her by the arm.
-// -...please stay, he says.
-// -friday wordlessly comes back and envelops him again in her arms. kisses him on the forehead.
-// -she starts to hum a lullaby.
-// -i feel, for the first time tonight, the long arms of sleep reaching out to me. I reach back.
+// -establish dependence.
+// -first haich for mc
 // END
 //=============﻿
 
 ~n("")
 part 1 event 4.
--> END﻿﻿
+-> END
+
 
 //~set background darkened agairy room.
 I feel tired.
@@ -242,7 +194,7 @@ As if reading my thoughts, Mother laughs a little.
 
 ~n("Friday")
 How could it be wrong for me to care for you? Who else in all the world could possibly have more of a claim to you than I?
-Now, relax. Everything is going to be okay, I promise. I'll protect you. I'm here for you and I love you, always.
+Now, relax. Everything is going to be okay, I promise. I'll protect you. I love you.
 
 //~set background scene1-6 ; paizuri
 
@@ -250,77 +202,188 @@ Now, relax. Everything is going to be okay, I promise. I'll protect you. I'm her
 ... Mommmm...
 
 ~n("")
-It's all I can do to moan in content through my full mouth.
+It's all I can do to moan in content.
 
 //~set background scene1-5 ; paizuri
 
 ~n("Friday")
-Yeessss? Feeling any better?
-
-~n("")
-I barely manage a nod.
-
-~n("Friday")
-I'm glad. I'd hate to think this was all for nothing.
+Uh-huh? Feeling any better?
 
 //~set background scene1-6 ; paizuri
 
+~n("")
+I manage a nod. Mother beams at me.
 
+~n("Friday")
+Good.
 
+//~set background scene1-5 ; paizuri
 
-//this was all to make me feel better, mc asks? implication; won;'t happen again
-//friday mock scowls; don't be silly, i wouldn't do this with anyone who was feeling down. no, it's all because your my son, and i love you.
+~n("")
+She pushes her breasts tightly together and pauses there. She jiggles her breasts around my shaft, and I watch the rippling of her pale flesh.
+I wasn't expecting this at all. Mother... my mother, the strong, kind, proud woman who raised me... whose love has always shone out like a fire, and equal to one in warthm and intensity.
+And now she's wrapping her breasts around me, stroking me almost absentmindedly while trying to reassure me. Love pushes its way forward to the front of my chest and I'm reminded how important Mother is to me.
 
-//friday speeds up, and knocks the rest of her dress off her chest; switch to 7-8 for paizuri
-//amazing softness talky
-//
+//~set background scene1-6 ; paizuri
 
+But I want to impress her again.
 
+//~set background scene1-8 ; friday with both breasts pulled out of dress; mc's dick sandwiched between her breasts; breasts NOT pushed together; used with [7] to simulate paizuri
 
+~n("Friday")
+Ahhh?
 
+~n("")
+I waited until Mother's breasts were relaxed against my member, then reached forward and pulled at her dress. The half-in half-out thing was killing me.
+Seeing both of her heavy, firm breasts out in the open is more than I can take. Any plans I had to take further action are stopped in their tracks at the sight.
+Sooo big... Sooo soft...
 
-// POST HAICH:
-// -there, says friday, stroking mc's face and chest. feel any better?
-// -...yeah.
-// -good. remember, im here for you anytime... but this sort of thing is special, you know it's not always possible.
-// -i know. Just the sound of your voice is enough, mom.
-// -Oh, just that? the other part isn't necessary?
-// -i didn't mean-
-// -go to sleep, you charmer. Goodnight.
-// -monologue: friday starts to move away and into her own bed, but mc grabs her by the arm.
-// -...please stay, he says.
-// -friday wordlessly comes back and envelops him again in her arms. kisses him on the forehead.
-// -she starts to hum a lullaby.
-// -i feel, for the first time tonight, the long arms of sleep reaching out to me. I reach back.
-// END
-//=============﻿
+~n("Friday")
+None of that now, you'll stretch my dress.
 
+//~set background scene1-7 ; friday with both breasts pulled out of dress; mc's dick sandwiched between her breasts; breasts pushed together
 
-//CG OUTLINE - haich scene 1
-//5 ; friday with her left breast pulled out of dress; mc's dick sandwiched between her breasts; breasts pushed together
-//6: friday with her left breast pulled out of dress; mc's dick sandwiched between her breasts; breasts NOT pushed together; used with [5] to simulate paizuri
-//7: friday with both breasts pulled out of dress; mc's dick sandwiched between her breasts; breasts pushed together
-//8: friday with both breasts pulled out of dress; mc's dick sandwiched between her breasts; breasts NOT pushed together; used with [7] to simulate paizuri
-//9: friday with both breasts pulled out of dress; mc's dick sandwiched between her breasts and cumming; breasts pushed together; cum in the air
-//10: friday with both breasts pulled out of dress; mc's dick sandwiched between her breasts and finished cumming; breasts relaxed; cum has landed on friday's chest and face
-//DONE
+If this is what you wanted, you only had to say something, you know. Satisfied?
+You're acting just like a child. When you used to nurse, you were always pawing at me just like that. Trying to pull my dress down and the like...
+You've always had a special place in your heart for my breasts, haven't you?
 
+//~set background scene1-8 ; not pushed together
 
+~n("")
+Of course I have. Who wouldn't? Until today, I've never been able to decide if it was lucky or unlucky to have the best breasts I've ever seen be on my mom; Always in sight, but out of reach.
+Not so out of reach, apparently.
 
+//~set background scene1-7 ; pushed together
 
+~n("Friday")
+Of course I don't blame you. It's natural to be interested in that type of thing. I've always been a bit worried about you in that respect.
+Sometimes you seemed so disinterested in anything that wasn't one of your magic books. Not really worried, I just wanted to make sure I didn't rush you.
 
+//~set background scene1-8 ; not pushed together
 
+~n("")
+With both of her breasts out now, Mother starts stroking me faster and harder. She pushes against the bottoms and then drops them back down, ready to catch them and raise them back up.
+It feels so soft and warm, and I wonder how much longer I can last.
 
+//~set background scene1-7 ; pushed together
 
+~n("Friday")
+But you're ready, whether you like it or not. From watching you today, I'm sure of it.
 
+//~set background scene1-8 ; not pushed together
 
+The way you handled yourself in the forest...
 
+//~set background scene1-7 ; pushed together
 
+And in the cave...
 
+//~set background scene1-8 ; pushed together
 
+How you fought against the monsters... I can see it.
 
+//~set background scene1-7 ; pushed together
 
+You've grown into such a fine...
 
+//~set background scene1-8 ; pushed together
+
+... young...
+
+//~set background scene1-7 ; pushed together
+
+... man...
+
+//~set background scene1-8 ; pushed together
+
+And your mother is so proud of you and who you've become.
+
+//~set background scene1-7 ; pushed together
+
+You've really grown a lot this last year, my beautiful boy.
+
+//~set background scene1-9 ; friday with both breasts pulled out of dress; mc's dick sandwiched between her breasts and cumming; breasts pushed together; cum in the air
+
+~n("")
+That pushes me over the edge, and my vision blurs as I cum violently, more intensely than I've ever cum before.
+
+//~set background scene1-10 ; friday with both breasts pulled out of dress; mc's dick sandwiched between her breasts and finished cumming; breasts relaxed; cum has landed on friday's chest and face
+
+It lands all over Mother's chest and face and she slows down her pace before finally stopping her titfucking, relaxing her breasts. But even so, they continue to spill against each other, exerting pressure under their own weight on my member between them.
+
+~n("Friday")
+... Good boy.
+
+~n("")
+Mother look so beautiful like this.
+
+~n("Friday")
+You've been awfully quiet for a while. At a loss for words or something?
+
+~n("Me")
+... Yeah.
+
+~n("Friday")
+Feel any better?
+
+~n("")
+I nod and she smiles brightly at me in return.
+
+~n("Friday")
+Good. Remember, I'm here for you anytime... but this sort of thing is special. It's not always possible. Sometimes you'll have to make do with a hug.
+
+~n("Me")
+I know, Mom. Just the sound of your voice is enough.
+
+~n("Friday")
+Oh, you charmer.
+
+~n("Me")
+But Mom... not that I'm complaining, but what was this all about?
+
+~n("Friday")
+What do you mean?
+
+~n("Me")
+Well, you've... we've... never done anything like that before.
+
+~n("")
+She shrugs like it's obvious.
+
+~n("Friday")
+You've never been that upset before.
+
+~n("")
+How about that. Mother kisses me on the forehead.
+
+~n("Friday")
+Try to get some sleep now, alright? I'm going to need your help again tomorrow.
+
+~n("Me")
+OK. Mom... you can rely on me, you know. When we're fighting or... when anything.
+
+~n("Froday")
+I know I can, sweetheart. But now, sleep. For real. You've had an exciting day, stayed up too late, and I dare say you've had an exciting night too.
+
+~n("")
+Mother starts to get up, but I grab hold of her sleeve.
+
+~n("Friday")
+Hey. What did i say about pulling on my dress?
+
+~n("Me")
+Mom... don't go.
+
+~n("")
+She smiles heartmeltingly down at me and winks.
+
+~n("Friday")
+Well, OK, you spoiled little boy.
+
+~n("")
+Mother lowers herself back down into bed, facing me. She turns me over so my back is facing her and pulls me in close to her warmth, envelopping me.
+She rubs my back, and then, so gently that it's barely audible, I catch the first notes of a familiar lullaby from her mouth. I feel totally at ease.
+I don't hear the rest.
 
 
 
