@@ -170,7 +170,8 @@ public class Dungeon0 : Dungeon
             case 3: //fourth fight, boss.
                 //1 sabaind in front. 1 sabaind at large in back.
                 formation[1] = enemyPool[2];
-                //formation[4] = enemyPool[0];
+                formation[3] = enemyPool[0];
+                formation[5] = enemyPool[0];
                 break;
         }
     }
@@ -313,4 +314,5 @@ public class Dungeon0 : Dungeon
 
         return new string(a);
     }
+
 }

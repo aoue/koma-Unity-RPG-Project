@@ -51,6 +51,7 @@ MonoBehaviour:
   nom: Friday
   apMax: 1
   hpMax: 140
+  break_multiplier: 1
   affinity: 4
   mpMax: 30
   patk: 95

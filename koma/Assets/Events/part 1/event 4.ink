@@ -139,13 +139,16 @@ She's humming and carefully running her hand through my hair.
 Suddenly, she freezes.
 
 ~n("Friday")
-You know, if you don't start looking like you're enjoying yourself I might get offended.
+You know, if you don't start looking like you're enjoying yourself I may become annoyed.
 
 ~n("")
-At once all the tension I had been feeling at this sudden turn evaporates. What had I been thinking? It's so painfully simple.
+At once all the tension I had been feeling evaporates. What had I been thinking? It's painfully simple.
 I press myself back into her chest forcefully and latch onto her breast.
-I suck hungrily at her. I inhale her; her soft smell, the gentle, yet firm, yield of her flesh. I absorb this moment and push it down deep within myself to be kept and cherished always.
-Her petting resumes and I bask in it.
+I suck hungrily at her; inhaling her and her scent, the gentle, yet firm, yielding of her flesh. I absorb this moment and push it down deep within myself to be kept and cherished always.
+She resumes her petting and I bask in it.
+
+~n("Friday")
+Now tell your mother what's on your mind.
 
 ~n("")
 Everything that had been on my mind earlier, all my worries, come out all at once. Fear, worry, loneliness, every small thing that's every been on my mind; they all seem silly now, like somebody else's problems. How could I have felt this way with Mother right there?

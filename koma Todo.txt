@@ -25,6 +25,8 @@ GAME ART:
 	- prologue overworld background; see notes
 	- tile art
 	- dungeon background image that goes behind the tiles
+		- general trees and branches and bushes and stuff. same one for both dungeons.
+
 
 ===========================================
 PROGRAMMING
@@ -54,10 +56,13 @@ could maybe use: (future additions)
 	- friday, matriarch: all stats increased by 10% for each adj ally
 	- sincy, charm: 50% chance to take 50% dmg from an attack. 
 
+- the combat system IS good. it does have depth, and in a different way
+  than a tactics game does. For instance, this game can do boss battles.
+- for a game that focuses on monster fighting and stuff like that, having
+  a system that allows good boss battles is super important.
+
 =====
 last part of notes
-
-- there are NO such thing as night events. >:|
 
 - the overworld bgs should have some animation. (even just weather, like rain, snow, or wind, flags blowing, chimney smoke, fog, clouds, etc)
 	- flag blowing: single animated sprite
@@ -101,12 +106,14 @@ last part of notes
 PART 0 (skele done)
 - immediate (DONE)
 - event 1 (DONE) loc: square
-- pass time
+ unlock dungeon 0
 
 DUNGEON 0 (skele done)
 - dun 0 event 1 (DONE)
 - dun 0 event 2 (DONE)
 - dun 0 mobEvent 1 (DONE)
+ clear
+ pass time
 
 PART 1 (skele done)
 - immediate (DONE)
@@ -116,32 +123,28 @@ PART 1 (skele done)
 - event 3 (DONE) settler,loc: near square
 once all cleared, unlock:
 - event 4 (DONE) friday, loc: aptmt
-- pass time
+ pass time
 
-PART 2 (needs skele)
+PART 2 (test skele)
 - immediate (next)
-- event 1 (...)
+- event 1 (...) ; ends on mc leaving
 - event 2 (...)
-- pass time
+ unlock dungeon 1
 
 DUNGEON 1 (needs skele)
 - (...)
+ clear
+ pass time
 
 PART 3 (needs skele)
 - immediate (...)
+ pass time
 
-End of prologue
+End of prologue - Chapter 1 coming soon!
 ========================================
 
-- review plan for rest of prologue:
-	- part 2 onwards
 
-- image testing:
-	- fabricated backgrounds
-		- too low resolution? try a higher resolution image for comparison
-	- base images for mc and friday, import them into the game
-		- test them in event scenes (close ups)
-		- test them as combat move select portraits (tested; closeups, once again)
+- make part 2 skele
 
 - dungeon 1:
 	plan out:

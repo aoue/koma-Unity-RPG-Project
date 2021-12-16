@@ -636,6 +636,8 @@ public class CombatManager : MonoBehaviour
     void send_pl_backFront()
     {
         //sends the back row to the front and the front row to the back
+        //however: only send a front unit to the back if there is a back unit behind it that has to move forward.
+
         Unit[] tmpArr = new Unit[3];
         for (int i = 0; i < tmpArr.Length; i++)
         {
@@ -644,9 +646,25 @@ public class CombatManager : MonoBehaviour
 
         for (int i = 0; i < 3; i++)
         {
-            pl[i] = pl[i + 3];
-            pl[i + 3] = tmpArr[i];
+            //if front empty and back empty, no action required.
+            //if front not empty but back is empty, no action required
+            //if front not empty and back not empty, swap both together
+            //if front empty and back not empty, send back to front
+
+            if (pl[i] == null && pl[i+3] != null)
+            {
+                //if front empty and back not empty, send back to front.
+                pl[i] = pl[i + 3];
+                pl[i + 3] = null;
+            }
+            else if (pl[i] != null && pl[i + 3] != null)
+            {
+                //if both not empty, swap them.
+                pl[i] = pl[i + 3];
+                pl[i + 3] = tmpArr[i];
+            }
         }
+
         //update unit places
         for (int i = 0; i < pl.Length; i++)
         {
@@ -830,7 +848,7 @@ public class CombatManager : MonoBehaviour
                                 plays.add("Deals " + dmgList[i] + " damage!");
 
                                 //check here for break
-                                int breakAmount = Mathf.Min(100, (int)((dmgList[i] * move.get_breakMult() / el[i].get_hpMax_actual()) * 150));
+                                int breakAmount = Mathf.Min(100, (int)((dmgList[i] * move.get_breakMult() * el[i].get_break_multiplier() / el[i].get_hpMax_actual()) * 150));
                                 bool didBreak = el[i].damage(dmgList[i], breakAmount);
 
                                 //display dmg numbers or break
@@ -1017,7 +1035,7 @@ public class CombatManager : MonoBehaviour
                                 plays.add("Deals " + dmgList[i] + " damage!");
 
                                 //check here for break
-                                int breakAmount = Mathf.Min(100, (int)((dmgList[i] * move.get_breakMult() / pl[i].get_hpMax_actual()) * 150));
+                                int breakAmount = Mathf.Min(100, (int)((dmgList[i] * move.get_breakMult() * pl[i].get_break_multiplier() / pl[i].get_hpMax_actual()) * 150));
                                 bool didBreak = pl[i].damage(dmgList[i], breakAmount);
 
                                 //display dmg numbers or break

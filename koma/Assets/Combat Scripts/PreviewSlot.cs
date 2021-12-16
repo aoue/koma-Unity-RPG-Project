@@ -25,9 +25,9 @@ public class PreviewSlot : MonoBehaviour
             {               
                 theBoss.show_active_portrait(theBoss.get_pl()[which].get_activePortrait());
 
-                if (theBoss.get_pl()[which].get_ap() > 0 && theBoss.get_pl()[which].get_ooa() == false)
+                //if (theBoss.get_pl()[which].get_ap() > 0 && theBoss.get_pl()[which].get_ooa() == false)                
                     highlighter.highlight_user(which);
-            }               
+            }
         }
         //PLAYER SELECTING A TARGET TILE (on the player side of the map)
         else if ( theBoss.get_pTurn() == playerTurnPhase.SELECTTARGET && theBoss.currentUnit != null && theBoss.currentUnit.nextMove != null && theBoss.currentUnit.nextMove.get_isHeal() == true)
@@ -119,7 +119,7 @@ public class PreviewSlot : MonoBehaviour
         
     }
 
-    //PREVIEW MOVES  
+    //PREVIEW MOVES
     public void highlight_previewMove(int which)
     {
         //called when one of the moves held in preview is highlighted.

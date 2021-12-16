@@ -19,6 +19,7 @@ public class Enemy : Unit
     [SerializeField] private bool isBuffer; //true if the unit is a buffer.
     [SerializeField] private int healer_priority; //added to unit's priority if an ally is concerned.
     
+    public float get_break_multiplier() { return break_multiplier; }
 
     //move picking system.
     [SerializeField] private int mpRegen; //the amount of mp the unit regens per round.

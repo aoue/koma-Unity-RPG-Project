@@ -20,6 +20,7 @@ public class Unit : MonoBehaviour
     protected int ap;
     [SerializeField] protected int hpMax;
     protected int hp;
+    [SerializeField] protected float break_multiplier; //multiplies all break percentage taken by this number. this is to reconcile the break system with bosses.
     [SerializeField] private int affinity;
     protected int mp; //greater/eq to 0 for player and determines how much the unit adds to the party's stamina, positive number for enemy (move picking influencer)
     [SerializeField] private int mpMax; //the unit's max stamina.
@@ -161,6 +162,8 @@ public class Unit : MonoBehaviour
     public int get_matk() { return matk; }
     public int get_mdef() { return mdef; }
     public bool get_ooa() { return ooa; }
+
+    public float get_break_multiplier() { return break_multiplier; }
 
     //GET ACTUALS - add gear increases and status multipliers.
     public int get_hpMax_actual() { if (status == null) return hpMax; return (int)(hpMax * (1f + status.hp)); }

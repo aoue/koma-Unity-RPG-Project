@@ -1,0 +1,72 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &2850372047220327050
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8885182126909900674}
+  - component: {fileID: 4914016089414917255}
+  m_Layer: 0
+  m_Name: 3 Forest Wolv
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8885182126909900674
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2850372047220327050}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 490.1051, y: 264.17627, z: -515}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4914016089414917255
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2850372047220327050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 081b12efd40753d428fd913f350cf59e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  moveSelectionPortrait: {fileID: 0}
+  boxImg: {fileID: 0}
+  exp: 4
+  level: 0
+  nom: Forest Wolv
+  apMax: 1
+  hpMax: 60
+  affinity: 6
+  mpMax: 0
+  patk: 70
+  pdef: 50
+  matk: 20
+  mdef: 40
+  defendMove: {fileID: 0}
+  moveset:
+  - {fileID: 8685429007308350467, guid: ea9cc63bc403baa45ac04d5169b7085b, type: 3}
+  - {fileID: 1017240890321828223, guid: e3e13c5733e0a104098c368164d5db51, type: 3}
+  break_multiplier: 1
+  doSpawningVariance: 1
+  default_priority: 5
+  discipline: 2
+  concerned_level: 0.3
+  concerned_priority: -2
+  isHealer: 0
+  isBuffer: 0
+  healer_priority: 0
+  mpRegen: 10

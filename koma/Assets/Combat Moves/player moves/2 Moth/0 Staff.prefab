@@ -53,7 +53,7 @@ MonoBehaviour:
   selfStatus: 0
   selfStatusTextColorGreen: 0
   statusText: 
-  phase: 1
+  phase: 0
   preferredRow: 0
   strikes: 1
   power: 20

@@ -140,23 +140,23 @@ public class Overworld : MonoBehaviour
             {
                 case LeavingState.LOSS:
                     //we lost the dungeon. we repeat the day.
-                    Debug.Log("passTime pressed - loss.");
+                    //Debug.Log("passTime pressed - loss.");
                     StartCoroutine(passTime_visuals(0, true));
                     break;
                 case LeavingState.WITHDRAW:
                     //we withdrew from the dungeon. we repeat the day.
-                    Debug.Log("passTime pressed - withdraw.");
+                    //Debug.Log("passTime pressed - withdraw.");
                     StartCoroutine(passTime_visuals(0, true));
                     break;
-                case LeavingState.CLEAR: //we can advacne to the next part.
-                    Debug.Log("passTime pressed - clear.");
+                case LeavingState.CLEAR: //we can advance to the next part.
+                    //Debug.Log("passTime pressed - clear.");
                     StartCoroutine(passTime_visuals(1, false));
                     break;
             }
         }
         else
         {
-            Debug.Log("passTime pressed; forget doing a dungeon.");
+            //Debug.Log("passTime pressed; forget doing a dungeon.");
             StartCoroutine(passTime_visuals(1, false));
         }
         
@@ -223,11 +223,12 @@ public class Overworld : MonoBehaviour
         //finally, check if the pary has an immediate event. if it does, then go to that event.
         if (partHolders[actPart].get_immediateEvent() != null)
         {
-            // false tells ev manager not to do its pre-event pause
-            //EventManager.event_triggered(partHolders[actPart].get_immediateEvent(), false);
-
-            //special immediate event call
-            EventManager.immediate_triggered(partHolders[actPart].get_immediateEvent());
+            //immediate event call
+            //if we are repeating the part, then don't replay immediate
+            if (repeating == false)
+            {
+                EventManager.immediate_triggered(partHolders[actPart].get_immediateEvent());
+            }
         }
     }
     public void add_active_event(EventHolder evholder, int id)
@@ -328,7 +329,6 @@ public class Overworld : MonoBehaviour
         //sets act part progress text.
         actPartText.text = partHolders[actPart].get_partName();
     }
-
 
     //getters
     public Button get_nextDayButton() { return nextDayButton; }

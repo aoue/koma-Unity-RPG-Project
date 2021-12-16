@@ -51,6 +51,7 @@ MonoBehaviour:
   nom: Moth
   apMax: 1
   hpMax: 90
+  break_multiplier: 1
   affinity: 4
   mpMax: 40
   patk: 60
