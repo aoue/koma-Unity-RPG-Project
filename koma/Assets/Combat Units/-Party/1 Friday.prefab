@@ -46,7 +46,8 @@ MonoBehaviour:
   moveSelectionPortrait: {fileID: 21300000, guid: 6943f11f0c83aa54daa753f9d00819ac,
     type: 3}
   boxImg: {fileID: 21300000, guid: cd8233b94ea6ad24cbf19a7f5dae0351, type: 3}
-  exp: 12
+  playerUnitId: 1
+  exp: 100
   level: 1
   nom: Friday
   apMax: 1

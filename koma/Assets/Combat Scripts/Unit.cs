@@ -13,6 +13,7 @@ public class Unit : MonoBehaviour
     //a crit portrait? to cover a slice of the screen like in trails in the sky? a bit more than that though; include like head and upper body?
 
     //base stats
+    [SerializeField] private int playerUnitId; //a unique identifier for a player unit. used to link unit to level trees.
     [SerializeField] protected int exp; //unspent exp. increases and decreases just fine. (for enemy, it's how much exp they drop.)
     [SerializeField] protected int level;
     [SerializeField] protected string nom;
@@ -53,7 +54,7 @@ public class Unit : MonoBehaviour
     //a null value means an empty moveslot
     [SerializeField] private DefendMove defendMove; //the 1 defend move the user has equipped.
     [SerializeField] protected Move[] moveset; //the 5 moves the unit has equipped. set at dungeon start.
-
+    
     //MODIFIERS
     public void inc_exp(int x) { exp += x; }
     public void create_status()
@@ -140,6 +141,7 @@ public class Unit : MonoBehaviour
     public void set_break(int to) { break_level = to; }
 
     //GETTERS
+    public int get_unitId() { return playerUnitId; }
     public bool get_isScheduled() { return isScheduled; }
     public int get_break() { return break_level; }
     public Sprite get_activePortrait() { return moveSelectionPortrait; }

@@ -13,6 +13,8 @@ public class LevelTreePreviewer : MonoBehaviour
     // -1 defend move slots (not interactable)
     // -move highlight portion. lets us see what the info of a move when it is highlighted.
 
+    private Unit unitShowing;
+
     [SerializeField] private Image[] moveBgs;
     [SerializeField] private Text[] moveText;
     [SerializeField] private Text defendMoveText;
@@ -25,6 +27,7 @@ public class LevelTreePreviewer : MonoBehaviour
 
     public void show(Unit unit)
     {
+        unitShowing = unit;
         expText.text = "EXP: " + unit.get_exp().ToString();
 
         nameText.text = unit.get_nom() + " Lv " + unit.get_level();
@@ -32,7 +35,8 @@ public class LevelTreePreviewer : MonoBehaviour
 
         moveHighlightText.text = "";
 
-        statBlockText.text = "Patk: " + unit.get_patk()
+        statBlockText.text = "HP: " + unit.get_hp() 
+            + "\nPatk: " + unit.get_patk()
             + "\nPdef: " + unit.get_pdef()
             + "\nMatk: " + unit.get_matk()
             + "\nMdef: " + unit.get_mdef()
@@ -56,8 +60,7 @@ public class LevelTreePreviewer : MonoBehaviour
             }
         }
         gameObject.SetActive(true);
-    }
-    /*
+    }    
     public void hover_move(int which)
     {
         //0-4: normal moves.
@@ -65,13 +68,13 @@ public class LevelTreePreviewer : MonoBehaviour
         //show the highlight for lastUnit's move.
         if (which < 5)
         {
-            if (lastUnit.get_moveset()[which] != null)
-                moveHighlightText.text = lastUnit.get_moveset()[which].generate_preview_text();
+            if (unitShowing.get_moveset()[which] != null)
+                moveHighlightText.text = unitShowing.get_moveset()[which].generate_preview_text();
         }
         else
         {
-            moveHighlightText.text = lastUnit.get_defendMove().generate_defend_string();
+            moveHighlightText.text = unitShowing.get_defendMove().generate_defend_string();
         }
-    }
-    */
+    }   
+
 }

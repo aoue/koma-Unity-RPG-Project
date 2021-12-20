@@ -143,16 +143,28 @@ PART 3 (needs skele)
 End of prologue - Chapter 1 coming soon!
 ========================================
 
+- level tree adjustments:
+	- move viewer: exp cost text move down, min level text move down
+	- level trees aren't showing on unit click:
+		- create dummy trees for mc and moth for now.
+
 - level tree canvas:
-	- unit previewer: move hover information
-	- make sample one (friday):
-		- all the moves the unit knows/can learn go on here.
-		- each move button has 5 little buttons beneath the name; they mean equip move to slot 1-5
-		- click on a move to read its descr/etc. when clicked on, you can learn it.
-		- hover over a move to read descr/etc, but unhovering will show last clicked one.
-		in short, example needs: learn move, equip move.
-	- move view on the right. shows the hovered move's info/locked move's info.
-		- provides interface to learn move.
+	MOVE PART
+	time for an example.
+	- mouse over moves
+	- equip moves
+	- learn a new move and equip it
+	- equip moves and see if they stay when going to dungeon
+	LEVEL PART
+	- the level up interface:
+		- click to increase stats. 
+		- button only interactable when you have enough exp to afford next level up.
+		when clicked successfully:
+		- increase all stats; hp, mp, patk, pdef, matk, mdef, lvl
+		- validate button again; decrease unit exp.
+
+- units:
+	- game start: reset exp.
 
 - rewrite incoming:
 	- see new notes in day by day.

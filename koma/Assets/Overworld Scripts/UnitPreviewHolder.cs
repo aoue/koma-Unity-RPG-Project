@@ -42,7 +42,8 @@ public class UnitPreviewHolder : MonoBehaviour
 
         moveHighlightText.text = "";
 
-        statBlockText.text = "Patk: " + unit.get_patk()
+        statBlockText.text = "HP: " + unit.get_hp()
+            + "\nPatk: " + unit.get_patk()
             + "\nPdef: " + unit.get_pdef()
             + "\nMatk: " + unit.get_matk()
             + "\nMdef: " + unit.get_mdef()
