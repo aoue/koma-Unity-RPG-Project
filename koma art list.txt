@@ -25,14 +25,6 @@ note, agairy backgrounds have the emblem and other icons of the virginal order p
 DUNGEON TILES
 - a unique image for each tile prefab
 
-CUT-INS (the unit fighting or something all badass. bg images.)
-- Friday
-
-PARTY UNITS
-- friday portrait + variants (smirk, smile, sad, frown, fake-smile, fake-smile level2, worry, resolute)
-- mc portrait (combat only)
-- moth portrait + variants. Note, in prologue moth will be wearing sister clothes.
-
 ENEMY UNITS
 - sabaind-at-large
 - sabaind warrior
@@ -44,13 +36,7 @@ ENEMY UNITS
 NPCS
 - abbess portrait + variants (neutral, fake smile, fake smile level2)
 
-SCENES: (see day by day)
-- sc0: sabaind-at-large + Moth, at cave
-	- states: full[y sheathed] [hands on hips] | partial [hands on hips] | inflated [hands over shoulders/chest]
-- sc1: friday + mc
-	- see p1 ev4 for detailed description of the 10 images.
-- sc2: artifact's tentacles + abbess, settler girls 
-	- states: 
+
 
 
 

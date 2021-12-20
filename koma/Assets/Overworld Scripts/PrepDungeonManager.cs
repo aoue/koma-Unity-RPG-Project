@@ -31,7 +31,7 @@ public class PrepDungeonManager : MonoBehaviour
 
     [SerializeField] private Sprite[] affOrbSprites;
 
-       
+    
     public void inc_exp()
     {
         foreach (Unit partyMember in reserveParty)
@@ -43,6 +43,8 @@ public class PrepDungeonManager : MonoBehaviour
         ExpManager.distribute_xp(reserveParty);
     }
 
+    public List<Unit> get_reserveParty() { return reserveParty; }
+    public void refill_reserve(List<Unit> replacementParty) { reserveParty = replacementParty; }
 
     public void load_up(Dungeon dun)
     {

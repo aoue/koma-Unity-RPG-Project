@@ -188,6 +188,7 @@ public class CombatManager : MonoBehaviour
                 //if player is selecting target;
                 //then return to select move.
                 //Debug.Log("select target -> select move");
+                targetingDefendMove = false;
                 pTurn = playerTurnPhase.SELECTMOVE;
                 previews.hide();
                 plays.hide();

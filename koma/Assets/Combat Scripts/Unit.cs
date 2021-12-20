@@ -53,7 +53,6 @@ public class Unit : MonoBehaviour
     //a null value means an empty moveslot
     [SerializeField] private DefendMove defendMove; //the 1 defend move the user has equipped.
     [SerializeField] protected Move[] moveset; //the 5 moves the unit has equipped. set at dungeon start.
-    private List<Move> allKnownMoves; //all the moves the unit knows.
 
     //MODIFIERS
     public void inc_exp(int x) { exp += x; }

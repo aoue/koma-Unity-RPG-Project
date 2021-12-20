@@ -143,12 +143,30 @@ PART 3 (needs skele)
 End of prologue - Chapter 1 coming soon!
 ========================================
 
+- level tree canvas:
+	- unit previewer: move hover information
+	- make sample one (friday):
+		- all the moves the unit knows/can learn go on here.
+		- each move button has 5 little buttons beneath the name; they mean equip move to slot 1-5
+		- click on a move to read its descr/etc. when clicked on, you can learn it.
+		- hover over a move to read descr/etc, but unhovering will show last clicked one.
+		in short, example needs: learn move, equip move.
+	- move view on the right. shows the hovered move's info/locked move's info.
+		- provides interface to learn move.
 
-- make part 2 skele
+- rewrite incoming:
+	- see new notes in day by day.
+	- when rewriting, reuse when possible.
+	- finish rewriting before adding anything.
+
+- write in its entirety
 
 - dungeon 1:
 	plan out:
 	- grid, tile events, enemies, and mobparties
+
+- make the skeleton
+
 
 - save:
 	- can only save on the overworld, in between events. just save part, history (choices, not text), char progress, units, and gold. as little as possible.
