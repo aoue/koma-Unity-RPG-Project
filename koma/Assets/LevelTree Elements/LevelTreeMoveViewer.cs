@@ -18,8 +18,8 @@ public class LevelTreeMoveViewer : MonoBehaviour
 
     public void fill(string expCostStr, string minLevelStr, string moveNameStr, string moveDescrStr)
     {
-        expCostText.text = expCostStr;
-        minLevelText.text = minLevelStr;
+        expCostText.text = expCostStr + " EXP";
+        minLevelText.text = "Min lvl " + minLevelStr;
         moveNameText.text = moveNameStr;
         moveDescrText.text = moveDescrStr;
     }

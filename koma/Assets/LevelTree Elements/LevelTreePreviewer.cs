@@ -25,6 +25,10 @@ public class LevelTreePreviewer : MonoBehaviour
     [SerializeField] private Text apText;
     [SerializeField] private Text moveHighlightText;
 
+    public void update_exp()
+    {
+        expText.text = "EXP: " + unitShowing.get_exp().ToString();
+    }
     public void show(Unit unit)
     {
         unitShowing = unit;

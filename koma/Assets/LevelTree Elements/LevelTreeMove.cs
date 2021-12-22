@@ -21,31 +21,41 @@ public class LevelTreeMove : MonoBehaviour
 
     //prerequisistes
     [SerializeField] private int[] prerequisiteIds; //the unit must know all moves with matching ids to learn this move.
+    [SerializeField] bool alreadyLearned; 
 
     void Start()
     {
         if (containedMove == null)
         {
-            Debug.Log("error: some LevelTreeMove container has no move set!");
+            Debug.Log("error: some LevelTreeMove container has no move assigned to it! Epic Fail!");
             return;
         }
 
         //set the move's name:
         moveNameText.text = containedMove.get_nom();
 
-        //set the move's exp cost text:
-        //if move already learned:
-        //ExpCostText.text = "<i>Learned</i>"
-        //else:
-        ExpCostText.text = expCost.ToString() + " EXP";
-
         //set the colour of the move bg to match containedMove's affinity:
         bg.color = AffKeyWords.get_aff_color(containedMove.get_affinity());
     }
+    
+    public void hide_assignment_buttons()
+    {
+        assignmentGroup.alpha = 0f;
+    }
+    public void show_assignment_buttons()
+    {
+        assignmentGroup.alpha = 100f;
+    }
+
+    //SETTERS
+    public void set_alreadyLearned(bool v) { alreadyLearned = v; }
+    public void set_expCostText(string s) { ExpCostText.text = s; }
+    public void display_expCost() { ExpCostText.text = expCost.ToString() + " EXP"; }
 
     //GETTERS
     public Move get_containedMove() { return containedMove; }
     public int get_expCost() { return expCost; }
     public int get_minLevel() { return minLevel; }
-
+    public int[] get_prereqs() { return prerequisiteIds; }
+    public bool get_alreadyLearned() { return alreadyLearned; }
 }

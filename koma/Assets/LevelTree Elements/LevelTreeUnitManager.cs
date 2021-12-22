@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelTreeUnitManager : MonoBehaviour
 {
@@ -14,26 +15,49 @@ public class LevelTreeUnitManager : MonoBehaviour
     //if not, the player can learn it or they can't if the prereq isn't met.
 
     [SerializeField] private int linkId; //represents the level tree of the same unit.
-    [SerializeField ]private List<int> allKnownMoveIds; //all the known moves of this particular unit. it's a prefab, so they save themselves.
 
-    public void load_up()
+    public void load_up(List<int> allKnownMoveIds)
     {
         //if a move's id is in allKnownMoveIds, the move is already learned.
-        //generate the level tree this way.
+        //load the level tree this way.
 
-        //first pass: equippable moves
-        //for all children of this gameobject (the children are of type leveltreemove)
-        //  if leveltreemove contained move id is in allKnownMoveIds
-        //      interactable
-        //  else
-        //      not interactable
+        foreach (Transform child in transform)
+        {          
+            if ( allKnownMoveIds.Contains(child.gameObject.GetComponent<LevelTreeMove>().get_containedMove().get_moveID()) )
+            {
+                //move is known:
+                //-enable equip buttons
+                //-make button interactable
+                child.gameObject.GetComponent<LevelTreeMove>().show_assignment_buttons();
+                child.gameObject.GetComponent<Button>().interactable = true;
+                //-set text to learned
+                child.gameObject.GetComponent<LevelTreeMove>().set_expCostText("<i>Learned</i>");
+            }
+            else
+            {
+                //move is not known:
+                //-disable equip buttons
+                child.gameObject.GetComponent<LevelTreeMove>().hide_assignment_buttons();
 
-        //second pass: learnable moves
-        //for all children of this gameobject (the children are of type leveltreemove) 
-        //  if not interactable
-        //      if prereqs are all in allKnownMoveIds
-        //          then learnable
-        //
+                //check if move is learnable:
+                //-if it is, interactable
+                //-if it is not, not interactable
+                if ( move_is_learnable(child.gameObject.GetComponent<LevelTreeMove>().get_prereqs(), allKnownMoveIds) == true)
+                {
+                    //move is learnable
+                    child.gameObject.GetComponent<Button>().interactable = true;
+                    //set text to exp cost
+                    child.gameObject.GetComponent<LevelTreeMove>().display_expCost();
+                }
+                else
+                {   
+                    //move is not learnable
+                    child.gameObject.GetComponent<Button>().interactable = false;
+                    //set texp to ineligible
+                    child.gameObject.GetComponent<LevelTreeMove>().set_expCostText("Ineligible");
+                }                           
+            }
+        }
 
         gameObject.SetActive(true);
     }
@@ -41,7 +65,21 @@ public class LevelTreeUnitManager : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
-    
+
+
+    bool move_is_learnable(int[] prereqs, List<int> allKnownMoveIds)
+    {
+        //returns true if move is learnable, false otherwise.
+        //a move is learnable is all of its prereqs are in the list of allKnownMoveIds.
+        foreach (int i in prereqs)
+        {
+            if ( allKnownMoveIds.Contains(i) == false )
+            {
+                return false;
+            }
+        }
+        return true;
+    }
 
     //getters
     public int get_linkId() { return linkId; }

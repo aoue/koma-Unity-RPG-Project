@@ -54,9 +54,13 @@ public class Unit : MonoBehaviour
     //a null value means an empty moveslot
     [SerializeField] private DefendMove defendMove; //the 1 defend move the user has equipped.
     [SerializeField] protected Move[] moveset; //the 5 moves the unit has equipped. set at dungeon start.
-    
+    [SerializeField] private List<int> allKnownMoveIds; //all the known moves of this particular unit. it's a prefab, so they save themselves.
+
+
     //MODIFIERS
+    public void add_moveId(int id) { allKnownMoveIds.Add(id); }
     public void inc_exp(int x) { exp += x; }
+    public void pay_exp(int x) { exp -= x; }
     public void create_status()
     {
         ooa = false;
@@ -141,6 +145,7 @@ public class Unit : MonoBehaviour
     public void set_break(int to) { break_level = to; }
 
     //GETTERS
+    public List<int> get_allKnownMoveIds() { return allKnownMoveIds; }
     public int get_unitId() { return playerUnitId; }
     public bool get_isScheduled() { return isScheduled; }
     public int get_break() { return break_level; }

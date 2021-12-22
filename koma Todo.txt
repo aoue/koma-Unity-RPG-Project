@@ -140,21 +140,22 @@ PART 3 (needs skele)
 - immediate (...)
  pass time
 
-End of prologue - Chapter 1 coming soon!
+End of Prologue
 ========================================
 
-- level tree adjustments:
-	- move viewer: exp cost text move down, min level text move down
-	- level trees aren't showing on unit click:
-		- create dummy trees for mc and moth for now.
+- combat adjustments:
+	- when left clicking on a unit in select unit:
+		- force move selection portrait to unit's move select portrait
 
 - level tree canvas:
 	MOVE PART
 	time for an example.
-	- mouse over moves
-	- equip moves
-	- learn a new move and equip it
-	- equip moves and see if they stay when going to dungeon
+	- mouse over moves (done)
+	- equip moves (done)
+	- learn a new move:
+		- update ui (done)
+		- equip it (done)
+	- it remains between scene loads (done)
 	LEVEL PART
 	- the level up interface:
 		- click to increase stats. 
@@ -164,7 +165,11 @@ End of prologue - Chapter 1 coming soon!
 		- validate button again; decrease unit exp.
 
 - units:
-	- game start: reset exp.
+	- game start:
+	  (or rather when joining party, that makes more sense) 
+		- set exp. 
+		- set default move sets
+		- set default known move ids
 
 - rewrite incoming:
 	- see new notes in day by day.
@@ -179,9 +184,9 @@ End of prologue - Chapter 1 coming soon!
 
 - make the skeleton
 
-
-- save:
-	- can only save on the overworld, in between events. just save part, history (choices, not text), char progress, units, and gold. as little as possible.
+- dialogue canvas adjustments:
+	- name text background; weird looking.
+	- main text background; instead of black with alpha, try white with alpha.
 
 - sound manager:
 	- footsteps sound.
@@ -216,6 +221,10 @@ End of prologue - Chapter 1 coming soon!
 		- load (not interactable for now)
 		- gallery (same scene as main menu. you click to load an event, which plays right there. post demo.)
 		- exit: Application.Quit()
+
+- save:
+	- can only save on the overworld, in between events. just save part, history (choices, not text), char progress, units, and gold. as little as possible.
+
 
 - help sheet:
 	Do last because things may change.

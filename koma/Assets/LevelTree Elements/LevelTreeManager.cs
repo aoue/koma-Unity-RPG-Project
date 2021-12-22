@@ -50,7 +50,9 @@ public class LevelTreeManager : MonoBehaviour
         {
             if (lt.get_linkId() == currentlySelectedUnit.get_unitId())
             {
-                //load_lt();
+                //load new currentlySelectedUnit's level tree
+                lt.load_up(currentlySelectedUnit.get_allKnownMoveIds());
+                moveViewer.hide();
                 break;
             }
         }
@@ -61,6 +63,7 @@ public class LevelTreeManager : MonoBehaviour
         //called when player clicks the overworld leveltree button.           
         //load in the party, eh?
         LTparty = pdm.get_reserveParty();
+        moveViewer.hide();
 
         //fails if party is null
         if (LTparty == null || LTparty.Count == 0) return;
@@ -79,7 +82,7 @@ public class LevelTreeManager : MonoBehaviour
             {
                 if (lt.get_linkId() == currentlySelectedUnit.get_unitId())
                 {
-                    //load_lt();
+                    lt.load_up(currentlySelectedUnit.get_allKnownMoveIds());
                     break;
                 }
             }
@@ -102,11 +105,12 @@ public class LevelTreeManager : MonoBehaviour
         //shows the locked move in the move displayer.      
         moveViewer.fill(ltm.get_expCost().ToString(), ltm.get_minLevel().ToString(), ltm.get_containedMove().get_nom(), ltm.get_containedMove().generate_preview_text());
 
-        //if there is no locked move, then this move is locked.
-        if (moveInQuestion == null)
+        //if no locked move, then lock.
+        if ( moveInQuestion == null)
         {
             moveInQuestion = ltm;
         }
+
     }
     public void unhover_levelTreeMove(LevelTreeMove ltm)
     {
@@ -125,8 +129,8 @@ public class LevelTreeManager : MonoBehaviour
         moveInQuestion = ltm;
         //when locked, you can now interact with the learn move button.
 
-        //if unit has enough exp to pay cost AND is high enough level, then enable learn move button
-        if (currentlySelectedUnit.get_exp() >= moveInQuestion.get_expCost() && currentlySelectedUnit.get_level() >= moveInQuestion.get_minLevel())
+        //if unit has enough exp to pay cost AND is high enough level AND move is not learned, then enable learn move button
+        if (currentlySelectedUnit.get_exp() >= moveInQuestion.get_expCost() && currentlySelectedUnit.get_level() >= moveInQuestion.get_minLevel() && moveInQuestion.get_alreadyLearned() == false)
         {
             learnMoveButton.interactable = true;
         }
@@ -142,6 +146,12 @@ public class LevelTreeManager : MonoBehaviour
         //for this function to be called, the move must already be learned.
         //fails if:
         // -unit already has move equipped in some other slot.
+
+        //prevent move spoofing
+        if (moveInQuestion.get_alreadyLearned() == false)
+        {
+            return;
+        }
 
         foreach (Move equippedMove in currentlySelectedUnit.get_moveset())
         {
@@ -162,9 +172,30 @@ public class LevelTreeManager : MonoBehaviour
         //add the move's id to that leveltreeunitmanager's allknownmoveids
         //called by pressing the learn move button in the bottom right near the move viewer.
 
-        //decrease unit exp; refresh ui
-        //add move id to known move ids
-        //refresh move tree ui; some new moves may have become learnable
+        //so the player successfully learns the locked move.
+        //-pay exp cost
+        //-set move to learned
+        currentlySelectedUnit.pay_exp(moveInQuestion.get_expCost());
+        moveInQuestion.set_alreadyLearned(true);
+
+        //-add move's id to unit's level tree allKnownMoveIds
+        //-refresh ui as a whole
+        foreach (LevelTreeUnitManager lt in unitLevelTrees)
+        {
+            if (lt.get_linkId() == currentlySelectedUnit.get_unitId())
+            {
+                currentlySelectedUnit.add_moveId(moveInQuestion.get_containedMove().get_moveID());
+                lt.load_up(currentlySelectedUnit.get_allKnownMoveIds());
+                break;
+            }
+        }
+
+        //disable learn move button:
+        //(don't want player learning the same move twice by mistake; throwing their exp down a hole)
+        learnMoveButton.interactable = false;
+
+        //update exp display in the previewer ui
+        unitPreviewer.update_exp();
     }
 
     //LEVELING UP
