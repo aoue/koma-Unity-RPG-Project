@@ -8,7 +8,8 @@ public class AdrenalineMove : Move
 
     public override void apply_status(Unit target, Unit[] pl, Enemy[] el, int userIndex)
     {
-        pl[userIndex].status.apply_hp(0.3f, 0.3f, 3, 3);
+        //apply_hp(float amount, float am_ceiling, int duration, int dur_ceiling)
+        pl[userIndex].status.apply_hp(0.3f, 0.3f, 4, 4);
 
     }
 }

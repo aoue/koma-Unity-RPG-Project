@@ -53,11 +53,11 @@ public class Unit : MonoBehaviour
     //finally, there's also the moveset. only 5 moves.
     //a null value means an empty moveslot
     [SerializeField] private DefendMove defendMove; //the 1 defend move the user has equipped.
-    [SerializeField] protected Move[] moveset; //the 5 moves the unit has equipped. set at dungeon start.
-    [SerializeField] private List<int> allKnownMoveIds; //all the known moves of this particular unit. it's a prefab, so they save themselves.
-
+    [SerializeField] protected Move[] moveset; //the 5 moves the unit has equipped.
+    /*[SerializeField]*/ private List<int> allKnownMoveIds; //all the known moves of this particular unit. it's a prefab, so they save themselves.
 
     //MODIFIERS
+    public void set_known_moveIds(List<int> lt) { allKnownMoveIds = lt; }
     public void add_moveId(int id) { allKnownMoveIds.Add(id); }
     public void inc_exp(int x) { exp += x; }
     public void pay_exp(int x) { exp -= x; }
@@ -143,6 +143,24 @@ public class Unit : MonoBehaviour
     public void set_isScheduled(bool x) { isScheduled = x; }
     public void set_ooa(bool state) { ooa = state; }
     public void set_break(int to) { break_level = to; }
+
+    //LEVEL UP INCREMENTERS
+    public void inc_hpMax(int add1, int add2) { hpMax += UnityEngine.Random.Range(add1, add2 + 1); hp = hpMax; }
+    public void inc_mpMax(int add1, int add2) { mpMax += UnityEngine.Random.Range(add1, add2 + 1); mp = mpMax; }
+    public void inc_patk(int add1, int add2) { patk += UnityEngine.Random.Range(add1, add2 + 1); }
+    public void inc_pdef(int add1, int add2) { pdef += UnityEngine.Random.Range(add1, add2 + 1); }
+    public void inc_matk(int add1, int add2) { matk += UnityEngine.Random.Range(add1, add2 + 1); }
+    public void inc_mdef(int add1, int add2) { mdef += UnityEngine.Random.Range(add1, add2 + 1); }
+
+    //UNIT STAT SETTERS
+    public void set_level(int l) { level = l; }
+    public void set_exp(int set) { exp = set; }
+    public void set_hpMax(int set) { hpMax = set; }
+    public void set_mpMax(int set) { mpMax = set; }
+    public void set_patk(int set) { patk = set; }
+    public void set_pdef(int set) { pdef = set; }
+    public void set_matk(int set) { matk = set; }
+    public void set_mdef(int set) { mdef = set; }
 
     //GETTERS
     public List<int> get_allKnownMoveIds() { return allKnownMoveIds; }

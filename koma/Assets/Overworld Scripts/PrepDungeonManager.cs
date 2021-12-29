@@ -16,14 +16,13 @@ public class PrepDungeonManager : MonoBehaviour
     private static List<Unit> reserveParty; //all units, including the ones in the expedition party.
     private static Unit[] party; //the expedition party. always size 6. empty units are null.
     //private Inventory inven; (holds arm, wpn, acc, AND moves)
-    [SerializeField] private Text stamText;
+    [SerializeField] private Text unusedText;
     [SerializeField] private GameObject unitPreviewGO;
     [SerializeField] private Image bgImage;
     [SerializeField] private Button embarkButton; //button that sends us to the dungeon.
     [SerializeField] private Text unitLimitText;
     [SerializeField] private UnitBox[] unitBoxes; //dimensions are 500x250. 2:1
     [SerializeField] private ReserveUnitBox[] reserveUnitBoxes; //dimensions are 110x110. 1:1
-    private int stamina; //transferred to dungeonmanager.
     private int unitsInParty; //to help with the unit limit.
     private int dungeonId; //the id of the dungeon we're headed to.
     private int unitLimit; //how many units can you bring into this dungeon at this time. set in load_up.
@@ -50,8 +49,6 @@ public class PrepDungeonManager : MonoBehaviour
     {
         unitPreviewGO.SetActive(false);
         DungeonManager.heldDun = dun;
-        stamina = 30; //in the future we'll actually read this value instead of just setting it to dummy.
-        stamText.text = "Stamina: " + stamina;
 
         //take necessary info from dun
         unitLimit = dun.get_unitLimit();
@@ -141,7 +138,6 @@ public class PrepDungeonManager : MonoBehaviour
         //Debug.Log("loading dungeon scene");
         //pass party to dungeonManager
         DungeonManager.party = party;
-        DungeonManager.stamina = stamina; //default. will actually check somewhere in the future.
 
         theWorld.fill_cart();
 
@@ -251,18 +247,13 @@ public class PrepDungeonManager : MonoBehaviour
     {
         //checks if the party is valid:
         //conditions:
-        // -stamina > 0
         // -there is at least one unit in the front three rows.
         // -the number of non-null units in the party is not greater than the unit limit
         //if all conditions are met, then it enables the embarkButton.
 
         bool isValid = true;
 
-        if (stamina <= 0)
-        {
-            isValid = false;
-        }
-        else if (party[0] == null && party[1] == null && party[2] == null)
+        if (party[0] == null && party[1] == null && party[2] == null)
         {
             isValid = false;
         }

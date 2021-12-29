@@ -15,10 +15,19 @@ public class LevelTreeManager : MonoBehaviour
     [SerializeField] private LevelTreePreviewer unitPreviewer; //used to see the currently viewed unit's stats
     [SerializeField] private LevelTreeMoveViewer moveViewer; //used to see the currently locked move's information
     [SerializeField] private Button learnMoveButton; //button player clicks to get a unit to learn a move in exchange for exp.
+    [SerializeField] private Text levelUpButtonText; //text on the level up button; shows needed exp cost for next level up.
+    [SerializeField] private Button levelUpButton; //button that allows level up. valid when unit has exp > level up cost
 
     private List<Unit> LTparty;
     private Unit currentlySelectedUnit; //reference for the unit whose tree we're looking at.
     private LevelTreeMove moveInQuestion { get; set; } //the move the unit is doing anything with. set when the player mouses over a LevelTreeMove object.
+
+    private int[] levelUpExpCosts = new int[]
+    {
+        100, 140, 185, 200, 250, 300, 350, 400, 450, 500,
+        600, 700, 800, 900, 1000, 1100, 1200, 1300, 1400, 1500,
+        1650, 1800, 1950, 2100, 2250, 2400, 2550, 2700, 2850, 3000
+    };
 
     //LOADING AND CLOSING
     public void close()
@@ -42,21 +51,31 @@ public class LevelTreeManager : MonoBehaviour
             }
         }
 
-        currentlySelectedUnit = LTparty[which];
-        unitPreviewer.show(currentlySelectedUnit);
 
+        currentlySelectedUnit = LTparty[which];
+        
         //show new currently shown unit's level tree.
-        foreach(LevelTreeUnitManager lt in unitLevelTrees)
+        foreach (LevelTreeUnitManager lt in unitLevelTrees)
         {
             if (lt.get_linkId() == currentlySelectedUnit.get_unitId())
             {
                 //load new currentlySelectedUnit's level tree
                 lt.load_up(currentlySelectedUnit.get_allKnownMoveIds());
-                moveViewer.hide();
+
                 break;
             }
         }
+        if ( moveInQuestion != null)
+        {
+            moveInQuestion.hide_assignment_buttons();
+            moveInQuestion = null;
+        }
+        
+        moveViewer.hide();
+        unitPreviewer.show(currentlySelectedUnit);
 
+        //set up leveling up
+        validate_level_up_button();
     }
     public void load_up()
     {
@@ -89,11 +108,14 @@ public class LevelTreeManager : MonoBehaviour
         }
         moveInQuestion = null;
         moveViewer.hide();
-        learnMoveButton.interactable = false;
 
         //display the currentlySelectedUnit's information:
         unitPreviewer.show(currentlySelectedUnit);
-      
+
+        //set up leveling up
+        validate_level_up_button();
+
+        //ready to show
         levelTreeCanvas.SetActive(true);
     }
 
@@ -125,9 +147,19 @@ public class LevelTreeManager : MonoBehaviour
     {
         //called when the player clicks one of the levelTreeMove objects on screen.
         //locks them to the move displayer in the bottom right.
+
+        //hide the assignment buttons of the previously locked move.
+        moveInQuestion.hide_assignment_buttons();
+
         moveViewer.fill(ltm.get_expCost().ToString(), ltm.get_minLevel().ToString(), ltm.get_containedMove().get_nom(), ltm.get_containedMove().generate_preview_text());
         moveInQuestion = ltm;
         //when locked, you can now interact with the learn move button.
+
+        //only show the assignment buttons of the locked move; and only then if it is learned.
+        if (ltm.get_alreadyLearned() == true)
+        {
+            ltm.show_assignment_buttons();
+        }
 
         //if unit has enough exp to pay cost AND is high enough level AND move is not learned, then enable learn move button
         if (currentlySelectedUnit.get_exp() >= moveInQuestion.get_expCost() && currentlySelectedUnit.get_level() >= moveInQuestion.get_minLevel() && moveInQuestion.get_alreadyLearned() == false)
@@ -165,7 +197,6 @@ public class LevelTreeManager : MonoBehaviour
         currentlySelectedUnit.get_moveset()[which] = moveInQuestion.get_containedMove();
         unitPreviewer.show(currentlySelectedUnit);
     }
-
     public void click_levelTreeMove_learnMove()
     {
         //the unit learns a move. it pays for the move with exp, and the move becomes permanently available in the moveTree.
@@ -193,6 +224,7 @@ public class LevelTreeManager : MonoBehaviour
         //disable learn move button:
         //(don't want player learning the same move twice by mistake; throwing their exp down a hole)
         learnMoveButton.interactable = false;
+        moveInQuestion.show_assignment_buttons();
 
         //update exp display in the previewer ui
         unitPreviewer.update_exp();
@@ -203,27 +235,113 @@ public class LevelTreeManager : MonoBehaviour
     {
         //called when player clicks level up button.
         //for this button to have been clicked, we already know a level up is valid.
+
+        //subtract exp from unit
+        currentlySelectedUnit.pay_exp(calculate_next_level_up_exp());
+
+        //increase unit's level
+        currentlySelectedUnit.set_level(currentlySelectedUnit.get_level());
+
+        //increase unit's stats.
+        level_up_stat_increases();
+
+        validate_level_up_button();
+
+        //update ui: unit's stats
+        unitPreviewer.show(currentlySelectedUnit);
     }
     void validate_level_up_button()
     {
         //if the player no longer has enough exp to afford another level up, the button
         //is set to non-interactable.
         //otherwise, it is set to interactable.
-    }
+        int cost = calculate_next_level_up_exp();
+        //Debug.Log("levelUpExpCosts.Length = " + levelUpExpCosts.Length);
+
+        if ( currentlySelectedUnit.get_exp() >= cost /*&& currentlySelectedUnit.get_level() <= levelUpExpCosts.Length*/ )
+        {
+            levelUpButton.interactable = true;
+        }
+        else
+        {
+            levelUpButton.interactable = false;
+        }
+        levelUpButtonText.text = "Level Up\n(" + cost + " EXP)";
+    }  
     int calculate_next_level_up_exp()
     {
         //returns the exp necessary for the unit's next level up.
-        //value returned depends on: unit's level...
+        //Mathf.Pow(f, p): returns f raised to power p
 
-        //if level cap reached, fail immediately.
+        return levelUpExpCosts[currentlySelectedUnit.get_level() - 1];
 
-        //what else? number of moves learned?
-        //should we have a system where learning moves increases level up exp
-        //and leveling up increases move learning exp?
-
-
-        return 0;
+        //EXPONENTIAL
+        //formula:  100 * (1.4)^(lvl-1)
+        //1: 100
+        //2: 150
+        //3: 225
+        //4: 337 
+        //5: 506
+        //6: 759
+        //7: 1139
+        //8: 1708
+        //9: 2562
+        //20: 59763
+        //30: 1728600
+        //notes: nah...
+        //return (int)(100 * Mathf.Pow(1.5f, currentlySelectedUnit.get_level() - 1));      
     }
+
+    void level_up_stat_increases()
+    {
+        //what to increase:
+        /*
+        currentlySelectedUnit.inc_hpMax(0, 0);
+        currentlySelectedUnit.inc_mpMax(0, 0);
+        currentlySelectedUnit.inc_patk(0, 0);
+        currentlySelectedUnit.inc_pdef(0, 0);
+        currentlySelectedUnit.inc_matk(0, 0);
+        currentlySelectedUnit.inc_mdef(0, 0);
+        */
+
+        //see the party units spreadsheet for notes and projections.
+
+        //the switch determines by how much each stat increases,
+        currentlySelectedUnit.set_level(currentlySelectedUnit.get_level() + 1);
+        switch (currentlySelectedUnit.get_unitId())
+        {
+            case 0: //mc
+                currentlySelectedUnit.inc_hpMax(10, 12);
+                currentlySelectedUnit.inc_mpMax(2, 4);
+                currentlySelectedUnit.inc_patk(3, 4);
+                currentlySelectedUnit.inc_pdef(4, 6);
+                currentlySelectedUnit.inc_matk(7, 10);
+                currentlySelectedUnit.inc_mdef(7, 8);
+                break;
+            case 1: //friday
+                currentlySelectedUnit.inc_hpMax(14, 17);
+                currentlySelectedUnit.inc_mpMax(1, 2);
+                currentlySelectedUnit.inc_patk(7, 9);
+                currentlySelectedUnit.inc_pdef(9, 10);
+                currentlySelectedUnit.inc_matk(7, 9);
+                currentlySelectedUnit.inc_mdef(7, 9);
+                break;
+            case 2: //moth
+                currentlySelectedUnit.inc_hpMax(9, 11);
+                currentlySelectedUnit.inc_mpMax(2, 3);
+                currentlySelectedUnit.inc_patk(3, 5);
+                currentlySelectedUnit.inc_pdef(5, 6);
+                currentlySelectedUnit.inc_matk(6, 7);
+                currentlySelectedUnit.inc_mdef(9, 12);
+                break;
+            default:
+                Debug.Log("Error: level_up_stat_increases() exited switch on default statement. unitId: " + currentlySelectedUnit.get_unitId() + "not found.");
+                break;
+        }
+
+
+    }
+
 
 
 }

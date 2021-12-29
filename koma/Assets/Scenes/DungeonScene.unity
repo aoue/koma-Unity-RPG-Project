@@ -5100,7 +5100,7 @@ MonoBehaviour:
   - {fileID: 497894774}
   - {fileID: 1661609863}
   - {fileID: 198556619}
-  staminaText: {fileID: 1650711456}
+  barUiTopRightText: {fileID: 1650711456}
   healChargesText: {fileID: 629889437}
   coordText: {fileID: 949498112}
   cammy: {fileID: 386956726}
@@ -9363,7 +9363,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 813, y: -136}
+  m_AnchoredPosition: {x: 813, y: 172}
   m_SizeDelta: {x: 250, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &949498112
@@ -16827,12 +16827,12 @@ GameObject:
   - component: {fileID: 1650711457}
   - component: {fileID: 1650711456}
   m_Layer: 5
-  m_Name: stamina text
+  m_Name: unused top right text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1650711455
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16849,8 +16849,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 771, y: 164}
-  m_SizeDelta: {x: 160, y: 120}
+  m_AnchoredPosition: {x: 823.99994, y: 164}
+  m_SizeDelta: {x: 271.9999, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1650711456
 MonoBehaviour:
@@ -16878,15 +16878,13 @@ MonoBehaviour:
     m_BestFit: 0
     m_MinSize: 4
     m_MaxSize: 40
-    m_Alignment: 2
+    m_Alignment: 0
     m_AlignByGeometry: 0
     m_RichText: 1
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Stamina
-
-    1000'
+  m_Text: unused
 --- !u!222 &1650711457
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -21869,7 +21867,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 822, y: 13}
+  m_AnchoredPosition: {x: 822, y: -15}
   m_SizeDelta: {x: 64, y: 192}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2144183858

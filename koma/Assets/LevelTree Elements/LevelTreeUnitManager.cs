@@ -28,7 +28,7 @@ public class LevelTreeUnitManager : MonoBehaviour
                 //move is known:
                 //-enable equip buttons
                 //-make button interactable
-                child.gameObject.GetComponent<LevelTreeMove>().show_assignment_buttons();
+                //child.gameObject.GetComponent<LevelTreeMove>().show_assignment_buttons();
                 child.gameObject.GetComponent<Button>().interactable = true;
                 //-set text to learned
                 child.gameObject.GetComponent<LevelTreeMove>().set_expCostText("<i>Learned</i>");

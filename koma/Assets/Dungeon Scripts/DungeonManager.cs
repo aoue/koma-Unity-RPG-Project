@@ -15,7 +15,6 @@ public class DungeonManager : MonoBehaviour
     //SETTINGS
     private float spacing = 1.73f; //space between tiles. currently set at 1.73, as tiles are 173x173
     private float transitionDuration = 2f; //the time movement/rotation takes. higher is faster.
-    //private float hpPercentHealedPerStamina = 5; //the % of all unit's maxhp healed with 1 stamina in dungeon healer. this can be changed with difficulty setting or by buying upgrades or something.
     private int healCharges; //number of healing charges the party has left. set on dungeon load.
     private float healPercentage; //the percentage of a unit's hpmax healed by use of the heal charge. ranges from 0.50f to 1.0f
     private float rotationDuration = 0.5f;
@@ -30,7 +29,6 @@ public class DungeonManager : MonoBehaviour
     private bool canDragScreen;
     public static Dungeon heldDun; //set by prepdungeonmanager
     public static Unit[] party; //set by prepdungeonmanager
-    public static int stamina; //set by prepdungeonmanager
 
     public static DungeonState state; //help govern the managers.
     private Direction facing; //directio the party is facing. N-E-S-W
@@ -57,7 +55,7 @@ public class DungeonManager : MonoBehaviour
     [SerializeField] private CombatManager combatManager; //combat manager. to fight you know.
     [SerializeField] private EventManager evManager; //the dungeon's event manager. doesn't have tooltipmanager, otherwise the same.
     [SerializeField] private DungeonUnitBox[] partyBoxes;
-    [SerializeField] private Text staminaText;
+    [SerializeField] private Text barUiTopRightText; //currently unused; used to be stamina text.
     [SerializeField] private Text healChargesText;
     [SerializeField] private Text coordText;
     [SerializeField] private Camera cammy;
@@ -99,7 +97,10 @@ public class DungeonManager : MonoBehaviour
             Destroy(_instance.gameObject);
         }
         _instance = this;
-        coordText.text = "";
+
+        //coordText.text = "";
+        update_coord_text();
+
         xParty = 0;
         yParty = 0;
 
@@ -112,7 +113,6 @@ public class DungeonManager : MonoBehaviour
         
         //read and display information
         threat = heldDun.threat;
-        staminaText.text = "Stamina\n" + stamina;
 
         //party setup
         fill_party();
@@ -735,11 +735,6 @@ public class DungeonManager : MonoBehaviour
             //tile not explored; heal hp and mp of each party unit.
             unexplored_tile();
             
-
-            //decrement stamina
-            stamina = System.Math.Max(0, stamina - heldDun.get_tile(xParty, yParty).get_tileDrain());
-            staminaText.text = "Stamina\n" + stamina;
-
             rendyGrid[xParty, yParty].gameObject.GetComponent<Tile>().set_tile_image();
             //if this breaks tiles that aren't Tile, but inherit from it, just do rendyGrid[].enabled = true; and fill the image manually.
 
@@ -982,7 +977,7 @@ public class DungeonManager : MonoBehaviour
     void update_pbp(bool entering = false)
     {
         //update play by play text too
-        //line 1: name and drain
+        //line 1: name
         //line 2: vision
 
         string toShow;
@@ -993,7 +988,7 @@ public class DungeonManager : MonoBehaviour
         }
         else
         {
-            toShow = "Moved to " + heldDun.get_tile(xParty, yParty).get_tileName() + " using 1 stamina.\nVisibility is ";
+            toShow = "Moved to " + heldDun.get_tile(xParty, yParty).get_tileName() + ".\nVisibility is ";
         }
 
         int vis = heldDun.get_tile(xParty, yParty).get_vision();
@@ -1054,17 +1049,12 @@ public class DungeonManager : MonoBehaviour
         switch (facing)
         {
             case Direction.NORTH:
-                if (yParty == yDungeon - 1)
+                if (yParty == yDungeon - 1) //edge of map
                 {
                     movementArrows[1].interactable = false;
                     movementArrowsEnabled[1] = false;
                 }                
-                else if (heldDun.dungeonGrid[xParty, yParty + 1] == null)
-                {
-                    movementArrows[1].interactable = false;
-                    movementArrowsEnabled[1] = false;
-                }
-                else if (stamina == 0 && heldDun.explored_grid[xParty, yParty + 1] != Exploration.EXPLORED)
+                else if (heldDun.dungeonGrid[xParty, yParty + 1] == null) //no tile there
                 {
                     movementArrows[1].interactable = false;
                     movementArrowsEnabled[1] = false;
@@ -1086,11 +1076,6 @@ public class DungeonManager : MonoBehaviour
                     movementArrows[1].interactable = false;
                     movementArrowsEnabled[1] = false;
                 }
-                else if (stamina == 0 && heldDun.explored_grid[xParty, yParty - 1] != Exploration.EXPLORED)
-                {
-                    movementArrows[1].interactable = false;
-                    movementArrowsEnabled[1] = false;
-                }
                 else
                 {
                     movementArrows[1].interactable = true;
@@ -1108,11 +1093,6 @@ public class DungeonManager : MonoBehaviour
                     movementArrows[1].interactable = false;
                     movementArrowsEnabled[1] = false;
                 }
-                else if (stamina == 0 && heldDun.explored_grid[xParty - 1, yParty] != Exploration.EXPLORED)
-                {
-                    movementArrows[1].interactable = false;
-                    movementArrowsEnabled[1] = false;
-                }
                 else
                 {
                     movementArrows[1].interactable = true;
@@ -1126,11 +1106,6 @@ public class DungeonManager : MonoBehaviour
                     movementArrowsEnabled[1] = false;
                 }
                 else if (heldDun.dungeonGrid[xParty + 1, yParty] == null)
-                {
-                    movementArrows[1].interactable = false;
-                    movementArrowsEnabled[1] = false;
-                }
-                else if (stamina == 0 && heldDun.explored_grid[xParty + 1, yParty] != Exploration.EXPLORED)
                 {
                     movementArrows[1].interactable = false;
                     movementArrowsEnabled[1] = false;
@@ -1355,7 +1330,7 @@ public class DungeonManager : MonoBehaviour
     public void yes_heal_prompt()
     {
         //the player accepts the heal conditions.
-        //take away their stamina, heal units, etc.
+        //take away their heal charge, heal units, etc.
         healCharges -= 1;
         healChargesText.text = "Heal (" + healCharges + " left)";
         for (int i = 0; i < party.Length; i++)
@@ -1449,9 +1424,6 @@ public class DungeonManager : MonoBehaviour
         rendyGrid[xParty, yParty].gameObject.GetComponent<UsableTile>().turn_off_sparkle();
 
         heldDun.get_tile(xParty, yParty).use_tile(this);
-
-        //update stamina text
-        staminaText.text = "Stamina\n" + stamina;
 
         //update dungeon boxes
         fill_party();

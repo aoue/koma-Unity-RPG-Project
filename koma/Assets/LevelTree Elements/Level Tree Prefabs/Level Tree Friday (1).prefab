@@ -49,7 +49,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   linkId: 1
-  allKnownMoveIds: 00000000010000000200000003000000
 --- !u!1001 &1205627494021744252
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -800,7 +799,7 @@ PrefabInstance:
         type: 3}
       propertyPath: containedMove
       value: 
-      objectReference: {fileID: 5133056019573839718, guid: d423ee424dca051439bac8e34892883a,
+      objectReference: {fileID: 3641029461688156835, guid: 234e58b599071bf4096b848be391eb10,
         type: 3}
     - target: {fileID: 6713938815002201102, guid: 1e8d2f05062dffe4bba74cf3085b2704,
         type: 3}

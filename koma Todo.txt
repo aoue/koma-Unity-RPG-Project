@@ -29,13 +29,6 @@ GAME ART:
 
 
 ===========================================
-PROGRAMMING
-use drag and drop for assigning gear, moves, positions in formation, etc
-
-Okay, okay, but what do we need for the demo/prologue to be released?
-(in no particular order)
-
-=====
 OGA licenses:
 - you are required to follow only one of the licenses listed for a multi-licensed asset.
 
@@ -142,47 +135,35 @@ PART 3 (needs skele)
 
 End of Prologue
 ========================================
+update unity version?
 
-- combat adjustments:
-	- when left clicking on a unit in select unit:
-		- force move selection portrait to unit's move select portrait
+new big think for prologue story. see notes.
+- plan it :)
+- write it :)
+
+- stat increases are too much. by about half would be acceptable i think?
 
 - level tree canvas:
 	MOVE PART
-	time for an example.
-	- mouse over moves (done)
-	- equip moves (done)
-	- learn a new move:
-		- update ui (done)
-		- equip it (done)
-	- it remains between scene loads (done)
-	LEVEL PART
-	- the level up interface:
-		- click to increase stats. 
-		- button only interactable when you have enough exp to afford next level up.
-		when clicked successfully:
-		- increase all stats; hp, mp, patk, pdef, matk, mdef, lvl
-		- validate button again; decrease unit exp.
-
+	plan and fill out for our prologue units: (see sheets)
+	- Friday| light brand, stabilize, exceed
+	- Mc    | elemental (in apply status function, randomly change this move's affinity to any non-normal aff.)
+	- Moth  | guard: break, guard: magic, guard: might, light
+	
 - units:
-	- game start:
-	  (or rather when joining party, that makes more sense) 
+	- game start; will be part of loading. either set unit values to base, or to loaded states
+	  (bases are hardcoded)
+		for each unit:
+		- set all stats to base values.
 		- set exp. 
 		- set default move sets
 		- set default known move ids
 
-- rewrite incoming:
-	- see new notes in day by day.
-	- when rewriting, reuse when possible.
-	- finish rewriting before adding anything.
-
-- write in its entirety
-
-- dungeon 1:
-	plan out:
-	- grid, tile events, enemies, and mobparties
-
-- make the skeleton
+- dungeon design:
+	- background image: tiles go overtop.
+	- scale room sizes up and remove rooms too. 
+		- meaning: less empty rooms in between full rooms.
+		- meaning: less busy walking.
 
 - dialogue canvas adjustments:
 	- name text background; weird looking.

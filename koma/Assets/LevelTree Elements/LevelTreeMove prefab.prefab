@@ -49,7 +49,7 @@ CanvasGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6713938814415348849}
   m_Enabled: 1
-  m_Alpha: 1
+  m_Alpha: 0
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
@@ -413,6 +413,7 @@ MonoBehaviour:
   moveNameText: {fileID: 6713938815731910550}
   ExpCostText: {fileID: 6713938815498084840}
   prerequisiteIds: 
+  alreadyLearned: 0
 --- !u!114 &6713938815002201090
 MonoBehaviour:
   m_ObjectHideFlags: 0

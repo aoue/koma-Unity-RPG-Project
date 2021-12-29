@@ -1219,10 +1219,9 @@ public class CombatManager : MonoBehaviour
         //possibilities:
 
         //first off, return if a right click.
-
         if ( Input.GetMouseButtonUp(1) ) return;
 
-            // -player is using defend
+        // -player is using defend
         if ( targetingDefendMove == true && playerScheduledUnit.place == which ) 
         {
             //then, it's a valid target spot for a defend move.
@@ -1241,6 +1240,7 @@ public class CombatManager : MonoBehaviour
             pTurn = playerTurnPhase.SELECTMOVE;
             currentUnit = pl[which];
             playerScheduledUnit = pl[which]; //setting the active unit's id.
+            show_active_portrait(currentUnit.get_activePortrait(), true);
             load_unit_move_selection();           
         }
         // -player is selecting a move target location (on their own side)

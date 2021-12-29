@@ -47,7 +47,7 @@ MonoBehaviour:
     type: 3}
   boxImg: {fileID: 21300000, guid: cd8233b94ea6ad24cbf19a7f5dae0351, type: 3}
   playerUnitId: 1
-  exp: 50
+  exp: 0
   level: 1
   nom: Friday
   apMax: 1
@@ -65,6 +65,5 @@ MonoBehaviour:
   - {fileID: 1738390688075259775, guid: 6a131bd5456e35c43ba5a5b1eae43532, type: 3}
   - {fileID: 6463100206085023854, guid: 956ff4ab1bfb6954b993f9a247218b22, type: 3}
   - {fileID: 256133302298382596, guid: 0a8f10670b686dc46af2846052b0127a, type: 3}
-  - {fileID: 5133056019573839718, guid: d423ee424dca051439bac8e34892883a, type: 3}
+  - {fileID: 3641029461688156835, guid: 234e58b599071bf4096b848be391eb10, type: 3}
   - {fileID: 0}
-  allKnownMoveIds: 00000000010000000200000003000000

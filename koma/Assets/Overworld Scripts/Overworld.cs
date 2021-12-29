@@ -31,6 +31,7 @@ public class Overworld : MonoBehaviour
     [SerializeField] private Text actPartText; // displays act part information.
 
     //managers
+    [SerializeField] private UnitPrefabManager unitManager;
     [SerializeField] private SoundManager SM; //handles playing music and sounds, baby.
     [SerializeField] private FadeManager fader; //handles fading, baby.
     [SerializeField] private PrepDungeonManager pdm; //shows prep dungeon menu and controls transition to dungeon scene.
@@ -68,6 +69,7 @@ public class Overworld : MonoBehaviour
             actPart = 0;
             dayProgression = 0;
             //setup managers for first time
+            unitManager.set_units_to_default();
             pdm.first_time_setup();
             isDaytime = true;
             a_new_part(0, false);
@@ -81,7 +83,9 @@ public class Overworld : MonoBehaviour
         }
         else //firstTime == state.LOADING
         {
-            //loading game stuff
+            //loading game stuff.
+
+            //go and set all the unit's stats in unitManager
         }
     }
 

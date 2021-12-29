@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TileType { FontOfTriumph, FontOfHp, FontOfMp, FontOfStamina, SmallTreasure }
+public enum TileType { FontOfTriumph, FontOfHp, FontOfMp, SmallTreasure }
 public class UsableTile : Tile
 {
     //so, this holds all the different kinds of tiles.
@@ -60,11 +60,6 @@ public class UsableTile : Tile
                     }
                 }
                 dman.display_pbp_message("Partially restored party MP.");
-                break;
-            case TileType.FontOfStamina:
-                //increases the stamina.
-                DungeonManager.stamina += 10;
-                dman.display_pbp_message("Gained 10 stamina.");
                 break;
             case TileType.SmallTreasure:
                 //roll for loot; is an amount of money within a certain range, added to by threat.

@@ -57,7 +57,7 @@ MonoBehaviour:
   mpMax: 30
   patk: 70
   pdef: 80
-  matk: 105
+  matk: 110
   mdef: 80
   defendMove: {fileID: 1817192110456301059, guid: a5804e98675f85c4a9c3b49c95391048,
     type: 3}
@@ -67,3 +67,4 @@ MonoBehaviour:
   - {fileID: 7961881290996551369, guid: ec86c3ad3bac86a4d8f83eef45929ed4, type: 3}
   - {fileID: 1550898009749650574, guid: 837e8078dd26cb041a460384b13125a1, type: 3}
   - {fileID: 0}
+  allKnownMoveIds: 
