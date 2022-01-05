@@ -14,7 +14,7 @@ public class BarrierMove : DefendMove
         //we've got 4 lines.
 
         string toReturn = "";
-        toReturn += get_nom() + " | All AP\nMdef -> Mdef+ | "
+        toReturn += get_nom() + " | All AP\nMdef -> Mdef+ |"
             + get_xSize() + "x" + get_ySize() + "\n\n"
             + get_flavour();
         return toReturn;

@@ -40,19 +40,16 @@ grow up? as if he did.
 
 the combat system is fine. 
 could maybe use: (future additions)
-- hit, dodge
-- passives.eg:
-	ofc, they should only work when the unit is not ooa.
-	- suri? composure: brk% halved at round start
-	- mc, elemental authority: affinity atk multipliers increased (+) by a further 0.25? 0.5?
-	- ganat, clear body: at round start, all status effects expire regardless of duration.
-	- friday, matriarch: all stats increased by 10% for each adj ally
-	- sincy, charm: 50% chance to take 50% dmg from an attack. 
 
 - the combat system IS good. it does have depth, and in a different way
   than a tactics game does. For instance, this game can do boss battles.
-- for a game that focuses on monster fighting and stuff like that, having
+  For a game that focuses on monster fighting and stuff like that, having
   a system that allows good boss battles is super important.
+- Further improvements to it do exist though. Like these, maybe:
+	- hit%, dodge%
+	- passives.
+	- statuses redone and made individual. no one catch all duration thingie.
+		- or rather, make duration for each stat individual; e.g. individual hp mod duration, ind physa dur, ind physd dur, etc
 
 =====
 last part of notes
@@ -87,87 +84,68 @@ last part of notes
 		- if doing something in an optional dungeon is necessary for a sidequest or something (like a recruitment quest or a monster slaying quest)
 		  then triggering an event will mark something in history that the event back in overworld checks.
 
-- writing:
+- ic patch:
 	- on mainmenu screen; read player ic and name from a textfile in the saves folder.
 		- if read ic and name different from default values, then display them on the mainmenu so player can easily see.
-		- if textfile not found, then create it with default values.
-	- create prologue skeleton.
-	- write events.
+		- if textfile not found, then create and fill with default values.
 
 ========================================
+art notes
+- new scene 1 design (hjovp) see new insp image; pretty good. good for progression/buildup
 
-PART 0 (skele done)
-- immediate (DONE)
-- event 1 (DONE) loc: square
- unlock dungeon 0
-
-DUNGEON 0 (skele done)
-- dun 0 event 1 (DONE)
-- dun 0 event 2 (DONE)
-- dun 0 mobEvent 1 (DONE)
- clear
- pass time
-
-PART 1 (skele done)
-- immediate (DONE)
-[remember, keep these short.]
-- event 1 (DONE) abbess, loc: church
-- event 2 (DONE) sister, loc: one edge of town, doing laundry or something
-- event 3 (DONE) settler,loc: near square
-once all cleared, unlock:
-- event 4 (DONE) friday, loc: aptmt
- pass time
-
-PART 2 (test skele)
-- immediate (next)
-- event 1 (...) ; ends on mc leaving
-- event 2 (...)
- unlock dungeon 1
-
-DUNGEON 1 (needs skele)
-- (...)
- clear
- pass time
-
-PART 3 (needs skele)
-- immediate (...)
- pass time
-
-End of Prologue
 ========================================
-update unity version?
+new big think for prologue story. see skeleton below.
+- part 0
+	- immediate (done)
+	- event 1 (done)
+- dungeon 0
+	- tile event 1
+	- tile event 2
+	- post mob event 1
+- part 1
+	- immediate
+	- event 1
+	- event 2
+	- event 3
+	- event 4
+- part 2
+	- immediate
+	- event 1
+- dungeon 1
+	- mob event 1
+	- tile event 1
+	- mob event 2
+- part 3
+	- immediate
+	- event 1
+END OF PROLOGUE
+========================================
 
-new big think for prologue story. see notes.
-- plan it :)
-- write it :)
+- status changes?
+	- rather, make duration for each stat individual; e.g. individual hp mod duration, ind physa dur, ind physd dur, etc
 
-- stat increases are too much. by about half would be acceptable i think?
+- dialogue canvas adjustments:
+	- name text background; weird looking. just a black bar. look for insp somewhere, or use the ui set.
+	- main text background; instead of black with alpha, try white with alpha.
 
 - level tree canvas:
 	MOVE PART
 	plan and fill out for our prologue units: (see sheets)
 	- Friday| light brand, stabilize, exceed
 	- Mc    | elemental (in apply status function, randomly change this move's affinity to any non-normal aff.)
-	- Moth  | guard: break, guard: magic, guard: might, light
+	- Moth  | guard: break, guard: magic, guard: physical, light
 	
-- units:
-	- game start; will be part of loading. either set unit values to base, or to loaded states
-	  (bases are hardcoded)
-		for each unit:
-		- set all stats to base values.
-		- set exp. 
-		- set default move sets
-		- set default known move ids
 
 - dungeon design:
+	- empty slots: a more suitable image. maybe something like an irregular circle of light? to show that something could be there.
 	- background image: tiles go overtop.
 	- scale room sizes up and remove rooms too. 
 		- meaning: less empty rooms in between full rooms.
 		- meaning: less busy walking.
 
-- dialogue canvas adjustments:
-	- name text background; weird looking.
-	- main text background; instead of black with alpha, try white with alpha.
+- dungeon0 and dungeon1:
+	- dungeon0 layout is ok. that boss fight is too much prob. make it just the boss.
+	- dungeon1 layout needs to be made.
 
 - sound manager:
 	- footsteps sound.
@@ -203,9 +181,9 @@ new big think for prologue story. see notes.
 		- gallery (same scene as main menu. you click to load an event, which plays right there. post demo.)
 		- exit: Application.Quit()
 
-- save:
-	- can only save on the overworld, in between events. just save part, history (choices, not text), char progress, units, and gold. as little as possible.
-
+- save/load:
+	- can only save on the overworld, in between events. save part, history (choices, not text), char progress, units, and gold. as little as possible.
+	- on load should rejoin at the correct part, with same events displayed, party units states restored, etc.
 
 - help sheet:
 	Do last because things may change.
@@ -228,7 +206,6 @@ new big think for prologue story. see notes.
 	- beware that moves may have strange effects
 	- and that's all... you'll learn the rest by doing.
 	dungeon help sheet:
-	- explain stamina system (the tile cost is in red.)
 	- explain that when entering an unexplored tile, all party units regain a bit of hp and mp.
 	- explain about use_tile button. you can use it on any tile that has a sparkling effect on it, a little yellow thing.
 		- remember you can only use each tile once.
@@ -242,7 +219,7 @@ new big think for prologue story. see notes.
 		- if you feel the battle is unwinnable, then you should hit the withdraw option instead.
 
 - overworld menu options:
-	- next to pass time button section, have these buttons: save, load, party(level trees)
+	- next to pass time button section, have these buttons: save, load
 	- only appear when the mouse is in the top section of the screen.
 
 - dialogue canvas:
@@ -251,15 +228,9 @@ new big think for prologue story. see notes.
 	- the dialogue box image needs a frame image.
 	- the name plate image needs a frame image too.
 
-- dungeon 0:
-	VISUALS:
-	- tile image types: plains and trees, cave.
-	- a wider background image that the grid is displayed overtop. Should be visually obvious that is not part of the map.
-
-
+- update unity version?
 
 ===== Post Demo
-
 
 - unit box layout: maybe.
 	(see paper design)

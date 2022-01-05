@@ -636,6 +636,18 @@ public class CombatManager : MonoBehaviour
     }
     void send_pl_backFront()
     {
+        //if all player units are ooa, then return immediately.
+        bool pDefeated = true;
+        foreach (Unit u in pl)
+        {
+            if (u.get_ooa() == false)
+            {
+                pDefeated = false;
+                break;
+            }
+        }
+        if (pDefeated == true) {return;}
+        
         //sends the back row to the front and the front row to the back
         //however: only send a front unit to the back if there is a back unit behind it that has to move forward.
 

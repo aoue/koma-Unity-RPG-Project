@@ -2,53 +2,29 @@ keeping track of planned art for Ink.
 format:
 name - description
 ==========================================
-for prologue, we need:
-(note that some units will be duplicates, e.g. deaconess is npc + enemy unit)
+Prologue
 
 OVERWORLD
-- single overworld image for the town (Agairy?) is fine.
+- single overworld image for the town (Agairy) is fine for prologue.
 
-EVENTS BACKGROUNDS
-(OUTDOORS)
-note, outdoors backgrounds should be reuseable.
-- plains road with a few trees in the background. lightly wooded.
-- forest. no path, trees. stuff are on the ground. some light peeking through.
-- cave. got your stalegtites/mites, rocks, etc. a bat sleeping in one corner.
-(AGAIRY)
-note, agairy backgrounds have the emblem and other icons of the virginal order present. what's the emblem? a woman's thighs closed together.
-- agairy town square (part 1 event 1). church and other buildings are visible in the bg.
-- agairy church. pews, stone building. there's a visible door to the back room.
-- agairy church room. A bed in there, with adj chair, and moth is laying in in, asleep. stone walls, same as rest of church.
-(CITIES)
-- inn room. a basic room, we'll be using it in like every city. bed, dresser, etc.
+BACKGROUNDS
+- the whole world origin story image series
+- bg blackness
+- bg academy grounds: grounds in front of the academy. buildings in the background, terrace in the foreground.
+- bg city street: city streets.
+- bg stables: outside them.
+- bg inside church: show pews, a statue, carpet down the center. order emblem too.
 
-DUNGEON TILES
-- a unique image for each tile prefab
+EVENT CG
 
-ENEMY UNITS
-- sabaind-at-large
-- sabaind warrior
-- sabaind skirmisher
-- forest wolv
-- qegmer
-- settler
+PORTRAITS USED
+- Friday: base, loving smile, frown, smirk, proud, fake smile, angry/mad, sad
+- Abbess: base, fake smile, faker smile
+- Moth: 
 
-NPCS
-- abbess portrait + variants (neutral, fake smile, fake smile level2)
-
-
-
-
-
-
-==========================================
-(only add ones that have been used explicitly. for char images, each will have 2 versions, at near/far zooms)
-
-
-
-
-
-
+MUSIC USED
+- ancients theme. for world history and, later, stuff to do with the ancients.
+- city theme. for city streets.
 
 
 

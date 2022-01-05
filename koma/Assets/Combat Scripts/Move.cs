@@ -32,7 +32,7 @@ public class Move : MonoBehaviour
     [SerializeField] private int xSize; //how many tiles in the x area does the move hit: 1, 2, 3
     [SerializeField] private int ySize; //how many tiles in the y area does the move hit: 1, 2
     
-    [SerializeField] private int affinity; //the move's affinity. affects damage multiplier.
+    [SerializeField] protected int affinity; //the move's affinity. affects damage multiplier.
     [SerializeField] private bool usesPatk; //true: the user uses patk. false: the user uses matk.
     [SerializeField] private bool usesPdef; //true: the target uses pdef. false: the user uses mdef.
     [SerializeField] private int apDrain; //how much ap the user loses when they use this move.
@@ -43,6 +43,11 @@ public class Move : MonoBehaviour
     {
         //exists to be overriden.
         //this is where a move could apply poison, stat mods, etc.
+    }
+
+    public void set_affinity(int set)
+    {
+        affinity = set;
     }
 
     public bool get_selfStatusTextColorGreen() { return selfStatusTextColorGreen; }

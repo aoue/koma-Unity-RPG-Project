@@ -22,7 +22,7 @@ public class DefendMove : Move
         //we've got 4 lines.
 
         string toReturn = "";
-        toReturn += get_nom() + " | All AP\nPdef -> Pdef+ | " 
+        toReturn += get_nom() + " | All AP\nPdef -> Pdef+ |" 
             + get_xSize() + "x" + get_ySize() + "\n\n"
             + get_flavour();
         return toReturn;
@@ -34,7 +34,7 @@ public class DefendMove : Move
         //overriden for other classes, but this is also the base defend move.
 
         //does: pdef up.
-        u.status.pdef_up(amount, amount_ceiling, dur, dur_ceiling);              
+        u.status.pdef_up(amount, amount_ceiling, dur, dur_ceiling);
     }
 
 }

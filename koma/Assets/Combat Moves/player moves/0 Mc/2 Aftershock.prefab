@@ -66,5 +66,5 @@ MonoBehaviour:
   usesPatk: 0
   usesPdef: 0
   apDrain: 1
-  mpDrain: 4
+  mpDrain: 3
   flavour: A quick shock that travels through the earth. Good break.

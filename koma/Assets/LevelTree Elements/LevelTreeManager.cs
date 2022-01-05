@@ -161,15 +161,7 @@ public class LevelTreeManager : MonoBehaviour
             ltm.show_assignment_buttons();
         }
 
-        //if unit has enough exp to pay cost AND is high enough level AND move is not learned, then enable learn move button
-        if (currentlySelectedUnit.get_exp() >= moveInQuestion.get_expCost() && currentlySelectedUnit.get_level() >= moveInQuestion.get_minLevel() && moveInQuestion.get_alreadyLearned() == false)
-        {
-            learnMoveButton.interactable = true;
-        }
-        else
-        {
-            learnMoveButton.interactable = false;
-        }
+        validate_learnMove_button();
     }
     public void click_levelTreeMove_assignmentButton(int which)
     {
@@ -229,6 +221,18 @@ public class LevelTreeManager : MonoBehaviour
         //update exp display in the previewer ui
         unitPreviewer.update_exp();
     }
+    public void validate_learnMove_button()
+    {
+        //if unit has enough exp to pay cost AND is high enough level AND move is not learned, then enable learn move button
+        if (currentlySelectedUnit.get_exp() >= moveInQuestion.get_expCost() && currentlySelectedUnit.get_level() >= moveInQuestion.get_minLevel() && moveInQuestion.get_alreadyLearned() == false)
+        {
+            learnMoveButton.interactable = true;
+        }
+        else
+        {
+            learnMoveButton.interactable = false;
+        }
+    }
 
     //LEVELING UP
     public void click_level_up()
@@ -245,7 +249,9 @@ public class LevelTreeManager : MonoBehaviour
         //increase unit's stats.
         level_up_stat_increases();
 
+        //validate level up button and currently locked move learn button
         validate_level_up_button();
+        validate_learnMove_button();
 
         //update ui: unit's stats
         unitPreviewer.show(currentlySelectedUnit);
@@ -311,28 +317,28 @@ public class LevelTreeManager : MonoBehaviour
         switch (currentlySelectedUnit.get_unitId())
         {
             case 0: //mc
-                currentlySelectedUnit.inc_hpMax(10, 12);
-                currentlySelectedUnit.inc_mpMax(2, 4);
-                currentlySelectedUnit.inc_patk(3, 4);
-                currentlySelectedUnit.inc_pdef(4, 6);
-                currentlySelectedUnit.inc_matk(7, 10);
-                currentlySelectedUnit.inc_mdef(7, 8);
+                currentlySelectedUnit.inc_hpMax(8, 10);
+                currentlySelectedUnit.inc_mpMax(2, 3);
+                currentlySelectedUnit.inc_patk(2, 3);
+                currentlySelectedUnit.inc_pdef(3, 5);
+                currentlySelectedUnit.inc_matk(5, 7);
+                currentlySelectedUnit.inc_mdef(4, 6);
                 break;
             case 1: //friday
-                currentlySelectedUnit.inc_hpMax(14, 17);
+                currentlySelectedUnit.inc_hpMax(12, 15);
                 currentlySelectedUnit.inc_mpMax(1, 2);
-                currentlySelectedUnit.inc_patk(7, 9);
-                currentlySelectedUnit.inc_pdef(9, 10);
-                currentlySelectedUnit.inc_matk(7, 9);
-                currentlySelectedUnit.inc_mdef(7, 9);
+                currentlySelectedUnit.inc_patk(4, 6);
+                currentlySelectedUnit.inc_pdef(6, 8);
+                currentlySelectedUnit.inc_matk(4, 6);
+                currentlySelectedUnit.inc_mdef(4, 6);
                 break;
             case 2: //moth
-                currentlySelectedUnit.inc_hpMax(9, 11);
-                currentlySelectedUnit.inc_mpMax(2, 3);
-                currentlySelectedUnit.inc_patk(3, 5);
-                currentlySelectedUnit.inc_pdef(5, 6);
-                currentlySelectedUnit.inc_matk(6, 7);
-                currentlySelectedUnit.inc_mdef(9, 12);
+                currentlySelectedUnit.inc_hpMax(8, 10);
+                currentlySelectedUnit.inc_mpMax(2, 4);
+                currentlySelectedUnit.inc_patk(3, 4);
+                currentlySelectedUnit.inc_pdef(3, 5);
+                currentlySelectedUnit.inc_matk(4, 5);
+                currentlySelectedUnit.inc_mdef(6, 7);
                 break;
             default:
                 Debug.Log("Error: level_up_stat_increases() exited switch on default statement. unitId: " + currentlySelectedUnit.get_unitId() + "not found.");
