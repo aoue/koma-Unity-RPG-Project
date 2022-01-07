@@ -29,7 +29,20 @@ MonoBehaviour:
   - compileAutomatically: 0
     inkAsset: {fileID: 102900000, guid: 573b8241c65f9634885e778a364ed2e7, type: 3}
     jsonAssetDirectory: {fileID: 0}
-    jsonAsset: {fileID: 4900000, guid: 1c2b37d8148eb594fb177358b24a641e, type: 3}
+    jsonAsset: {fileID: 0}
+    unhandledCompileErrors: []
+    errors: []
+    warnings: []
+    todos: []
+    parents: []
+    masterInkAssets: []
+    masterInkAsset: {fileID: 0}
+    includePaths: []
+    includes: []
+  - compileAutomatically: 0
+    inkAsset: {fileID: 102900000, guid: be5e8d961519c08428182229e5935211, type: 3}
+    jsonAssetDirectory: {fileID: 0}
+    jsonAsset: {fileID: 4900000, guid: 2ecf6e848808e0e42859a1de8ae0a445, type: 3}
     unhandledCompileErrors:
     - "Ink Compiler threw exception \nError: Collection was modified; enumeration
       operation may not execute.\n---- Trace ----\n  at System.Collections.Generic.HashSet`1+Enumerator[T].MoveNext
@@ -75,19 +88,6 @@ MonoBehaviour:
       \r\n  at Ink.UnityIntegration.InkCompiler.CompileInkThreaded (System.Object
       itemObj) [0x00094] in C:\\Users\\aaja\\Documents\\unity games\\koma\\koma\\Assets\\Ink\\Editor\\Core\\Compiler\\InkCompiler.cs:419
       \n--------\n"
-    errors: []
-    warnings: []
-    todos: []
-    parents: []
-    masterInkAssets: []
-    masterInkAsset: {fileID: 0}
-    includePaths: []
-    includes: []
-  - compileAutomatically: 0
-    inkAsset: {fileID: 102900000, guid: be5e8d961519c08428182229e5935211, type: 3}
-    jsonAssetDirectory: {fileID: 0}
-    jsonAsset: {fileID: 4900000, guid: 2ecf6e848808e0e42859a1de8ae0a445, type: 3}
-    unhandledCompileErrors: []
     errors: []
     warnings: []
     todos: []

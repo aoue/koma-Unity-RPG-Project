@@ -99,8 +99,8 @@ new big think for prologue story. see skeleton below.
 	- immediate (done)
 	- event 1 (done)
 - dungeon 0
-	- tile event 1
-	- tile event 2
+	- tile event 1 (done)
+	- tile event 2 (done)
 	- post mob event 1
 - part 1
 	- immediate
@@ -118,7 +118,6 @@ new big think for prologue story. see skeleton below.
 - part 3
 	- immediate
 	- event 1
-END OF PROLOGUE
 ========================================
 
 - status changes?
@@ -131,7 +130,7 @@ END OF PROLOGUE
 - level tree canvas:
 	MOVE PART
 	plan and fill out for our prologue units: (see sheets)
-	- Friday| light brand, stabilize, exceed
+	- Friday| stabilize, exceed
 	- Mc    | elemental (in apply status function, randomly change this move's affinity to any non-normal aff.)
 	- Moth  | guard: break, guard: magic, guard: physical, light
 	

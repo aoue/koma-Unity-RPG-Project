@@ -18,8 +18,7 @@ VAR player = "playerCharName"
 
 //SCENE OUTLINE
 //Welcome to dungeon 0 mob event 1. this is what plays after the boss of dungeon 0 has been defeated.
-// -the party defeats the sabaind at large and rescues moth. They can't wake her up though, regardless of what they try.
-// -friday says there's no time to stick around here, they'll just carry her back and pray nothing happens.
+// -the party defeats the sabaind at large and gets to the girl, but she is still out of it. They carry her back.
 //=============
 
 dun 0 mob event 1
@@ -33,33 +32,33 @@ Rrroaaaahhhh!!
 
 ~n("")
 Roaring, it pulls its thick arms back and prepares to attack again.
-But I can feel it nearing its limit. It's already covered in a multitude of minor wounds. We have been getting the better of it, but I'm feeling exhaustion beginning to creep in.
-... I need to last just a little bit longer!
+But I can feel it nearing its limit, already covered in a layer of minor wounds. We have been getting the better of it, but I'm feeling my own exhaustion beginning to creep in.
+... I need to last just a little while longer!
 
 //~show friday resolute(slot 0; replacing the monster)
 Mother's breathing is deep and measured; the efficient breaths of a warrior. She's showing no sign of slowing down.
-Absentmendidly, she flicks some of her hair out of her face, all while watching the creature intently.
-I always knew Mother was strong, but I never grasped exactly how incredile her strength is. How fast she is. How subtle and clever.
+Absentmendidly, she flicks some of her hair out of her face. Her gaze nevers moves off of the creature.
+I always knew Mother was strong, but I never grasped exactly how incredible her strength is. How fast, how strong she is.
 
 //~show creature(slot 1; alongside friday)
 
-How well do I really know her...
+How well do I really know my own mother?
 
 ~n("Creature")
 ~shake(5, 0.5)
 GRRRooooaaggghhhh!!!
 
 ~n("")
-It lunges faster than something that size has any right to, straight towards Mother.
-Even before I start forming a shield around her, she slips by its heavy swing and inside its guard, her sword upright and close to her chest.
-Then, in a practiced motion, she shifts her weight forwards and plants her blade in the monster's side. She presses it in halfway to the hilt before the monster reacts.
+It lunges faster than something that size has any right to.
+Even before I start forming a shield around her, Mother slips past its heavy swing and inside its reach, her sword upright and close to her chest.
+Then, in a practiced motion, she shifts her weight forwards and plants her blade in the monster's side. It's in halfway to the hilt before the monster reacts.
 
 //~hide slot 0
 //~hide slot 1
 //~show bg friday cutin
 
 As it reaches for her, Mother pulls the sword clean and whirls behind the monster, staying a moment ahead of it.
-Then, she stabs it once more at the base of the spine and passes her sword through half its waist as she slides it free.
+Then, she stabs it once more at the base of the spine. Her sword passes through a quarter of its waist as she slides it free.
 
 //~show bg cave
 //~show friday resolute slot 0
@@ -78,7 +77,7 @@ Mother! That was— it was amazing!
 ~n("")
 She nods her head in acknowledgement.
 
-//~show friday smile
+//~show friday worry
 ~n("Friday")
 It was nothing.
 
@@ -87,93 +86,79 @@ Mother smoothes down the front of her dress and frowns as she notices the splash
 
 //~show friday frown
 ~n("Friday")
-Another dress ruined...
-{player}, go check on our wayward Sister, will you? I'm going to make sure big guy over here stays dead.
+Ruined.
+{player}, go check on our wayward sister, will you? I'm going to make sure big guy over here stays dead.
 
 ~n("Me")
 OK.
 
 //~hide friday
 ~n("")
-We had moved the girl to the side of the cave earlier so she wouldn't be in the line of fire during the fight. She was still unresponsive then, but she was still breathing.
-I crouch next to her and shake her gently, trying to rouse her. But there's no reaction.
+We had positioned ourselves so the girl wouldn't be in the line of fire during the fight. She was unresponsive, but still breathing.
+I crouch next to her and shake her gently, trying to rouse her. There's no reaction.
 I try speaking to her but stop after a few seconds when nothing happens, feeling like a fool.
-And I don't know what else to do. How pathetic to be stumped after such a short time.
-All the while, her shallow steady breathing continues uninterrupted.
+And I don't know what else to do. How pathetic to be stumped so quickly.
+Her shallow steady breathing continues uninterrupted.
 
 //~show friday neutral
 ~n("Friday")
 Anything?
 
 ~n("Me")
-She hasn't responded to me at all. I don't know what's wrong with her.
+She's passed out. I don't know what's wrong with her.
 
 ~n("Friday")
 That's alright. It could be any of a lot of different things; the poor girl's been through a lot.
-Well, to be fair she still has more to come, but perhaps the worst is over.
+She still has more to come, I'm sorry, but the worst should be over.
 
 ~n("")
 Mother sizes her up.
 
 ~n("Friday")
-I was hoping she'd be able to walk... But it can’t be helped. We should leave here sooner rather than later and there’s no indication of whether the girl is going to wake up anytime soon.
+I was hoping she'd be able to walk... But it can’t be helped. There’s no indication of whether the girl is going to wake up anytime soon And we should leave here sooner rather than later.
 I'll just have to carry her.
 
 ~n("Me")
-I'll do it.
+... I can do it.
 
 ~n("Friday")
 Don't be silly, you're exhausted.
 //~show friday smile
-And don't act like you're stronger than me, young man. You've still got a ways to go.
+No need to pretend with me, young man. You've still got a ways to go.
 Anyway, she doesn't look heavy, so don't worry about it, OK?
 
 ~n("")
-Mother picks her up gently in her arms, holding her like one holds a baby.
+Mother picks her up gently in her arms, cradling her like a baby.
 
 ~n("Friday")
-~talk(0)
 How nostalgic...
-~talk(1)
-Come now, give me your coat. We need something to cover the poor girl or she’ll catch her death of cold before we get halfway back.
+Come now, give me your coat. We need something to cover the poor girl or she’ll catch her death of cold before we get back.
 
 ~n("Me")
-The Abbess said her name's Moth.
-
-~n("")
-That's her name, isn't it? I feel guilty calling her \'the girl.\' for so long. After what I've seen her go through, the least I can do is call her by her proper name.
-I pass her my coat. Mother drapes and tucks it around the Sister, doing her best to cover her.
+The girl. We've called her that this entire time. After what I've seen her go through, the least I could do is call her by her name, but I can't. I don't even know what it is.
+We've saved the body, but were we too late for the girl?
+I hand over my coat. Mother drapes and tucks it around the sister, doing her best to cover her for warthm and modesty.
 
 ~n("Friday")
-Was it? A strange name.
-And thanks for lending her your coat. I'd would have given her some of my own clothes, but this dress is rather all or nothing.
-
-~n("Me")
-Umm, right. It's not the most practical dress.
-
-~n("Friday")
-Nonsense. It’s the perfect dress for the modern noblewoman. Just not this particular one anymore, I suppose.
+Thanks for lending her your coat, she'll appreciate it later. I'd give her some of my own, but this dress is rather all or nothing. And ruined now, too.
 
 ~n("")
 She motions at the bright red bloodstain on its front.
 
 ~n("Friday")
-Anyway, let's get a move on. This whole episode has raised a lot of questions, like why did the demon bring the girl— Moth, I mean — here? Or did it even mean to?
-But now's not the time to answer them.
+Let's get a move on.
 
 ~n("")
-As we leave the cave, I think to myself that I wouldn't mind never seeing this place again. Agairy or any of it.
-
+As we leave the cave, I think to myself that I wouldn't mind never seeing this place again. Agairy, the cave, any of it.
 
 ~n("Me")
-She will be okay, won't she?
+She's going to be okay, won't she?
 
 ~n("Friday")
 ~talk(0)
 ...
 ~talk(1)
-We'll see.
+Of course she will, sweetheart. Now come on.
 
 
-
-END
+-> END

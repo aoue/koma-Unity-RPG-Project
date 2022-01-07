@@ -77,7 +77,7 @@ public class BattleBrain
     }
     int calculate_damage(int level, int power, int atk, int def, float affMod, float spread, float rowMod, float defenderMod, float dmgDealtMod, float dmgTakenMod)
     {        
-        int damage = Convert.ToInt32(((atk * (power + level)) / Mathf.Max(1, def)) * affMod * spread * rowMod * defenderMod * dmgDealtMod * dmgTakenMod);
+        int damage = Convert.ToInt32(((atk * (power + (level * 2))) / Mathf.Max(1, def)) * affMod * spread * rowMod * defenderMod * dmgDealtMod * dmgTakenMod);
             
         return damage;
     }
@@ -86,7 +86,7 @@ public class BattleBrain
         //heals don't care about affinity OR defender penalty
         //unit's defense is divided by 2. target's defense shoud matter... but not make them unhealable.
 
-        int heal = Convert.ToInt32(((atk * (power + (level * 1.5f))) / Mathf.Max(1, (def / 2))) * spread * rowMod);
+        int heal = Convert.ToInt32(((atk * (power + (level * 2))) / Mathf.Max(1, (def / 2))) * spread * rowMod);
 
         return heal;
     }

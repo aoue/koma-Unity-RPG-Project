@@ -4,6 +4,16 @@ name - description
 ==========================================
 Prologue
 
+MUSIC
+- normal city theme
+- ancients theme
+- overworld theme
+- dungeon crawling theme
+
+SOUNDS
+- cum glooping sound
+- monster roar sound
+
 OVERWORLD
 - single overworld image for the town (Agairy) is fine for prologue.
 
@@ -14,13 +24,37 @@ BACKGROUNDS
 - bg city street: city streets.
 - bg stables: outside them.
 - bg inside church: show pews, a statue, carpet down the center. order emblem too.
+- bg cave: generic cave. we'll be using this a lot.
 
 EVENT CG
+- scene 0: partial, fully blur, fully, inflation blur, inflation. All use bg cave as a background.
 
 PORTRAITS USED
-- Friday: base, loving smile, frown, smirk, proud, fake smile, angry/mad, sad
-- Abbess: base, fake smile, faker smile
+- Friday: base, loving smile, frown, smirk, proud, fake smile, angry, worry
+- Abbess: base, fake smile, fake smile 2
 - Moth: 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+end.
 
 MUSIC USED
 - ancients theme. for world history and, later, stuff to do with the ancients.

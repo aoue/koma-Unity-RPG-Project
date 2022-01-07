@@ -30,49 +30,50 @@ dun 0 (tile) event 1
 //~show friday
 
 ~n("")
-Mother reaches down and pulls a shred of dress from a low tree branch.
+Mother reaches down and pulls a shred of a pale dress from a low tree branch.
 
-//~show friday worry
+//~show friday frown
+~n("Friday")
+At least we're headed in the right direction. Looks like our demon's in some kind of hurry.
+
+~n("Me")
+Running from us?
 
 ~n("Friday")
-At least we're headed in the right direction. But I wonder... is our demon in that much of a hurry, or did it leave this for us?
-A taunt, maybe.
+Maybe. It could be able to sense us, but probably it just found out we were coming when it was still in the settlement. I doubt it's a coincidence it choose today of all days to make its escape.
+It doesn't change anything, of course.
+
+~n("Me")
+That seems unwise; waiting for us, I mean. If it had left earlier it would have had more time to get a lead.
+Which means it wants us to chase it. We're the ones it's truly after.
+
+~n("Friday")
+Yes, or someone like us. Possession demons have a very simple motive. They want to get hold of the most powerful host they can.
+The way they try to do that is different, of course. They're individuals. And even if they weren't it'd be impossible to understand the reasoning behind every action they do. Their minds are too mishapen to be fully understood.
+But the goal is always the same.
 
 ~n("")
-She makes a show of weighs the options for a moment.
+Mother stops us for a moment.
 
-//~show friday neutral
 ~n("Friday")
-It doesn't change anything, I guess.
+This is worrying. There's signs of wildlife around here. Monsters, too. Either one is enough to cause trouble for our girl.
 
 ~n("Me")
-It would taunt us? It doesn't even know we're coming.
+Won't the demon protect her?
 
 ~n("Friday")
-They're individuals. And even if they weren't it'd be impossible to understand every action they do. Their minds are the wrong shape.
-But this is worrying. There's signs of wildlife around here. Monsters, too.
-Big enough to cause our demon trouble if it has the misfortune.
+Until a better host comes along. But They're individuals, like I said. They're flawed and can make mistakes. I should know, my job is to take advantage of that.
+... We'll just have to find her first.
 
-~n("Me")
-But the demon will protect its host.
+~n("")
+I nod. Here in the woods, with monsters not too far away, the gravity of the situation is starting to hit me.
+Mother notices, of course.
 
+//~show friday loving smile
 ~n("Friday")
-To a point. At least until a better one doesn't come along. But They're individuals, like I said. They're imperfect. I should know, the job of an exorcist is to take advantage of that.
+Don't worry. I said I'd protect you, didn't I?
 
-~n("Me")
-A better host? That's us, isn't it?
-
-//~show friday worried
-~n("Friday")
-I wouldn't worry about it. //some wrongshadowing
-
-
-
-
-
-
-
-
+-> END
 
 
 

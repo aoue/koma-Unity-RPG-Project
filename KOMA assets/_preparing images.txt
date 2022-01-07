@@ -1,0 +1,14 @@
+in the gimp.
+
+after drawing them, there are many filters that help touch up the imperfections.
+
+Some of the most promising:
+- apply noise
+- cartoon
+- van gogh LIC
+
+
+some notes for certain types of images, so we stay consistent.
+
+Sabaind:
+- apply noice + cartoon (gives the textured skin)
