@@ -11,27 +11,27 @@ public class CombatManager : MonoBehaviour
     //responsible for running the combat.
     //manages control flow, ui elements, and calculations.
 
-    [SerializeField] private DungeonManager dMan; //links us back to the dungeon when we're done.
     [SerializeField] private Sprite[] affOrbSprites;
 
     [SerializeField] private DungeonUnitBox[] partyBoxes; //boxes that hold the party. 0-5
     [SerializeField] private DungeonUnitBox[] enemyBoxes; //boxes that hold the enemies. 0-5
     [SerializeField] private Image activePortrait; //540x1080. show a portrait of the unit that's doing something; choosing a move, or executing one.
-    [SerializeField] private Sprite lastActiveShown; //holds the last shown active Portrait. used to help us switch between scheduled move's user and current unit.
+    private Sprite lastActiveShown; //holds the last shown active Portrait. used to help us switch between scheduled move's user and current unit.
     [SerializeField] private Sprite emptySlotSprite; //used to fill empty dungeon boxes
     [SerializeField] private Text partyApText;
     [SerializeField] private Text enemyApText;
-    [SerializeField] private Text staminaText;
+    //[SerializeField] private Text staminaText;
     [SerializeField] private DmgText dmgTextPrefab;
 
     private BattleBrain brain;
+    [SerializeField] private PrepDungeonManager pdm;
+    [SerializeField] private LossManager loser;
     [SerializeField] private SoundManager SM; //handles playing music and sounds, baby.
     [SerializeField] private Highlighting highlighter;
     [SerializeField] private Previewer previews;
     [SerializeField] private PlayByPlay plays;
     [SerializeField] private MoveSelector moveSelector;
     [SerializeField] private PreviewSlot previewSlot;
-    [SerializeField] private LossManager loser;
 
     private int wavesNum; //number of waves left.
     private int battleXP;
@@ -133,7 +133,7 @@ public class CombatManager : MonoBehaviour
         else playerGoesFirst = false;
 
         //start up the battle.
-        SM.play_background_music(dMan.get_combatTheme());
+        //SM.play_background_music();
         battleOver = false;
         gameObject.SetActive(true);
         start_of_round(true);
@@ -326,7 +326,7 @@ public class CombatManager : MonoBehaviour
         fill_enemy_slots();
         if (battleOver == true)
         {
-            Debug.Log("returning from control; battleOver = true");
+            //Debug.Log("returning from control; battleOver = true");
             return;
         } 
 
@@ -532,7 +532,12 @@ public class CombatManager : MonoBehaviour
             battleOver = true;
             plays.show("-defeat-");
             previews.hide();
-            dMan.return_control(0, false);
+            //dMan.return_control(0, false);
+
+            //made combat screen go cloudy?
+
+            //give control to loss manager:
+            loser.show();
         }
         else if (playerWon == true)
         {
@@ -553,7 +558,8 @@ public class CombatManager : MonoBehaviour
                    if (pl[i] != null) pl[i].status.reset(pl[i]);
                 }
 
-                dMan.return_control(battleXP, true, pl);
+                //dMan.return_control(battleXP, true, pl);
+                pdm.battle_won(battleXP);
             }
         }
     }
@@ -640,11 +646,14 @@ public class CombatManager : MonoBehaviour
         bool pDefeated = true;
         foreach (Unit u in pl)
         {
-            if (u.get_ooa() == false)
+            if (u != null)
             {
-                pDefeated = false;
-                break;
-            }
+                if (u.get_ooa() == false)
+                {
+                    pDefeated = false;
+                    break;
+                }
+            }          
         }
         if (pDefeated == true) {return;}
         
@@ -1364,6 +1373,7 @@ public class CombatManager : MonoBehaviour
         {
             if (pl[i] == null)
             {
+                //Debug.Log(partyBoxes[i]);
                 partyBoxes[i].fill_dummy(emptySlotSprite);
             }
             else

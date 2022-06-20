@@ -17,6 +17,8 @@ public class EventManager : MonoBehaviour
     private int useIC;
     private string pName;
 
+    [SerializeField] private PrepDungeonManager pdm;
+
     [SerializeField] private GameObject shakeObject;
 
     [SerializeField] private Font ancientsFont;
@@ -36,6 +38,7 @@ public class EventManager : MonoBehaviour
     [SerializeField] private GameObject nameBox;
     [SerializeField] private Text nameText;
     [SerializeField] private Text sentenceText;
+    [SerializeField] private Text centeredText;
     [SerializeField] private Button buttonPrefab = null;
 
     [SerializeField] private Button[] textControlButtons; //in order: auto, skip, history
@@ -49,19 +52,24 @@ public class EventManager : MonoBehaviour
     private float imgFadeSpeed = 1.5f; //higher is faster. controls the speed at which char imgs are replaced/shown/hidden during events.
 
     //typing speed controllers
+    bool battle_block = false;
     private float textWait = 0.035f; //how many seconds to wait after a non-period character in typesentence
     private float autoWait = 1.75f; //when auto is on, time waited when a sentence is fully written out before playing the next one
     private bool skipOn = false; //when true, don't wait at all between textWaits, just display one after another.
     private bool autoOn = false; //when true, the player can't continue the text, but it will continue automatically.
     private bool historyOn = false; //when true, viewing history and cannot continue the story.
+    private bool settingsOn = false; //when true, viewing settings and cannot continue the story.
     private bool usingDefaultFont = true;
     private bool isTalking; //determines the mode of speech which is used when nametext is not empty. can either be true:talk [""] or false:think [()] 
+    private bool isCentered; //determines whether to use sentenceText or use centeredText in typeSentence().
+
+    [SerializeField] private GameObject settingsView; //lets player adjust vn settings, like text speed.
 
     private string currentSpeakerName; //used for pushing entries in history.
     [SerializeField] private GameObject HistoryPort; //master gameobject for the history interface.
     [SerializeField] private HistoryScroller histScroll; //used to fill/clear the content of the history interface.
     private List<HistoryEntry> historyList; 
-    private int historyLimit = 10; //the max number of displays the historyList stores at a time.
+    private int historyLimit = 15; //the max number of displays the historyList stores at a time.
     
     [SerializeField] private GameObject canProceedArrow; //visible when canProceed, invisible when cannot.
     private bool canProceed;
@@ -79,25 +87,27 @@ public class EventManager : MonoBehaviour
         _instance = this;
     }
     void Update()
-    {             
+    {
+        if (battle_block) return;
+
         //toggle text control states:
         //a: auto
         //left ctrl: skip
         //h: history
 
-        if (Input.GetKeyDown(KeyCode.A) && historyOn == false && hideOn == false)
+        if (Input.GetKeyDown(KeyCode.A) && historyOn == false && hideOn == false && settingsOn == false)
         {
             toggle_auto();
         }
-        else if (Input.GetKeyDown(KeyCode.LeftControl) && historyOn == false && hideOn == false)
+        else if (Input.GetKeyDown(KeyCode.LeftControl) && historyOn == false && hideOn == false && settingsOn == false)
         {
             toggle_skip();
         }
-        else if (Input.GetKeyDown(KeyCode.H))
+        else if (Input.GetKeyDown(KeyCode.H) && settingsOn == false)
         {
             toggle_history();
         }
-        else if (Input.GetKeyDown(KeyCode.Z))
+        else if (Input.GetKeyDown(KeyCode.Z) && settingsOn == false)
         {
             toggle_hide();
         }
@@ -107,7 +117,7 @@ public class EventManager : MonoBehaviour
         }
 
         //press 'spacebar' or 'enter' or 'LeftClick' to continue, only if canProceed if true, we aren't showing history, and we aren't hiding dialogue box
-        if (canProceed == true && historyOn == false)
+        if (canProceed == true && historyOn == false && settingsOn == false)
         {
             if (skipOn == false && autoOn == false && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)))
             {
@@ -128,10 +138,6 @@ public class EventManager : MonoBehaviour
     }
 
     //MANAGE EVENT PREVIEW
-    public static void dungeon_hovered(Dungeon dun, float xCoord, float yCoord)
-    {
-        _instance.ttm.show_dungeon_preview(dun, xCoord, yCoord);
-    }
     public static void event_hovered(Event ev, float xCoord, float yCoord)
     {
         _instance.preview_event(ev, xCoord, yCoord);
@@ -148,6 +154,7 @@ public class EventManager : MonoBehaviour
     //MANAGE EVENT SKIP/AUTO BUTTONS
     IEnumerator modify_diaBox_alpha(bool toTransparent, float speed = 1f)
     {
+        //used by hide button to hide/show the dialogue box.
         float objectAlpha = diaBoxGroup.alpha;
         float currentAlpha;
         if (toTransparent) //set alpha to 0
@@ -174,7 +181,7 @@ public class EventManager : MonoBehaviour
     }
     public void toggle_hide()
     {
-        Debug.Log("toggle hide called");
+        //Debug.Log("toggle hide called");
         if (hideAcceptsInput == false) return;
         hideAcceptsInput = false;
         hideOn = !hideOn;
@@ -228,9 +235,11 @@ public class EventManager : MonoBehaviour
             textControlButtons[2].image.color = Color.grey;
             hide_history();
         }        
-    }
+    }   
     void show_history()
     {
+        if (settingsOn == true) return;
+
         //fill history port.
         histScroll.show(historyList);
         HistoryPort.SetActive(true);
@@ -238,6 +247,30 @@ public class EventManager : MonoBehaviour
     void hide_history()
     {
         HistoryPort.SetActive(false);
+    }
+
+    //SETTINGS
+    public void show_settings()
+    {
+        if (historyOn == true) return;
+
+        settingsOn = true;
+        if (settingsOn == true)
+        {
+            textControlButtons[3].image.color = Color.black;
+            settingsView.SetActive(true);
+        }
+    }
+    public void hide_settings()
+    {
+        settingsOn = false;
+        textControlButtons[3].image.color = Color.grey;
+        settingsView.SetActive(false);
+    }
+    public void set_textWaitTime(System.Single value)
+    {
+        textWait = value;
+        //Debug.Log("set_textWaitTime(). value = " + value + " | textWait = " + textWait);
     }
 
     //MANAGE EVENT RUNNING
@@ -259,22 +292,26 @@ public class EventManager : MonoBehaviour
     }
     IEnumerator TypeSentence(string sentence)
     {
+        Text typeHere = null;
+        if (isCentered == true) typeHere = centeredText;
+        else typeHere = sentenceText;
+
         if (skipOn == false)
         {
             //hide canProceed arrow
             canProceedArrow.SetActive(false);
 
-            sentenceText.text = "";
-            string displayString = ""; 
+            typeHere.text = "";
+            string displayString = "";
 
             yield return new WaitForSeconds(0.05f);
-            
+
             foreach (char letter in sentence.ToCharArray())
             {
                 if (skipOn == true)
                 {
                     //i.e., if skip is turned on while the sentence is playing.
-                    sentenceText.text = sentence;
+                    typeHere.text = sentence;
                     break;
                 }
 
@@ -283,28 +320,28 @@ public class EventManager : MonoBehaviour
                 //control quotes, parentheses, or nothing.
                 if (nameText.text == "")
                 {
-                    sentenceText.text = displayString;                    
+                    typeHere.text = displayString;
                 }
                 else
                 {
                     if (isTalking == true) //use quotes
                     {
-                        sentenceText.text = "\"" + displayString + "\"";
+                        typeHere.text = "\"" + displayString + "\"";
                     }
                     else //use parantheses
                     {
-                        sentenceText.text = "(" + displayString + ")";
+                        typeHere.text = "(" + displayString + ")";
                     }
                 }
 
-                yield return new WaitForSeconds(textWait); 
+                yield return new WaitForSeconds(textWait);
             }
             //show canProceed arrow.
             canProceedArrow.SetActive(true);
         }
         else
         {
-            sentenceText.text = sentence;
+            typeHere.text = sentence;
             yield return new WaitForSeconds(0.1f);
         }
         
@@ -507,6 +544,20 @@ public class EventManager : MonoBehaviour
         //all the storys share the same external functions. we are externalizing complexity from 
         //ink and putting it here instead.
 
+        //battle-related
+        script.BindExternalFunction("rest_party", () =>
+        {
+            this.rest_party();
+        });
+        script.BindExternalFunction("add_units", () =>
+        {
+            this.add_units();
+        });
+        script.BindExternalFunction("battle", (int id) =>
+        {
+            this.to_battle(id);
+        });
+
         //music
         script.BindExternalFunction("stop_music", () =>
         {
@@ -534,6 +585,10 @@ public class EventManager : MonoBehaviour
         {
             this.set_speech(mode);
         });
+        script.BindExternalFunction("center", (bool mode) =>
+        {
+            this.set_centered(mode);
+        });
         script.BindExternalFunction("toggle_font", () =>
         {
             this.toggle_font();
@@ -555,6 +610,35 @@ public class EventManager : MonoBehaviour
 
     }
 
+    //battle
+    public void return_control()
+    {
+        //Note: not a linked function. called from cMan->pdm->here.
+        battle_block = false;
+    }
+    void rest_party()
+    {
+        //restores party to full hp and mp.
+        pdm.heal_party();
+    }
+    void add_units()
+    {
+        //for adding units to the party in the middle of an event. How exciting!
+        //Debug.Log("add to party called!");
+        Overworld.add_to_party(heldEv.get_unitsToAdd());
+    }
+    void to_battle(int id)
+    {
+        //loads a battle and then brings us back again.
+        //by loading a battle, we mean loading the prep dungeon manager,
+        //which will then load the battle after the player has laid out their deployment.
+
+        battle_block = true;
+
+        pdm.load_up(id);
+    }
+    
+
     //text effects
     void set_name(string s)
     {
@@ -573,6 +657,10 @@ public class EventManager : MonoBehaviour
     void set_speech(bool state)
     {
         isTalking = state;
+    }
+    void set_centered(bool state)
+    {
+        isCentered = state;
     }
     void toggle_font()
     {

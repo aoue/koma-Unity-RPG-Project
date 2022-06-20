@@ -13,11 +13,13 @@ public class Event : MonoBehaviour
     [SerializeField] private int eventID; //day-unique identifier for this event.
     [SerializeField] private int dayProgressionNeeded; //day progression must be at least this much for the vent to be enabled.
     [SerializeField] private bool hasHaich; //controls whether a heart icon appears with the event.
-    [SerializeField] private eventType event_type;
+    [SerializeField] private bool hasFight; //controls whether a sword crossing icon appears with the event.
     
+    [SerializeField] private eventType event_type;
+    [SerializeField] private Unit[] unitsToAdd;
+
     //replacing these three with an Ink story that will do all these as it wishes.
     //external functions will be linked in EventManager, which will also run it.
-
     [SerializeField] private TextAsset inkJSONAsset;
 
     //post event and preview
@@ -29,6 +31,7 @@ public class Event : MonoBehaviour
     [SerializeField] private int[] portraitPreviews; //the cast preview shown in tooltip preview. size <= 4.
 
     //getters
+    public Unit[] get_unitsToAdd() { return unitsToAdd; }
     public string get_eventPreviewLines() { return eventPreviewLines; }
     public bool get_hasHaich() { return hasHaich; }
     public string get_noteTitle() { return noteTitle; }

@@ -53,11 +53,11 @@ MonoBehaviour:
   selfStatus: 0
   selfStatusTextColorGreen: 0
   statusText: 
-  phase: 1
+  phase: 0
   preferredRow: 2
   strikes: 1
-  power: 15
-  break_mult: 2.25
+  power: 10
+  break_mult: 2.5
   lowSpread: 0.8
   highSpread: 1.2
   xSize: 1

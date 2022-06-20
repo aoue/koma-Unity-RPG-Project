@@ -46,7 +46,13 @@ MonoBehaviour:
   eventID: 0
   dayProgressionNeeded: 0
   hasHaich: 0
+  hasFight: 0
+  battleIDS: 00000000
   event_type: 0
+  unitsToAdd:
+  - {fileID: 5589160117182276410, guid: 87937ca7535a6ef40b0ea0b09d34147b, type: 3}
+  - {fileID: 363348870611456590, guid: 1df84eeb3ae3e4f4592abcded33ac4a6, type: 3}
+  - {fileID: 7052352532459036785, guid: 0b2ebc4e81158c84c886338c9500a987, type: 3}
   inkJSONAsset: {fileID: 4900000, guid: 80362a136f237ce44809bb97c82280a0, type: 3}
   useNotifierOnEnd: 0
   eventPreviewLines: 

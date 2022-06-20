@@ -2,6 +2,7 @@
 EXTERNAL bg(id)
 EXTERNAL n(name) //set to empty string to hide namebox.
 EXTERNAL talk(mode) //1: true, use quotes. 0: false, use parantheses.
+EXTERNAL center(mode) 
 EXTERNAL toggle_font()
 EXTERNAL show(whichSlot, portraitID)
 EXTERNAL hide(whichSlot)

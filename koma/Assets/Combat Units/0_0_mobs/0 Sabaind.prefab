@@ -43,13 +43,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 081b12efd40753d428fd913f350cf59e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSelectionPortrait: {fileID: 0}
+  moveSelectionPortrait: {fileID: 21300000, guid: 3b7b16535563cc242a821df5b9acfffd,
+    type: 3}
   boxImg: {fileID: 0}
+  playerUnitId: 0
   exp: 6
   level: 1
   nom: Sabaind
   apMax: 1
   hpMax: 90
+  break_multiplier: 1
   affinity: 6
   mpMax: 0
   patk: 85
@@ -60,7 +63,6 @@ MonoBehaviour:
   moveset:
   - {fileID: 4376910969778097162, guid: ccffeeb982f5a9b48b2676af46f1a27d, type: 3}
   - {fileID: 8973319096785210393, guid: ea0436148280e184f8a0aa8c5218fd71, type: 3}
-  break_multiplier: 1
   doSpawningVariance: 1
   default_priority: 0
   discipline: 5

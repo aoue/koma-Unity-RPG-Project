@@ -43,7 +43,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba42b37bc7aa8744c844abe1c58e792a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSelectionPortrait: {fileID: 21300000, guid: 02a02f2663ccebb408d71df9c8b7cd70,
+  moveSelectionPortrait: {fileID: 21300000, guid: 157988754542b6a4ab6c23186cd10a97,
     type: 3}
   boxImg: {fileID: 21300000, guid: f56f78292ffe0ee4eb0e9259b634e9dc, type: 3}
   playerUnitId: 0

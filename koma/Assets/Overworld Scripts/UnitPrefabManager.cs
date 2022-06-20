@@ -88,7 +88,7 @@ public class UnitPrefabManager : MonoBehaviour
         mothUnit.get_moveset()[4] = null;
         mothUnit.set_known_moveIds(new List<int> { 0, 1, 2, 3 });
 
-        Debug.Log("unitprefabmanager.set_units_to_default() done.");
+        //Debug.Log("unitprefabmanager.set_units_to_default() done.");
     }
 
 }

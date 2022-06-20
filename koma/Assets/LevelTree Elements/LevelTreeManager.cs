@@ -174,19 +174,31 @@ public class LevelTreeManager : MonoBehaviour
         //prevent move spoofing
         if (moveInQuestion.get_alreadyLearned() == false)
         {
+            Debug.Log("assignButton function early exit.");
             return;
         }
 
-        foreach (Move equippedMove in currentlySelectedUnit.get_moveset())
+        //save move that was in the destination slot
+        Move moveTemp = currentlySelectedUnit.get_moveset()[which];
+
+        //put move into that slot
+        currentlySelectedUnit.get_moveset()[which] = moveInQuestion.get_containedMove();
+
+        //if equipped move was already in a slot (already equipped in another slot)
+        //then: assign move temp to that slot.
+        //else: do nothing
+
+        //foreach (Move equippedMove in currentlySelectedUnit.get_moveset())
+        for (int i = 0; i < currentlySelectedUnit.get_moveset().Length; i++)
         {
-            if (equippedMove == moveInQuestion.get_containedMove())
+            if (i != which && currentlySelectedUnit.get_moveset()[i] == moveInQuestion.get_containedMove())
             {
-                return;
+                Debug.Log("assignButton function swapping move.");
+                currentlySelectedUnit.get_moveset()[i] = moveTemp;
+                break;
             }
         }
-
-        //all clear, so now equip the move you want to the argumented slot
-        currentlySelectedUnit.get_moveset()[which] = moveInQuestion.get_containedMove();
+        
         unitPreviewer.show(currentlySelectedUnit);
     }
     public void click_levelTreeMove_learnMove()

@@ -9,7 +9,6 @@ public class Beat : Event
 
     [SerializeField] protected int postEventProgression; //set progression to this when done.
     [SerializeField] protected bool enablePassTimeAfter; //if true, then enable next day button when done.
-    [SerializeField] protected bool enableDungeonsAfter; //if true, then enable dungeons after this event. (only interactable, does not show hidden ones)
 
 
     public override void post_event()
@@ -25,10 +24,7 @@ public class Beat : Event
         {           
             Overworld.enable_nextDayButton();
         }
-        if (enableDungeonsAfter)
-        {
-            Overworld.enable_shownDungeons();
-        }
+
     }
 
 }

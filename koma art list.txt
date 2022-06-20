@@ -25,6 +25,8 @@ BACKGROUNDS
 - bg stables: outside them.
 - bg inside church: show pews, a statue, carpet down the center. order emblem too.
 - bg cave: generic cave. we'll be using this a lot.
+- bg room: the room they stay in in agairy. also will double as inn rooms and the like.
+- bg church: inside order churches.
 
 EVENT CG
 - scene 0: partial, fully blur, fully, inflation blur, inflation. All use bg cave as a background.

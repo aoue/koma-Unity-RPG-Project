@@ -12,51 +12,54 @@ public class PrepDungeonManager : MonoBehaviour
     //can click on a single unit box for a more detailed look at the unit, but you can't edit them here.
 
     [SerializeField] private Overworld theWorld; //used to save information in the cart.
+    [SerializeField] private BattleLibrary battleLibrary; //holds information for all enemy parties. Retrievable with corresponding id.
+    [SerializeField] private CombatManager combatManager; //handles combat.
+    [SerializeField] private FadeManager fader;
+    [SerializeField] private EventManager evManager;
 
     private static List<Unit> reserveParty; //all units, including the ones in the expedition party.
     private static Unit[] party; //the expedition party. always size 6. empty units are null.
     //private Inventory inven; (holds arm, wpn, acc, AND moves)
-    [SerializeField] private Text unusedText;
+    //[SerializeField] private Text unusedText;
     [SerializeField] private GameObject unitPreviewGO;
     [SerializeField] private Image bgImage;
     [SerializeField] private Button embarkButton; //button that sends us to the dungeon.
     [SerializeField] private Text unitLimitText;
     [SerializeField] private UnitBox[] unitBoxes; //dimensions are 500x250. 2:1
     [SerializeField] private ReserveUnitBox[] reserveUnitBoxes; //dimensions are 110x110. 1:1
+    [SerializeField] private LossManager loser;
+
+    private Enemy[][] heldEnemies; //hold onto the current enemy party.
     private int unitsInParty; //to help with the unit limit.
-    private int dungeonId; //the id of the dungeon we're headed to.
     private int unitLimit; //how many units can you bring into this dungeon at this time. set in load_up.
     private bool unitInFront; //when not true, can only place units in the front row. check everytime a unit is placed.
 
     [SerializeField] private Sprite[] affOrbSprites;
 
-    
-    public void inc_exp()
+    public void heal_party()
     {
         foreach (Unit partyMember in reserveParty)
         {
             partyMember.set_hp(partyMember.get_hpMax());
             partyMember.set_mp(partyMember.get_mpMax());
         }
-        
-        ExpManager.distribute_xp(reserveParty);
     }
 
     public List<Unit> get_reserveParty() { return reserveParty; }
     public void refill_reserve(List<Unit> replacementParty) { reserveParty = replacementParty; }
 
-    public void load_up(Dungeon dun)
+    public void load_up(int battleID)
     {
         unitPreviewGO.SetActive(false);
-        DungeonManager.heldDun = dun;
 
-        //take necessary info from dun
-        unitLimit = dun.get_unitLimit();
+        //retrieve and save information specific for this battle
+        var battleInfo = battleLibrary.get_encounter(battleID);
+        heldEnemies = battleInfo.Item1;
+        unitLimit = battleInfo.Item2;
+
         unitLimitText.text = "Unit Limit: " + unitLimit;
-        dungeonId = dun.get_dungeonId();
 
-        //add units alraedy in party to their boxes
-        //party length is always 6        
+        //party length is always 6
         for (int i = 0; i < 6; i++)
         {
             party[i] = null;
@@ -71,14 +74,73 @@ public class PrepDungeonManager : MonoBehaviour
 
         load_reserveParty();
         isPartyValid();
-        gameObject.SetActive(true);
-        
+        gameObject.SetActive(true);    
+    }
+
+    //COMBAT MANAGEMENT
+    public void battle_won(int exp/*, Unit[] pl*/)
+    {
+        //Debug.Log("pdm.battle_won() called.");
+
+        //restore hp/ooa/break of party.
+        for (int i = 0; i < party.Length; i++)
+        {
+            if (party[i] != null)
+            {         
+                if (party[i].get_ooa() == true) //if unit ooa, then set them back to 1 hp.
+                {
+                    party[i].set_ooa(false);
+                    party[i].set_hp(1);
+                }
+                party[i].set_break(0);
+            }
+        }
+
+        //distribute exp
+        foreach (Unit partyMember in reserveParty)
+        {
+            partyMember.inc_exp(exp);
+        }
+
+        //return control back to VN.
+        combatManager.close();
+        close();
+        evManager.return_control();
+    }
+    public void start_battle()
+    {
+        embarkButton.interactable = false;
+        //Debug.Log("pdm.start_battle() called.");
+        //tell combat manager to start:
+        //combatManager.load_battle(Unit[] party. Enemy[][] waves, int threat)
+        //here, threat is used to level up the enemy units, since all enemies
+        //are base 0.
+        //combatManager.load_battle(party, heldEnemies, 0);
+
+        //save information in loss manager
+        loser.prebattle_partyFill(party);
+
+        //start the battle for real now
+        fader.fade_to_black();
+        StartCoroutine(healthy_pause(2.0f, heldEnemies));
+    }
+    public void retry()
+    {
+        loser.setup_party_for_retry(party);
+
+        //combatManager.load_battle(party, heldEnemies, 0);
+        fader.fade_to_black();
+        StartCoroutine(healthy_pause(2.0f, heldEnemies));
+    }
+    IEnumerator healthy_pause(float duration, Enemy[][] waves = null)
+    {
+        yield return new WaitForSeconds(duration);
+        combatManager.load_battle(party, waves, 0);
     }
 
     //STRIDES
     void load_reserveParty()
     {
-        
         //sets up reserve party.
         //fills each slot with a reservepartyunit. if the unit is in the party, then the slot is not interactable.
         for (int i = 0; i < reserveParty.Count; i++)
@@ -124,24 +186,6 @@ public class PrepDungeonManager : MonoBehaviour
     {
         //called on close button click.
         gameObject.SetActive(false);
-    }
-    
-    public void to_the_dungeon()
-    {
-        //pass along any necessary relevant info to the dungeonSceneManager.
-
-        //(i think you need to do dontdestroyonload to the player units too.)
-
-        
-
-        //finally, load the dungeon scene.
-        //Debug.Log("loading dungeon scene");
-        //pass party to dungeonManager
-        DungeonManager.party = party;
-
-        theWorld.fill_cart();
-
-        SceneManager.LoadScene("DungeonScene");
     }
 
     //SWAPPING
@@ -242,7 +286,6 @@ public class PrepDungeonManager : MonoBehaviour
         load_reserveParty();
         isPartyValid();
     }   
-
     void isPartyValid()
     {
         //checks if the party is valid:

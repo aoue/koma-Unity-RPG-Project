@@ -8,6 +8,9 @@ pdm/playerdungeon portrait dimensions: 500x250/450x225 (2x1) maybe enenacle for 
 enemy dungeon portrait dimensions: 450x200 (9x4)
 
 
+DRAWING PROCESS:
+- try this pipeline: lined paper -> scan -> draw outline digitally. Might yield better results.
+
 SOME UI TO ADD:
 - dungeon scene ui bg for the bottom of the screen box. should be somber, with like, carved angels in it.
 - find a custom mouse pointer to use. they're fun.
@@ -33,13 +36,9 @@ OGA licenses:
 - you are required to follow only one of the licenses listed for a multi-licensed asset.
 
 ===== story dependent stuff
-
-grow up? as if he did.
+simplify, simplify.
 
 ===== end story dependent stuff
-
-the combat system is fine. 
-could maybe use: (future additions)
 
 - the combat system IS good. it does have depth, and in a different way
   than a tactics game does. For instance, this game can do boss battles.
@@ -47,93 +46,39 @@ could maybe use: (future additions)
   a system that allows good boss battles is super important.
 - Further improvements to it do exist though. Like these, maybe:
 	- hit%, dodge%
+	- make duration for each stat individual; e.g. individual hp mod duration, ind physa dur, ind physd dur, etc
 	- passives.
 	- statuses redone and made individual. no one catch all duration thingie.
 		- or rather, make duration for each stat individual; e.g. individual hp mod duration, ind physa dur, ind physd dur, etc
 
-=====
-last part of notes
-
-- the overworld bgs should have some animation. (even just weather, like rain, snow, or wind, flags blowing, chimney smoke, fog, clouds, etc)
-	- flag blowing: single animated sprite
-	- wind/rain/snow/etc: use a single image and have it continually loop past the screen.
-- Note: specific events in character chains may also be locked to the world's part level. 
-	(- No chains are available in the prologue.)
-
-- story arcs:
-	think about character arcs. if you don't them, then your characters will fall flat.
-	- mc: absolute, unthinking obediance to friday/leader -> independent thinking and looking for better ways to solve problems.
-	  e.g. friday proposes a plan with huge risk, but it seems like the best option. instead of accepting it, mc refuses the plan and says 
-	       that they won't act with it. there's no such thing as 'acceptable losses.'
-	- friday: sort of the inverse. from suffocating over-protectiveness -> letting each of her kids take a leadership position in operations.
-	  e.g. early: friday insists on keeping all her kids with her during a large-scale mission. late: friday assigns each of her kids to lead one of the teams in a large-scale mission.
-	- yve: i think i have some good notes for this in the drive. stuff to do with her being passed over and blindness.
-	- luci: awkward with her family -> reconciled with her family. feelings that she'd been abandoned, etc.
-
-- when going into a dungeon, even though only certain party members may have been put in the party, we act like
-	  all (recruited) party members are there in events and stuff. Otherwise, it's just too much work.
-
-- dungeon design: (to keep in mind)
-	- mob parties must absolutely not start on a home tile. 
-	- note: you can make a multi-wave bossfight by placing multiple 0-movement mob parties on the same tile. 
-		- (make the extra's have a blank name and order the parties correctly so they are fought in the order you want.)
-	- be careful to make it so the player never becomes stuck in a dungeon. they must always be able to withdraw.
-	- mandatory dungeons; once cleared, you can never go back in. they're roadblocks.
-	- optional dungeons, you don't even 'clear' them. they have no clear tile.
-		- you can go in them as many times as you want, until the dungeon becomes unavailable, usually at an act change.
-		- if doing something in an optional dungeon is necessary for a sidequest or something (like a recruitment quest or a monster slaying quest)
-		  then triggering an event will mark something in history that the event back in overworld checks.
-
-- ic patch:
-	- on mainmenu screen; read player ic and name from a textfile in the saves folder.
-		- if read ic and name different from default values, then display them on the mainmenu so player can easily see.
-		- if textfile not found, then create and fill with default values.
+- a secondary combat system for large scale battles?
+	- would be cool, it would let us include them as part of the story.
+	- the combat system shouldn't be overly complicated. 
+	- could even be realtime:
+		- unit numbers go down every second they are in combat, order them to react, etc.
+	- units would be groups of soldiers. You can assign party members to the group to give an effect.
 
 ========================================
-art notes
-- new scene 1 design (hjovp) see new insp image; pretty good. good for progression/buildup
 
-========================================
-new big think for prologue story. see skeleton below.
-- part 0
-	- immediate (done)
-	- event 1 (done)
-- dungeon 0
-	- tile event 1 (done)
-	- tile event 2 (done)
-	- post mob event 1
-- part 1
-	- immediate
-	- event 1
-	- event 2
-	- event 3
-	- event 4
-- part 2
-	- immediate
-	- event 1
-- dungeon 1
-	- mob event 1
-	- tile event 1
-	- mob event 2
-- part 3
-	- immediate
-	- event 1
-========================================
+- combat:
+	- STAB?
 
-- status changes?
-	- rather, make duration for each stat individual; e.g. individual hp mod duration, ind physa dur, ind physd dur, etc
+- after clearing a dungeon:
+	add a tag to parts with two options:
+		- requires pass time press
+		- automatically goes to next part
+	only show pass time when it's required? right now it's always shown but only enabled when required.
+
+- the overworld maps look like hand-drawn campaign maps of the area. They have markers for towns, armies, forests, etc.
+	- brown canvas background. the event markers are little triangular flags stabbed down into the map.
+
+- add center(mode) function to ink script files.
 
 - dialogue canvas adjustments:
 	- name text background; weird looking. just a black bar. look for insp somewhere, or use the ui set.
 	- main text background; instead of black with alpha, try white with alpha.
-
-- level tree canvas:
-	MOVE PART
-	plan and fill out for our prologue units: (see sheets)
-	- Friday| stabilize, exceed
-	- Mc    | elemental (in apply status function, randomly change this move's affinity to any non-normal aff.)
-	- Moth  | guard: break, guard: magic, guard: physical, light
-	
+	- on show(), make portrait slots match image size exactly.
+	- on show(), include a parameter that sets order of portrait slot in scene
 
 - dungeon design:
 	- empty slots: a more suitable image. maybe something like an irregular circle of light? to show that something could be there.
@@ -227,6 +172,10 @@ new big think for prologue story. see skeleton below.
 	- the dialogue box image needs a frame image.
 	- the name plate image needs a frame image too.
 
+
+- idea for sabaind at large boss:
+	- can have -ap self moves, maybe?
+
 - update unity version?
 
 ===== Post Demo
@@ -296,57 +245,6 @@ new big think for prologue story. see skeleton below.
 		- ap text: top left, just below aff and name.
 		- hpbar along bottom left (include letters overtop)
 		- mpbar below hpbar (include letters overtop)
-
-- unit trees:
-	these let you customize and level up each unit. can: increase level, exchange moves, and do gear(?).
-	- some kind of way to increase the number of moveslots a unit has? buy with exp or auto unlock at certain lvls?
-	MOVE TREE
-	the unit's name is in the center of the screen and each of their starting moves goes in a direction. four move paths by default.
-	- to learn a move, you must click it, then click learn move. 
-		- when you highlight a move its info will be filled out.
-		- when you click a move, its info will be locked and the learn button is enabled (if you pass requirements).
-		- you must have gold and exp fee.
-		- you must have learned ALL of the move's predecessors. a move can have many.
-		- you must be the required level to learn the move. moves have a minimum learn level.
-	- when showing a move:
-		- use lines to show move predecessors
-		- learned moves have solid boxes, learnables have dotted boxes. unlearnables have no boxes.
-			- the predecessor lines follow the same pattern.
-	I suppse that, because of predecessors, etc, each unit must have their own version of the tree.	
-	CLICKED MOVE
-	the move's preview area. 
-		- has a locked version (shown on moveslot unhover, locked on click) 
-		- has a LEARN button for learneable moves when they are clicked. also displays the exp cost and gold cost to learn the move.
-	UNIT PART
-	the unit's preview area. you can see the name, aff, and stat block.
-		- near it, there's the level up button. it shows the cost in exp.
-		- press the button to level up the unit. leveling up the unit shows a popup of how the unit improved itself.
-	when level up button is pressed (only enabled if you can afford it):
-		- increase level by 1.
-		- increase each stat by a value taken from a very small range.
-			- a unit at the same level across games will always have very similar stats, but not identical.
-	MOVE SLOTS
-	at the bottom, the unit's 5 move slots are filled out.
-		- the player can drag a learned move from the tree into one of the move slots to equip moves.
-		- when trying to equip, check to make sure the move (using id) is not already equipped.
-	MECHANICS
-	so these are the decisions the player makes: level up or moves -> if moves, then which move.
-	offsets: if early moves are cheaper, then the player will just buy them up.
-		possible countermeasures:
-		- every time the player learns a move, the cost of learning every other move goes up by 5%?
-		- the cost of learning a move is increased by the player's level?
-
-- saving and loading: (not in demo)
-	keep it simple.
-	- party members' states.(stats, equipped moves, and unlocked reserve moves.) 
-	- unspent exp or items
-	- history. (a record of the significant choices the player has made during the game)
-	- day (which lets us pick ourselves back up in a load very easily)
-
-- cart:
-	- it strikes me that, just like for party units, we could create a prefab for the cart
-	  and then just make changes to that prefab, which would be saved given the nature of a prefab.
-	  Seems like a much cleaner way to carry data between scenes.
 
 - more status to add:
 	- make a unit's dmg spread get the highest/lowest possible roll. (2 stances)

@@ -15,18 +15,15 @@ public class Overworld : MonoBehaviour
     // - allows the player to save. (clicking on a special building)
 
     //game state
-    [SerializeField] private Cart cart;
     public Dictionary<int, EventHolder> active_events; //holds a ref to all eventholders that are currently showing. used to update them.
     public int actPart { get; set; } //controls game flow. equivalent to a dayHolder.
     public static int dayProgression { get; set; } //controls game flow with respect to a sequence of story beats. hhow far we are in a certain actPart.
-    public LeavingState dungeonLeavingState { get; set; } //LOSS, WITHDRAW, CLEAR. controls parts in pass time button.
     private bool isDaytime; //day or night.
 
     //serialized members - UI
     [SerializeField] private Button nextDayButton; //the next day button
     [SerializeField] private CharHolder[] charHolders; //holds character events.
     [SerializeField] private Part[] partHolders; //holds unique events for a given day; usually red.
-    [SerializeField] private DungeonHolder[] dunHolders; //holds the area's dungeons. used to access them in a_new_day(), as specified in today's dayholder.
     [SerializeField] private Image bg; // the overworld area's background image.
     [SerializeField] private Text actPartText; // displays act part information.
 
@@ -56,7 +53,6 @@ public class Overworld : MonoBehaviour
         }
         
         active_events = new Dictionary<int, EventHolder>();
-        ExpManager.setup();
     }
     void Start()
     {
@@ -74,13 +70,6 @@ public class Overworld : MonoBehaviour
             isDaytime = true;
             a_new_part(0, false);
         }
-        else if (firstTime == state.RETURNING)
-        {
-            //return from dungeon stuff
-            //let cart help.            
-            cart.ow_unload_cart(this);
-            back_from_dungeon();
-        }
         else //firstTime == state.LOADING
         {
             //loading game stuff.
@@ -90,21 +79,14 @@ public class Overworld : MonoBehaviour
     }
 
     //MANAGING DUNGEONS
-    public static void enable_shownDungeons()
-    {
-        for (int i = 0; i < _instance.dunHolders.Length; i++)
-        {
-            _instance.dunHolders[i].enable_dungeon(true, true);
-        }
-    }
     public static void add_to_party(Unit[] newPartyMembers)
     {
         //makes pdm do all the dirty work
         _instance.pdm.add_to_party(newPartyMembers);
     }
-    public static void open_dungeonPrepMenu(Dungeon dun)
+    public static void open_dungeonPrepMenu(/*Dungeon dun*/)
     {
-        _instance.pdm.load_up(dun);
+        //_instance.pdm.load_up(dun);
     }
 
     //NEXT DAY BUTTON
@@ -137,33 +119,7 @@ public class Overworld : MonoBehaviour
         //this button only progresses us to the next day if we suceeded in our dungeon.
         //if we failed, then we're stuck.
         Debug.Log("passTime pressed.");
-
-        if (partHolders[actPart].get_hasMandatoryDungeon() == true)
-        {
-            switch (dungeonLeavingState)
-            {
-                case LeavingState.LOSS:
-                    //we lost the dungeon. we repeat the day.
-                    //Debug.Log("passTime pressed - loss.");
-                    StartCoroutine(passTime_visuals(0, true));
-                    break;
-                case LeavingState.WITHDRAW:
-                    //we withdrew from the dungeon. we repeat the day.
-                    //Debug.Log("passTime pressed - withdraw.");
-                    StartCoroutine(passTime_visuals(0, true));
-                    break;
-                case LeavingState.CLEAR: //we can advance to the next part.
-                    //Debug.Log("passTime pressed - clear.");
-                    StartCoroutine(passTime_visuals(1, false));
-                    break;
-            }
-        }
-        else
-        {
-            //Debug.Log("passTime pressed; forget doing a dungeon.");
-            StartCoroutine(passTime_visuals(1, false));
-        }
-        
+        StartCoroutine(passTime_visuals(1, false));
     }
     void do_part(int toAddToPart, bool toPassToPart)
     {
@@ -210,15 +166,6 @@ public class Overworld : MonoBehaviour
             }
         }
         
-
-        //dungeon decay
-        for (int i = 0; i < dunHolders.Length; i++)
-        {
-            dunHolders[i].dungeon_decay();
-        }
-
-        dungeonLeavingState = LeavingState.WITHDRAW;
-
         //update display
         update_display();
         set_background();
@@ -275,58 +222,6 @@ public class Overworld : MonoBehaviour
         bg.sprite = backgroundManager.get_backgroundSprite(actPart);
     }
 
-    //SAVING
-    public void fill_cart()
-    {
-        //called right before we load dungeon
-        cart.ow_fill_cart(this);
-    }
-    public int[] save_evProgress()
-    {
-        int[] toRet = new int[charHolders.Length];
-        for (int i = 0; i < toRet.Length; i++)
-        {
-            toRet[i] = charHolders[i].progress;
-        }
-        return toRet;
-    }
-
-    //RETURNING
-    void back_from_dungeon()
-    {
-        //called when we get back from a dungeon and arrive back in the overworld.
-        update_display();
-        set_background();
-        partHolders[actPart].ready_night();
-
-        //setup background music. it's nightime, so it's a special track that gets played every night.
-        SM.play_nightMusic();
-
-        //distribute exp and heal party units.
-        pdm.inc_exp();
-    }
-    public void restore_charEvents_progress(Cart cart)
-    {
-        for(int i = 0; i < charHolders.Length; i++)
-        {
-            charHolders[i].progress = cart.get_charEventsProgress(i);
-        }
-    }
-    public void update_dungeon_states(Cart cart)
-    {
-        //called as part of returning to overworld from a dungeon.
-        //we copy all the states of dungeons into here so they are not lost.
-
-        //we've got dunHolders; those are the ones we have to update.
-        for(int i = 0; i < dunHolders.Length; i++)
-        {
-            Dungeon tmp = dunHolders[i].get_dungeon();
-            cart.update_single_dungeon(i, tmp);
-            dunHolders[i].set_dungeon(tmp);
-        }
-
-    }
-
     //DISPLAY
     void update_display()
     {
@@ -336,5 +231,4 @@ public class Overworld : MonoBehaviour
 
     //getters
     public Button get_nextDayButton() { return nextDayButton; }
-    public DungeonHolder[] get_dunHolders() { return dunHolders; }
 }

@@ -13,16 +13,12 @@ public class Part : MonoBehaviour
     [SerializeField] private Event immediateEvent; //if null, do nothing. if not null, then on part, play event first directly.
 
     [SerializeField] private string partName; //the name for the part. shown instead of boring old 'part _'
-    [SerializeField] private GameObject dungeonToRepeat;
-    [SerializeField] private bool hasMandatoryDungeon;
     [SerializeField] private bool startPassTimeButtonActive; //controls whether the next day button should be inactive on day start.
-    [SerializeField] private bool[] startDungeonsEnabled; //controls whether dungeons should start inactive or not. true=start inactive.
     [SerializeField] private EventHolder[] partEvents; //all the RED (mandatory) and BLUE (optional, missable) events in this part.
     [SerializeField] private AudioClip dayAudio; //what audio the game should start playing on day. if null, don't do anything.
 
     public Event get_immediateEvent() { return immediateEvent; }
     public string get_partName() { return partName; }
-    public bool get_hasMandatoryDungeon() { return hasMandatoryDungeon; }
     public AudioClip get_dayAudio() { return dayAudio; }
 
     public bool has_immediateEvent()
@@ -38,27 +34,9 @@ public class Part : MonoBehaviour
         //starts each part empty.
     }
 
-    public void ready_night()
-    {
-        //after returning from a dungeon (regardless of how we returned), this function is called.
-
-        //continue to show dungeon, but it's not interactable
-        dungeonToRepeat.SetActive(true);
-        dungeonToRepeat.gameObject.GetComponent<Button>().interactable = false;
-
-    }
-
     public void load_part(Overworld theWorld, bool repeatingPart)
     {
         //goes in and sets up all the part's events and other states. (passtime button, dungeons enabled, etc).
-
-        if (hasMandatoryDungeon && repeatingPart == true)
-        {
-            //even if repeating, mandatory dungeon must be shown.
-            //meaning we need a link to the mandatory dungeon.
-            dungeonToRepeat.SetActive(true);
-            dungeonToRepeat.gameObject.GetComponent<Button>().interactable = true;
-        }
 
         //set pass time button
         theWorld.get_nextDayButton().GetComponent<UnityEngine.UI.Button>().interactable = startPassTimeButtonActive;
@@ -77,19 +55,6 @@ public class Part : MonoBehaviour
                     partEvents[i].setup_event();
                 }
             }  
-        }
-
-        //finally, adjust dungeon status now
-        for (int i = 0; i < startDungeonsEnabled.Length; i++)
-        {
-            if (startDungeonsEnabled[i] == true)
-            {
-                theWorld.get_dunHolders()[i].enable_dungeon(false, true);
-            }
-            else
-            {
-                theWorld.get_dunHolders()[i].disable_dungeon();
-            }
         }
     }
 

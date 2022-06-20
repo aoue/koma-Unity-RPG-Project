@@ -43,11 +43,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba42b37bc7aa8744c844abe1c58e792a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSelectionPortrait: {fileID: 21300000, guid: 6943f11f0c83aa54daa753f9d00819ac,
+  moveSelectionPortrait: {fileID: 21300000, guid: 376d64ea9b0657745a8e034381d05c46,
     type: 3}
   boxImg: {fileID: 21300000, guid: cd8233b94ea6ad24cbf19a7f5dae0351, type: 3}
   playerUnitId: 1
-  exp: 0
+  exp: 100
   level: 1
   nom: Friday
   apMax: 1

@@ -28,9 +28,6 @@ public class ParBeat : Event
         {
             Overworld.enable_nextDayButton();
         }
-        if (enableDungeonsAfter)
-        {
-            Overworld.enable_shownDungeons();
-        }
+
     }
 }

@@ -47,27 +47,6 @@ public class TooltipManager : MonoBehaviour
         gameObject.transform.localPosition = new Vector2(x + xOffset, y + yOffset);        
         */
     }
-    public void show_dungeon_preview(Dungeon dun, float x, float y)
-    {
-        //a few things are to be shown on a dungeon preview:
-        // -dungeon's title
-        // -current threat value and how much it will decrease
-        // -exploration state. explored/total non null tiles.
-
-        handle_positioning(x, y);
-        locationText.text = dun.get_dungeonTitle();
-        infoText.text = "Threat: " + dun.threat + " (" + dun.get_threatDecay() + " decay)"
-            + "\nExplored: " + dun.exploredTiles + "/" + dun.totalTiles
-            + "\n" + dun.expeditionCounter + " prior foray";
-        if (dun.expeditionCounter != 1) infoText.text += "s";
-
-        for (int i = 0; i < 4; i++)
-        {
-            portraitSlots[i].gameObject.SetActive(false);
-        }
-        gameObject.SetActive(true);
-
-    }
     public void show_event_preview(Event ev, PortraitLibrary pLibrary, float x, float y)
     {
         //First, position yourself next to the actual event. 
