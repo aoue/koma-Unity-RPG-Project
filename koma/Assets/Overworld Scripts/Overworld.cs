@@ -78,17 +78,6 @@ public class Overworld : MonoBehaviour
         }
     }
 
-    //MANAGING DUNGEONS
-    public static void add_to_party(Unit[] newPartyMembers)
-    {
-        //makes pdm do all the dirty work
-        _instance.pdm.add_to_party(newPartyMembers);
-    }
-    public static void open_dungeonPrepMenu(/*Dungeon dun*/)
-    {
-        //_instance.pdm.load_up(dun);
-    }
-
     //NEXT DAY BUTTON
     IEnumerator passTime_visuals(int addToActPart, bool repeating)
     {

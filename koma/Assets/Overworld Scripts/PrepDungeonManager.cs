@@ -11,6 +11,8 @@ public class PrepDungeonManager : MonoBehaviour
     //player hits confirm button when ready and party valid, and we load the dungeonScene.
     //can click on a single unit box for a more detailed look at the unit, but you can't edit them here.
 
+    [SerializeField] private PlayerUnitPool plPool;
+
     [SerializeField] private Overworld theWorld; //used to save information in the cart.
     [SerializeField] private BattleLibrary battleLibrary; //holds information for all enemy parties. Retrievable with corresponding id.
     [SerializeField] private CombatManager combatManager; //handles combat.
@@ -29,6 +31,7 @@ public class PrepDungeonManager : MonoBehaviour
     [SerializeField] private ReserveUnitBox[] reserveUnitBoxes; //dimensions are 110x110. 1:1
     [SerializeField] private LossManager loser;
 
+    private int heldThreat; //hold onto the current battle's threat level.
     private Enemy[][] heldEnemies; //hold onto the current enemy party.
     private int unitsInParty; //to help with the unit limit.
     private int unitLimit; //how many units can you bring into this dungeon at this time. set in load_up.
@@ -36,27 +39,48 @@ public class PrepDungeonManager : MonoBehaviour
 
     [SerializeField] private Sprite[] affOrbSprites;
 
-    public void heal_party()
-    {
-        foreach (Unit partyMember in reserveParty)
-        {
-            partyMember.set_hp(partyMember.get_hpMax());
-            partyMember.set_mp(partyMember.get_mpMax());
-        }
-    }
-
     public List<Unit> get_reserveParty() { return reserveParty; }
     public void refill_reserve(List<Unit> replacementParty) { reserveParty = replacementParty; }
 
-    public void load_up(int battleID)
+    IEnumerator prepMenu_show_pause(float duration)
     {
-        unitPreviewGO.SetActive(false);
-
+        yield return new WaitForSeconds(duration);
+        gameObject.GetComponent<Canvas>().enabled = true;
+        
+    }
+    public void load_up(int battleID, bool allow_prep)
+    {
         //retrieve and save information specific for this battle
+        
+
         var battleInfo = battleLibrary.get_encounter(battleID);
         heldEnemies = battleInfo.Item1;
-        unitLimit = battleInfo.Item2;
+        heldThreat = battleInfo.Item2;
+        unitLimit = battleInfo.Item3;
 
+        //if a preset deployment battle{
+        if (!allow_prep)
+        {
+            //retrieve that deployment and assign to party:
+            party = battleLibrary.get_deployment(battleID);
+
+            //hide canvas element of the object, then enable it so the coroutine can run.
+            gameObject.GetComponent<Canvas>().enabled = false;
+            gameObject.SetActive(true);
+
+            //start battle immediately:
+            start_battle();
+            return;
+        }
+        else
+        {
+            fader.fade_to_black(); //prepmenu fade; not the battle fade
+            gameObject.GetComponent<Canvas>().enabled = false;
+            gameObject.SetActive(true);
+            StartCoroutine(prepMenu_show_pause(2.0f));
+        }
+   
+        unitPreviewGO.SetActive(false);
         unitLimitText.text = "Unit Limit: " + unitLimit;
 
         //party length is always 6
@@ -73,11 +97,18 @@ public class PrepDungeonManager : MonoBehaviour
         unitsInParty = 0;
 
         load_reserveParty();
-        isPartyValid();
-        gameObject.SetActive(true);    
+        isPartyValid();         
     }
 
     //COMBAT MANAGEMENT
+    public void heal_party()
+    {
+        foreach (Unit partyMember in reserveParty)
+        {
+            partyMember.set_hp(partyMember.get_hpMax());
+            partyMember.set_mp(partyMember.get_mpMax());
+        }
+    }
     public void battle_won(int exp/*, Unit[] pl*/)
     {
         //Debug.Log("pdm.battle_won() called.");
@@ -109,7 +140,6 @@ public class PrepDungeonManager : MonoBehaviour
     }
     public void start_battle()
     {
-        embarkButton.interactable = false;
         //Debug.Log("pdm.start_battle() called.");
         //tell combat manager to start:
         //combatManager.load_battle(Unit[] party. Enemy[][] waves, int threat)
@@ -118,6 +148,7 @@ public class PrepDungeonManager : MonoBehaviour
         //combatManager.load_battle(party, heldEnemies, 0);
 
         //save information in loss manager
+        embarkButton.interactable = false;
         loser.prebattle_partyFill(party);
 
         //start the battle for real now
@@ -170,16 +201,29 @@ public class PrepDungeonManager : MonoBehaviour
             reserveParty = new List<Unit>();
         }
     }
-    public void add_to_party(Unit[] newPartyMembers)
+    public void add_to_party(int id)
     {
-        //called from overworld after join party type events
-        //adds to reserse party.
-        foreach(Unit u in newPartyMembers)
+        //adds the unit from plPool corresponding to id to the reserve party.
+        //Idempotent.
+        Unit u = plPool.get_unit(id);
+
+        if (!reserveParty.Contains(u)) //idempotence.
         {
             u.set_hp(u.get_hpMax());
             u.set_mp(u.get_mpMax());
             reserveParty.Add(u);
             u.inParty = false;
+        }                 
+    }
+    public void remove_from_party(int id)
+    {
+        //called from eventmanager and removes specified unit ids from the reserve party.
+        //Idempotent.
+        Unit u = plPool.get_unit(id);
+
+        if (reserveParty.Contains(u)) //idempotence.
+        {
+            reserveParty.Remove(u);
         }
     }
     public void close()

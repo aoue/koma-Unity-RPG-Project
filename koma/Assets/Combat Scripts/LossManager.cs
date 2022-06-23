@@ -104,12 +104,12 @@ public class LossManager : MonoBehaviour
 
         //theBoss.go_fight(true);
     }
-    public void click_withdraw()
+    public void click_load()
     {
-        hide();
-        //theBoss.reporter_shortcut();
-    }
+        //currently does nothing.
+        //when loading and saving are implemented, then it will open the load menu.
 
+    }
 
     //show and hide
     public void show()

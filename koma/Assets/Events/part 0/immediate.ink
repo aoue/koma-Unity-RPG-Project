@@ -1,4 +1,5 @@
 //Link external functions here.
+//VN:
 EXTERNAL bg(id)
 EXTERNAL n(name) //set to empty string to hide namebox.
 EXTERNAL talk(mode) //1: use quotes | 0: use parantheses.
@@ -9,10 +10,13 @@ EXTERNAL stop_music()
 EXTERNAL play_music(whichTrack)
 EXTERNAL play_sound(whichTrack)
 EXTERNAL shake(intensity, duration) //camera shake. both parameters are ints. actual duration = 0.05f seconds * duration
-EXTERNAL battle(id) //starts battle corresponding to the given id.
-EXTERNAL add_units() //adds units attached to the event to the party.
-EXTERNAL rest_party() //refresh hp and mp of all party units.
-//end functions
+//Combat:
+EXTERNAL battle(id) //starts battle corresponding to the given id, and stops at the pdm on the way.
+EXTERNAL battle_no_prep(id) //starts battle corresponding to the given id. No stop at the pdm; preset deployment.
+EXTERNAL add_unit(id) //adds unit to reserve party pool based on unit id.
+EXTERNAL remove_unit(id) //removes unit from reserve party pool based on unit id.
+EXTERNAL rest_party() //fully restore hp and mp of all party units.
+//end of external functions
 
 //variable controllers here. set by EventManager at scene start.
 VAR ic = 0
@@ -21,20 +25,28 @@ VAR player = "playerCharName"
 
 //SCENE OUTLINE
 ~rest_party()
-~add_units()
+~add_unit(0)
+~add_unit(1)
+~add_unit(2)
+
 ~talk(1)
 ~n("")
 p0 imm.
-A battle!
+ok, a battle!
 
-~battle(0)
+//these two lines: first one sets up the battle, second one is the last line shown before the battle.
+//On the next proceed command, the battle is launched.
+~battle_no_prep(0)
+Yve is in command, so no prep!
 
 ~n("")
-battle over 1
-battle over 2
-battle over 3
-battle over 4
-battle over 5
+YOU SHOULDN'T SEE THIS UNTIL BATTLE OVER.
+battle over. There won't be another one, I'm sure.
 
+~battle(1)
+Oh frick, a battle!
+
+battle over.
+scene over.
 
 -> END

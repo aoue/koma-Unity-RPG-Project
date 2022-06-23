@@ -78,6 +78,9 @@ public class EventManager : MonoBehaviour
     [SerializeField] private GameObject[] portraitSlots; //3 total. dimensions are 540 x 1080 | 1 : 2 ratio
     private int[] portraitSlotIDs = new int[3]; //3 total, parallel to portraitSlots. used to save the current id of image in the slot, or -1 if none.
 
+    private int saved_battle_id;
+    private bool saved_allow_prep;
+
     void Awake()
     {
         if (_instance != null)
@@ -88,7 +91,14 @@ public class EventManager : MonoBehaviour
     }
     void Update()
     {
-        if (battle_block) return;
+        if (battle_block)
+        {
+            if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)))
+            {               
+                pdm.load_up(saved_battle_id, saved_allow_prep);
+            }
+            return;
+        }
 
         //toggle text control states:
         //a: auto
@@ -549,13 +559,21 @@ public class EventManager : MonoBehaviour
         {
             this.rest_party();
         });
-        script.BindExternalFunction("add_units", () =>
+        script.BindExternalFunction("add_unit", (int id) =>
         {
-            this.add_units();
+            this.add_unit(id);
+        });
+        script.BindExternalFunction("remove_unit", (int id) =>
+        {
+            this.remove_unit(id);
         });
         script.BindExternalFunction("battle", (int id) =>
         {
-            this.to_battle(id);
+            this.to_battle(id, true);
+        });
+        script.BindExternalFunction("battle_no_prep", (int id) =>
+        {
+            this.to_battle(id, false);
         });
 
         //music
@@ -614,30 +632,38 @@ public class EventManager : MonoBehaviour
     public void return_control()
     {
         //Note: not a linked function. called from cMan->pdm->here.
+
+        //turn off battle_block and automatically proceed next sentence.
         battle_block = false;
+        SM.play_typingSound();
+        DisplayNextSentence();
     }
     void rest_party()
     {
         //restores party to full hp and mp.
         pdm.heal_party();
     }
-    void add_units()
+    void remove_unit(int id)
     {
-        //for adding units to the party in the middle of an event. How exciting!
-        //Debug.Log("add to party called!");
-        Overworld.add_to_party(heldEv.get_unitsToAdd());
+        pdm.remove_from_party(id);
     }
-    void to_battle(int id)
+    void add_unit(int id)
+    {
+        //the pdm handles this.
+        pdm.add_to_party(id);
+    }
+    void to_battle(int id, bool allow_prep)
     {
         //loads a battle and then brings us back again.
         //by loading a battle, we mean loading the prep dungeon manager,
         //which will then load the battle after the player has laid out their deployment.
-
         battle_block = true;
 
-        pdm.load_up(id);
+        //when the next sentence is done being displayed, the next proceed button press will launch the battle instead of the next line of dialog.
+        //pdm.load_up(id, allow_prep);
+        saved_battle_id = id;
+        saved_allow_prep = allow_prep;
     }
-    
 
     //text effects
     void set_name(string s)
