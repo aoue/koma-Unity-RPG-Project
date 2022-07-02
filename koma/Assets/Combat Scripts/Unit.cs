@@ -12,7 +12,7 @@ public class Unit : MonoBehaviour
     [SerializeField] private Sprite boxImg; //250x500 | 2:1 ratio.
     //a crit portrait? to cover a slice of the screen like in trails in the sky? a bit more than that though; include like head and upper body?
 
-    //base stats
+    //base stats   
     [SerializeField] private int playerUnitId; //a unique identifier for a player unit. used to link unit to level trees.
     [SerializeField] protected int exp; //unspent exp. increases and decreases just fine. (for enemy, it's how much exp they drop.)
     [SerializeField] protected int level;
@@ -46,6 +46,7 @@ public class Unit : MonoBehaviour
 
     //status
     public Status status { get; set; }
+    
 
     //there's also gear- but we're going to ignore it for now.
     //it will: add flat stat bonuses, add a defensive affinity, add an offensive affinity for moves that allow that.
@@ -69,6 +70,7 @@ public class Unit : MonoBehaviour
     public virtual bool refresh(bool startOfBattle)
     {
         //called at the start of a round.
+        status.defState = defendState.NOT;
         isScheduled = false;
         if (ooa == true) return false; //don't do any of this if out of action.
         

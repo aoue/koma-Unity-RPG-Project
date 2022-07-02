@@ -2,6 +2,7 @@
 //VN:
 EXTERNAL bg(id)
 EXTERNAL n(name) //set to empty string to hide namebox.
+EXTERNAL p(pId) //pId to show corresponding portrait. -1 to hide.
 EXTERNAL talk(mode) //1: use quotes | 0: use parantheses.
 EXTERNAL toggle_font()
 EXTERNAL show(whichSlot, portraitID)
@@ -20,7 +21,7 @@ EXTERNAL rest_party() //fully restore hp and mp of all party units.
 
 //variable controllers here. set by EventManager at scene start.
 VAR ic = 0
-VAR player = "playerCharName"
+VAR pname = "Pax"
 //end variables
 
 //SCENE OUTLINE
@@ -36,8 +37,8 @@ ok, a battle!
 
 //these two lines: first one sets up the battle, second one is the last line shown before the battle.
 //On the next proceed command, the battle is launched.
-~battle_no_prep(0)
-Yve is in command, so no prep!
+~battle(0)
+battle with prep!
 
 ~n("")
 YOU SHOULDN'T SEE THIS UNTIL BATTLE OVER.

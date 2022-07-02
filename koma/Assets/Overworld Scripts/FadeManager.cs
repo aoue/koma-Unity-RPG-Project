@@ -19,24 +19,35 @@ public class FadeManager : MonoBehaviour
     // -object not active.
 
     [SerializeField] Image blackOutSquare;
+    private float default_duration = 1.0f;
+
+    public float get_default_duration() { return default_duration; }
 
     public void hide()
     {
         gameObject.SetActive(false);
     }
 
-    public void fade_to_black(float time = 0.5f)
-    { 
-        gameObject.SetActive(true);
-        StartCoroutine(fade(true, time));
+    private float convert_time_arg(float timeArg)
+    {
+        if (timeArg == -1f)
+        {
+            return default_duration;
+        }
+        return timeArg;
     }
-    public void fade_from_black(float time = 0.5f)
+    public void fade_to_black(float time = -1f)
+    {      
+        gameObject.SetActive(true);
+        StartCoroutine(fade(true, convert_time_arg(time)));
+    }
+    public void fade_from_black(float time = -1f)
     {
         gameObject.SetActive(true);
-        StartCoroutine(fade(false, time));
+        StartCoroutine(fade(false, convert_time_arg(time)));
     }
 
-    public void fade_from_black_cheat(float time = 0.5f)
+    public void fade_from_black_cheat(float time = -1f)
     {
         //sets to dark, then fades to light.
         Color objectColor = blackOutSquare.GetComponent<Image>().color;
@@ -44,10 +55,10 @@ public class FadeManager : MonoBehaviour
         blackOutSquare.GetComponent<Image>().color = objectColor;
 
         gameObject.SetActive(true);
-        StartCoroutine(fade(false, time));
+        StartCoroutine(fade(false, convert_time_arg(time)));
     }
 
-    IEnumerator fade(bool fadeToBlack, float fadeSpeed = 0.5f)
+    IEnumerator fade(bool fadeToBlack, float fadeSpeed = -1f)
     {
         Color objectColor = blackOutSquare.GetComponent<Image>().color;
         float fadeAmount;
@@ -55,19 +66,19 @@ public class FadeManager : MonoBehaviour
         {
             while ( blackOutSquare.GetComponent<Image>().color.a < 1)
             {
-                fadeAmount = objectColor.a + (fadeSpeed * Time.deltaTime);
+                fadeAmount = objectColor.a + (convert_time_arg(fadeSpeed) * Time.deltaTime);
 
                 objectColor = new Color(objectColor.r, objectColor.g, objectColor.b, fadeAmount);
                 blackOutSquare.GetComponent<Image>().color = objectColor;
                 yield return null;
             }
-            fade_from_black(fadeSpeed);
+            fade_from_black(convert_time_arg(fadeSpeed));
         }
         else
         {
             while ( blackOutSquare.GetComponent<Image>().color.a > 0)
             {
-                fadeAmount = objectColor.a - (fadeSpeed * Time.deltaTime);
+                fadeAmount = objectColor.a - (convert_time_arg(fadeSpeed) * Time.deltaTime);
 
                 objectColor = new Color(objectColor.r, objectColor.g, objectColor.b, fadeAmount);
                 blackOutSquare.GetComponent<Image>().color = objectColor;

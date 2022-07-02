@@ -20,6 +20,8 @@ public class Move : MonoBehaviour
     [SerializeField] private bool selfStatus; //true: applies status to self only, false: applies status to enemies only. if isStatus is false, then does nothing.
     [SerializeField] private bool selfStatusTextColorGreen; //true: self status text shows in green, false: shows in red.
     [SerializeField] private string statusText; //if isStatus is true, then this is the string that should show the status text.
+    [SerializeField] protected buffState buffType; //true: applies a status effect, false: does not.
+    [SerializeField] protected string explanationStr; //used to explain the buff/debuff applied.
 
     [SerializeField] private executionTime phase; //when is the move executed: instantly, in one turn, at the end of the round
     [SerializeField] private preferredRow preferredRow; //what row does the move not suffer penalties in: front, back, neither(ambi)

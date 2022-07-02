@@ -35,7 +35,8 @@ public class BattleLibrary : MonoBehaviour
         return (null, -1, -1);
     }
 
-    private (Enemy[][], int, int) battle0() { Enemy[][] allWaves = new Enemy[1][]; allWaves[0] = new Enemy[6] { null, null, null, null, e0, null }; return (allWaves, 0, 3); }
+    private (Enemy[][], int, int) battle0() { Enemy[][] allWaves = new Enemy[1][]; allWaves[0] = new Enemy[6] { e1, e1, e1, null, e0, null }; return (allWaves, 0, 3); }
+    //private (Enemy[][], int, int) battle0() { Enemy[][] allWaves = new Enemy[1][]; allWaves[0] = new Enemy[6] { null, null, null, null, e0, null }; return (allWaves, 0, 3); }
     private (Enemy[][], int, int) battle1() { Enemy[][] allWaves = new Enemy[1][]; allWaves[0] = new Enemy[6] { null, e2, null, e0, e0, e0 }; return (allWaves, 0, 3); }
 
     //=================================================================

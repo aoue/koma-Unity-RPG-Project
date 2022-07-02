@@ -53,6 +53,8 @@ MonoBehaviour:
   selfStatus: 0
   selfStatusTextColorGreen: 0
   statusText: Dmg Dealt+
+  buffType: 1
+  explanationStr: Blessed! Dmg dealth x1.25
   phase: 0
   preferredRow: 2
   strikes: 1

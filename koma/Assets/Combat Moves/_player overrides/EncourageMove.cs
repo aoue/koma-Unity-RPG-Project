@@ -8,7 +8,14 @@ public class EncourageMove : Move
 
     public override void apply_status(Unit target, Unit[] pl, Enemy[] el, int userIndex)
     {
-        target.status.trance_up(-0.2f, 0.7f, 3, 3);
+
+        bool canApply = target.status.update_status_state(target, buffType, explanationStr);
+        //then, apply your buff if and only if the target's status state is not neutral.
+        if (canApply)
+        {
+            target.status.trance_up(0.5f, 3);
+        }
+        
 
     }
 }

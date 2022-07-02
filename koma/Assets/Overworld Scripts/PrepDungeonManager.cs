@@ -42,17 +42,11 @@ public class PrepDungeonManager : MonoBehaviour
     public List<Unit> get_reserveParty() { return reserveParty; }
     public void refill_reserve(List<Unit> replacementParty) { reserveParty = replacementParty; }
 
-    IEnumerator prepMenu_show_pause(float duration)
-    {
-        yield return new WaitForSeconds(duration);
-        gameObject.GetComponent<Canvas>().enabled = true;
-        
-    }
+    
     public void load_up(int battleID, bool allow_prep)
     {
         //retrieve and save information specific for this battle
         
-
         var battleInfo = battleLibrary.get_encounter(battleID);
         heldEnemies = battleInfo.Item1;
         heldThreat = battleInfo.Item2;
@@ -77,7 +71,7 @@ public class PrepDungeonManager : MonoBehaviour
             fader.fade_to_black(); //prepmenu fade; not the battle fade
             gameObject.GetComponent<Canvas>().enabled = false;
             gameObject.SetActive(true);
-            StartCoroutine(prepMenu_show_pause(2.0f));
+            StartCoroutine(prepMenu_show_pause());
         }
    
         unitPreviewGO.SetActive(false);
@@ -98,6 +92,11 @@ public class PrepDungeonManager : MonoBehaviour
 
         load_reserveParty();
         isPartyValid();         
+    }
+    IEnumerator prepMenu_show_pause()
+    {
+        yield return new WaitForSeconds(fader.get_default_duration());
+        gameObject.GetComponent<Canvas>().enabled = true;
     }
 
     //COMBAT MANAGEMENT
@@ -153,7 +152,7 @@ public class PrepDungeonManager : MonoBehaviour
 
         //start the battle for real now
         fader.fade_to_black();
-        StartCoroutine(healthy_pause(2.0f, heldEnemies));
+        StartCoroutine(healthy_pause());
     }
     public void retry()
     {
@@ -161,12 +160,12 @@ public class PrepDungeonManager : MonoBehaviour
 
         //combatManager.load_battle(party, heldEnemies, 0);
         fader.fade_to_black();
-        StartCoroutine(healthy_pause(2.0f, heldEnemies));
+        StartCoroutine(healthy_pause());
     }
-    IEnumerator healthy_pause(float duration, Enemy[][] waves = null)
+    IEnumerator healthy_pause()
     {
-        yield return new WaitForSeconds(duration);
-        combatManager.load_battle(party, waves, 0);
+        yield return new WaitForSeconds(fader.get_default_duration());
+        combatManager.load_battle(party, heldEnemies, heldThreat);
     }
 
     //STRIDES

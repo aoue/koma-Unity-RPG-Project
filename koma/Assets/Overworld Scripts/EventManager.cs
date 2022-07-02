@@ -40,6 +40,7 @@ public class EventManager : MonoBehaviour
     [SerializeField] private Text sentenceText;
     [SerializeField] private Text centeredText;
     [SerializeField] private Button buttonPrefab = null;
+    [SerializeField] private Image speakerBoxPortrait;
 
     [SerializeField] private Button[] textControlButtons; //in order: auto, skip, history
 
@@ -93,7 +94,7 @@ public class EventManager : MonoBehaviour
     {
         if (battle_block)
         {
-            if ((Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)))
+            if (canProceed && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)))
             {               
                 pdm.load_up(saved_battle_id, saved_allow_prep);
             }
@@ -538,14 +539,18 @@ public class EventManager : MonoBehaviour
     }
     void fill_roles()
     {
-        //called at the start of each story event to fill in character roles.       
-        sentenceText.font = defaultFont;
+        //return all effects to default.
+        sentenceText.font = defaultFont; //use normal font
+        set_name(""); //hide name box
+        set_boxPortrait(-1);
+        set_speech(true); //use quotes for speaker
+        set_centered(false); //do not show text in centered.
 
         //dummy values -- will actually read from text file in save folder on main menu launch. hold the values in a static class i guess.
         useIC = 1; 
         script.variablesState["ic"] = useIC;
-        pName = "SampleName";
-        script.variablesState["player"] = pName;    
+        pName = "Pax";
+        script.variablesState["pname"] = pName;
     }
 
     //LINKING EXTERNAL FUNCTIONS
@@ -598,6 +603,10 @@ public class EventManager : MonoBehaviour
         script.BindExternalFunction("n", (string name) =>
         {
             this.set_name(name);
+        });
+        script.BindExternalFunction("p", (int pId) =>
+        {
+            this.set_boxPortrait(pId);
         });
         script.BindExternalFunction("talk", (bool mode) =>
         {
@@ -666,6 +675,18 @@ public class EventManager : MonoBehaviour
     }
 
     //text effects
+    void set_boxPortrait(int speakerBoxId)
+    {
+        if (speakerBoxId == -1)
+        {
+            speakerBoxPortrait.gameObject.SetActive(false);
+        }
+        else
+        {
+            speakerBoxPortrait.gameObject.SetActive(true);
+            speakerBoxPortrait.sprite = pLibrary.retrieve_speakerp(speakerBoxId);
+        }
+    }
     void set_name(string s)
     {
         if ( s == "" )

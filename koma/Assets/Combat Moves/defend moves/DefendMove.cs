@@ -8,9 +8,7 @@ public class DefendMove : Move
     //other defend moves are children of this guy here.
 
     [SerializeField] protected float amount;
-    [SerializeField] protected float amount_ceiling;
     [SerializeField] protected int dur;
-    [SerializeField] protected int dur_ceiling;
     [SerializeField] protected string floating_message; //shows in the damage spot of the move.
 
     public string get_floating_message() { return floating_message; }
@@ -34,7 +32,7 @@ public class DefendMove : Move
         //overriden for other classes, but this is also the base defend move.
 
         //does: pdef up.
-        u.status.pdef_up(amount, amount_ceiling, dur, dur_ceiling);
+        u.status.defState = defendState.DEFEND;
     }
 
 }

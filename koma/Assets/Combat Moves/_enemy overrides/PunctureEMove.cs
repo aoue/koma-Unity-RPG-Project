@@ -9,6 +9,13 @@ public class PunctureEMove : EnemyMove
     public override void apply_status(Unit target, Unit[] pl, Enemy[] el, int userIndex)
     {
         //amount, am ceil, set dur, dur ceil
-        target.status.pdef_up(-0.2f, 0.5f, 2, 2);
+        
+        bool canApply = target.status.update_status_state(target, buffType, explanationStr);
+
+        //then, apply your buff if and only if the target's status state is not neutral.
+        if (canApply)
+        {
+            target.status.pdef_up(0.8f, 2);
+        }
     }
 }

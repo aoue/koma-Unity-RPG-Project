@@ -8,6 +8,12 @@ public class ShieldMove : Move
 
     public override void apply_status(Unit target, Unit[] pl, Enemy[] el, int userIndex)
     {
-        target.status.dmgTaken_up(-0.25f, 0.75f, 3, 3);
+        
+        bool canApply = target.status.update_status_state(target, buffType, explanationStr);
+        //then, apply your buff if and only if the target's status state is not neutral.
+        if (canApply)
+        {
+            target.status.dmgTaken_up(0.75f, 3);
+        }
     }
 }

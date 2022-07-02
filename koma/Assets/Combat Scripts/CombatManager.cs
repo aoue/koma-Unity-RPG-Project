@@ -1859,7 +1859,7 @@ public class CombatManager : MonoBehaviour
             }
         }
         //Debug.Log("pick_enemy_actor(): unit " + chosenEnemy + " chosen!");
-        Debug.Log("chosen enemy id: " + chosenEnemy);
+        //Debug.Log("chosen enemy id: " + chosenEnemy);
         pick_enemy_actor_move(chosenEnemy);
     }
     void pick_enemy_actor_move(int chosenID)

@@ -18,8 +18,14 @@ public class ExemplarMove : Move
 
         //to weak, new formula is hpmax/15 + matk/5.
         //lvl 1 friday: heals (140/10 + 95/5) =  14 + 19 = 33
-        int toHeal = (target.get_hpMax_actual() / 10) + (pl[userIndex].get_matk_actual() / 5);
-        target.status.apply_dot(toHeal, toHeal, 5, 5);
+        
 
+        bool canApply = target.status.update_status_state(target, buffType, explanationStr);
+        //then, apply your buff if and only if the target's status state is not neutral.
+        if (canApply)
+        {
+            int toHeal = (target.get_hpMax_actual() / 10) + (pl[userIndex].get_matk_actual() / 5);
+            target.status.apply_dot(toHeal, 5);
+        }
     }
 }

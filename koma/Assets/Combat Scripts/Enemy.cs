@@ -190,7 +190,7 @@ public class Enemy : Unit
                 if (moveset[i].get_mpDrain() <= roll && moveset[i].get_isHeal() == false && !(moveset[i].get_phase() == executionTime.ENDOFROUND && canPickEOR == false) && ap >= moveset[i].get_apDrain())
                 {
                     //then, move is valid. :)
-                    Debug.Log("enemy picking move with index " + i);
+                    //Debug.Log("enemy picking move with index " + i);
                     chosenMove = (EnemyMove)moveset[i];
                     break;
                 }

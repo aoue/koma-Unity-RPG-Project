@@ -26,7 +26,7 @@ public class BarrierMove : DefendMove
         //overriden for other classes, but this is also the base defend move.
 
         //does: pdef up.
-        u.status.mdef_up(amount, amount_ceiling, dur, dur_ceiling);
+        u.status.defState = defendState.BARRIER;
     }
 
 }

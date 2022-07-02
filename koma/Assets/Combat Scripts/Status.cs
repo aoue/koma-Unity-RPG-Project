@@ -2,28 +2,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum buffState { NEUTRAL, BUFFED, DEBUFFED }; //remember, it's a ladder. 
+public enum defendState { NOT, DEFEND, BARRIER };
+
 public class Status
 {
+    //a unit may only have a single stat modifier on at a time. So, they can either be affected by a buff, by nothing, or by a debuff.
+
     //status conditions: (de)buffs, stat increases, and stat multipliers.
 
     //how multipliers work.
     //every move that increases a stat multiplier has two values: inc, ceil
     //  - it sets the multiplier: Max(multiplier + inc, ceil)
 
-    //about durations. duration is measured in rounds.
-    //every move that increases a stat has two values: dur, ceil
-    //  - it sets the (either stat or dot) duration: Max(duration + dur, ceil)
+    //a status, when applied, overwrites the previous status.
+
+    //defending
+    public defendState defState { get; set; } //reset to NOT at round start.
 
     // ap
     public int ap_duration { get; set; } //duration of added ap, in rounds.
     public int ap; //flat increase.
 
     // hp
-    public int hp_duration { get; set; } //duration of added hp, in rounds.
     public float hp { get; set; } //multiplier for additionnal hp of hpmax. starts at 0 and adds hp*unit.get_hpmax() hp
 
     // stats
-    public int stat_duration { get; set; } //duration of stat mults, in rounds.
+    public int duration { get; set; } //duration of stat mults, in rounds.
     public float trance { get; set; } //multiplie to stamina cost payed of moves.
     public float patk { get; set; } //multiplier to said stat.
     public float pdef { get; set; } //"
@@ -33,106 +38,74 @@ public class Status
     public float dmg_dealt { get; set; } //"
 
     public int dot_duration { get; set; } //duration of dots (both kinds), in rounds.
-    public int bad_dot { get; set; }  //flat number
-    public int good_dot { get; set; } //"
+    public int dot { get; set; } // flat number. Adds or subtracts from hp.
 
-    public string generate_string_left()
+    //ui
+    private buffState state;
+    private string explanation_text; //explains the current status affliction. Assigned by the status move during use.
+
+    //UI - Preview slot status text generation.
+    // it shows the explanation text by the status.
+    public string generate_string()
     {
-        //generates a string to describe the unit's status condition.
-        string toRet = "";
-        if (stat_duration != 0)
+        string defStr = "";
+        switch (defState)
         {
-            toRet += "Stat dur: " + stat_duration;
-            if (dmg_dealt != 1.0) toRet += "\nDMG out x" + dmg_dealt;
-            if (dmg_taken != 1.0) toRet += "\nDMG in x" + dmg_taken;
+            case defendState.NOT:
+                defStr = "";
+                break;
+            case defendState.DEFEND:
+                defStr = "Defending (pdef x1.5)\n";
+                break;
+            case defendState.BARRIER:
+                defStr = "Barrier up (mdef x1.5)\n";
+                break;
         }
-        if (hp_duration != 0)
+
+        if (duration > 1)
         {
-            toRet += "\nhp_dur: " + hp_duration;
-            if (hp != 0) toRet += "\nHP up: +" + hp;
+            return defStr + explanation_text + "\n" + duration + " turns remaining";
         }
-        if (stat_duration != 0 && trance != 1.0f) toRet += "\nMP mult: " + trance;
-        return toRet;
+        else if (duration == 1)
+        {
+            return defStr + explanation_text + "\n" + duration + " turn remaining";
+        }
+        return defStr;
     }
-    public string generate_string_right()
+
+    public bool update_status_state(Unit u, buffState moveType, string explanation)
     {
-        //generates a string to describe the unit's status condition.
-
-        string toRet = "";
-        if (ap_duration != 0) toRet = "\nap: " + ap + " (" + ap_duration + " turns)";
-
-        if (dot_duration == 0) return toRet;
-        toRet += "\nDots dur: " + dot_duration;
-        if (bad_dot != 1) toRet += "\nDOT -" + bad_dot;
-        if (good_dot != 1) toRet += "\nHOT +" + good_dot;          
-        
-        return toRet;
+        //adjust ui elements of the status and update state.
+        status_ladder(moveType);
+        if (state == buffState.NEUTRAL)
+        {
+            reset(u);
+            explanation_text = "";
+            return false;
+        }
+        else
+        {
+            explanation_text = explanation;
+            return true;
+        }      
     }
-
+    void status_ladder(buffState moveType)
+    {
+        if (moveType == buffState.BUFFED)
+        {
+            if (state == buffState.NEUTRAL) state = buffState.BUFFED;
+            else if (state == buffState.DEBUFFED) state = buffState.NEUTRAL;
+        }
+        else if (moveType == buffState.DEBUFFED)
+        {
+            if (state == buffState.NEUTRAL) state = buffState.DEBUFFED;
+            else if (state == buffState.BUFFED) state = buffState.NEUTRAL;
+        }
+    }
     public void reset(Unit u)
     {
-        //sets everything to its default state.
-        dot_reset();
-        stat_reset();
-        hp_reset(u);
-        ap_reset();
-    }
-    public bool decline(Unit u)
-    {
-        //stat mods decrease. if they hit 0, then stats are reset.
-        bool validExpiry = false;
-        if (hp_duration > 0)
-        {
-            validExpiry = true;
-            hp_duration--;
-        }
-        if (dot_duration > 0)
-        {
-            validExpiry = true;
-            dot_duration--;
-        }
-        if (stat_duration > 0)
-        {
-            validExpiry = true;
-            stat_duration--;
-        }
-        if (ap_duration > 0)
-        {
-            validExpiry = true;
-            ap_duration--;
-        }
-
-        bool expires = false;
-        if (hp_duration == 0)
-        {
-            expires = true;
-            hp_reset(u);
-        }
-        if (dot_duration == 0)
-        {
-            expires = true;
-            dot_reset();
-        }
-        if (stat_duration == 0)
-        {
-            expires = true;
-            stat_reset();
-        }
-        if (ap_duration == 0)
-        {
-            expires = true;
-            ap_reset();
-        }
-        return expires & validExpiry; //only true if both are true. neat bit of bool logical operators.
-    }
-    void ap_reset()
-    {
-        ap_duration = 0;
-        ap = 0;
-    }
-    void stat_reset()
-    {        
-        stat_duration = 0;
+        explanation_text = "";
+        duration = 0;
         trance = 1.0f;
         patk = 1.0f;
         pdef = 1.0f;
@@ -140,28 +113,40 @@ public class Status
         mdef = 1.0f;
         dmg_dealt = 1.0f;
         dmg_taken = 1.0f;
-    }
-    void dot_reset()
-    {
-        dot_duration = 0;
-        bad_dot = 0;
-        good_dot = 0;
-    }
-    void hp_reset(Unit u)
-    {
-        hp_duration = 0;
+        dot = 0;
         hp = 0;
         hp_expires(u);
     }
+    public bool decline(Unit u)
+    {
+        //stat mods decrease. if they hit 0, then stats are reset.
+        bool validExpiry = false;
+        if (duration > 0)
+        {
+            validExpiry = true;
+            duration--;
+        }
+        bool expires = false;
+        if (duration == 0)
+        {
+            expires = true;
+        }
+
+        if (expires & validExpiry) //only true if both are true. neat bit of bool logical operators.
+        {
+            reset(u);
+            return true;
+            
+        }
+        return false;
+    }
+    
 
     //HP
-    public void apply_hp(float amount, float am_ceiling, int duration, int dur_ceiling)
+    public void apply_hp(float amount, int dur)
     {
-        if (hp_duration < dur_ceiling)
-            hp_duration = Mathf.Min(hp_duration + duration, dur_ceiling);
-
-        if (hp < am_ceiling)
-            hp = Mathf.Min(hp + amount, am_ceiling);
+        duration = dur;
+        hp = amount;
     }
     void hp_expires(Unit unit)
     {
@@ -169,118 +154,66 @@ public class Status
         if (unit.get_hp() > unit.get_hpMax_actual())
         {
             unit.set_hp(unit.get_hpMax_actual());
-        }
-        
+        }      
     }
 
     //AP
-    public void ap_duration_up(int duration, int dur_ceiling)
-    {
-        if (ap_duration < dur_ceiling)
-            ap_duration = Mathf.Min(ap_duration + duration, dur_ceiling);
-    }
-    public void ap_up(int amount, int am_ceiling, int duration, int dur_ceiling)
+    public void ap_up(int amount, int dur)
     {
         //increase amount
-        if ( amount > 0) //increasing ap
-        {
-            ap = Mathf.Min(ap + amount, am_ceiling);
-            
-        }
-        else //decreasing ap
-        {
-            ap = Mathf.Max(ap + amount, am_ceiling);
-        }
-        //increase duration
-        ap_duration = Mathf.Min(ap_duration + duration, dur_ceiling);
+        ap = amount;
+        duration = dur;
     }
 
     //STATS
-    private float get_double(float current_amount, float toAdd, float ceiling)
+    public void trance_up(float amount, int dur)
     {
-        //returns what current_amount should be set to should be.
-        if (toAdd > 0) //we're increasing the stat
-        {
-            if (current_amount < ceiling)
-                return Mathf.Min(current_amount + toAdd, ceiling);
-        }
-        else //we're decreasing the stat
-        {
-            if (current_amount > ceiling)
-                return Mathf.Max(current_amount + toAdd, ceiling);
-        }
-        return current_amount;
+        trance = amount;
+        duration = dur;
     }
-    public void stat_duration_up(int duration, int dur_ceiling)
+    public void patk_up(float amount, int dur)
     {
-        //handles increasing (or not) stat duration stuff.
-        if (stat_duration < dur_ceiling)
-            stat_duration = Mathf.Min(stat_duration + duration, dur_ceiling);
-    }   
-    public void trance_up(float amount, float am_ceiling, int dur, int dur_ceiling)
-    {
-        trance = get_double(trance, amount, am_ceiling);
-        if ( trance > am_ceiling)
-        {
-            trance =  Mathf.Max(trance + amount, am_ceiling);
-        }
-        stat_duration_up(dur, dur_ceiling);
+        patk = amount;
+        duration = dur;
     }
-    public void patk_up(float amount, float am_ceiling, int dur, int dur_ceiling)
+    public void pdef_up(float amount, int dur)
     {
-        patk = get_double(patk, amount, am_ceiling);
-        stat_duration_up(dur, dur_ceiling);
+        pdef = amount;
+        duration = dur;
     }
-    public void pdef_up(float amount, float am_ceiling, int dur, int dur_ceiling)
+    public void matk_up(float amount, int dur)
     {
-        pdef = get_double(pdef, amount, am_ceiling);
-        stat_duration_up(dur, dur_ceiling);
+        matk = amount;
+        duration = dur;
     }
-    public void matk_up(float amount, float am_ceiling, int dur, int dur_ceiling)
+    public void mdef_up(float amount, int dur)
     {
-        matk = get_double(matk, amount, am_ceiling);
-        stat_duration_up(dur, dur_ceiling);
+        mdef = amount;
+        duration = dur;
     }
-    public void mdef_up(float amount, float am_ceiling, int dur, int dur_ceiling)
+    public void dmgTaken_up(float amount, int dur)
     {
-        mdef = get_double(mdef, amount, am_ceiling);
-        stat_duration_up(dur, dur_ceiling);
+        dmg_taken = amount;
+        duration = dur;
     }
-    public void dmgTaken_up(float amount, float am_ceiling, int dur, int dur_ceiling)
+    public void dmgDealt_up(float amount, int dur)
     {
-        dmg_taken = get_double(dmg_taken, amount, am_ceiling);
-        stat_duration_up(dur, dur_ceiling);
-    }
-    public void dmgDealt_up(float amount, float am_ceiling, int dur, int dur_ceiling)
-    {
-        dmg_dealt = get_double(dmg_dealt, amount, am_ceiling);
-        stat_duration_up(dur, dur_ceiling);
+        dmg_dealt = amount;
+        duration = dur;
     }
     
 
     //DOTS
     //units are damaged/healed from dots each time they act.
-    public void apply_dot(int amount, int am_ceiling, int duration, int dur_ceiling)
+    public void apply_dot(int amount, int duration)
     {
-        if (amount > 0 && am_ceiling > good_dot)
-        {
-            good_dot = Mathf.Min(good_dot + amount, am_ceiling);
-        }
-        else if (amount < 0 && am_ceiling > bad_dot)
-        {
-            bad_dot = Mathf.Max(bad_dot + amount, am_ceiling); //here, the am_ceiling will be a floor. it's a dot we can't surpass.
-        }
-
-        if (dot_duration < Mathf.Min(dot_duration + duration, dur_ceiling))
-        {
-            dot_duration = Mathf.Min(dot_duration + duration, dur_ceiling);
-        }
-        
+        dot = amount;
+        duration = duration;
     }
     public int take_dot()
     {
         //take_dot returns an int that will be added to the unit's hp.
-        return good_dot - bad_dot;
+        return dot;
     }
 
 

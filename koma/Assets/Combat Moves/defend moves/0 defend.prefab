@@ -43,17 +43,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06cc3e87beeab1e4b8aafbcf34761883, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  moveID: 0
   moveSound: {fileID: 0}
   nom: Defend
   targetsParty: 1
   mustTargetSelf: 1
   isHeal: 1
   isStatus: 1
+  selfStatus: 1
+  selfStatusTextColorGreen: 0
   statusText: 
+  buffType: 0
+  explanationStr: 
   phase: 0
   preferredRow: 0
   strikes: 0
   power: 0
+  break_mult: 0
   lowSpread: 0
   highSpread: 0
   xSize: 1
@@ -62,10 +68,8 @@ MonoBehaviour:
   usesPatk: 0
   usesPdef: 0
   apDrain: 0
-  staminaDrain: 0
+  mpDrain: 0
   flavour: Shields themself, raising physical defense.
   amount: 0.5
-  amount_ceiling: 1.5
   dur: 1
-  dur_ceiling: 1
   floating_message: Pdef+

@@ -6,7 +6,6 @@ using UnityEngine.UI;
 public class PreviewSlot : MonoBehaviour
 {
     //for the preview slot. is used to show a whole bunch of stuff when things are hovered. versatile.
-
     [SerializeField] private Highlighting highlighter;
     [SerializeField] private CombatManager theBoss;
 
@@ -50,13 +49,13 @@ public class PreviewSlot : MonoBehaviour
 
         previewText.text = nameString + " Lv " + theBoss.get_pl()[which].get_level() + "\nPatk: " + theBoss.get_pl()[which].get_patk() + " (x" + theBoss.get_pl()[which].status.patk + ")"
             + "\nPdef: " + theBoss.get_pl()[which].get_pdef() + " (x" + theBoss.get_pl()[which].status.pdef + ")"
-            + "\n" + theBoss.get_pl()[which].status.generate_string_left();
+            + "\n" + theBoss.get_pl()[which].status.generate_string();
 
 
         previewTextCol2.text = "Affinity: " + AffKeyWords.get_affName(theBoss.get_pl()[which].get_affinity());
         previewTextCol2.text += "\nMatk: " + theBoss.get_pl()[which].get_matk() + " (x" + theBoss.get_pl()[which].status.matk + ")"
-            + "\nMdef: " + theBoss.get_pl()[which].get_mdef() + " (x" + theBoss.get_pl()[which].status.mdef + ")"
-            + "\n" + theBoss.get_pl()[which].status.generate_string_right();
+            + "\nMdef: " + theBoss.get_pl()[which].get_mdef() + " (x" + theBoss.get_pl()[which].status.mdef + ")";
+            //+ "\n" + theBoss.get_pl()[which].status.generate_string_right();
 
         previewTextCol2.gameObject.SetActive(true);
         gameObject.SetActive(true);
@@ -90,12 +89,12 @@ public class PreviewSlot : MonoBehaviour
         previewText.text = nameString + " Lv " + theBoss.get_el()[which].get_level()
             + "\nPatk: " + theBoss.get_el()[which].get_patk_actual() + " (x" + theBoss.get_el()[which].status.patk + ")"
             + "\nPdef: " + theBoss.get_el()[which].get_pdef_actual() + " (x" + theBoss.get_el()[which].status.pdef + ")"
-            + "\n" + theBoss.get_el()[which].status.generate_string_left();
+            + "\n" + theBoss.get_el()[which].status.generate_string();
 
         previewTextCol2.text = "Affinity: " + AffKeyWords.get_affName(theBoss.get_el()[which].get_affinity());
         previewTextCol2.text += "\nMatk: " + theBoss.get_el()[which].get_matk_actual() + " (x" + theBoss.get_el()[which].status.matk + ")"
-            + "\nMdef: " + theBoss.get_el()[which].get_mdef_actual() + " (x" + theBoss.get_el()[which].status.mdef + ")"
-            + "\n" + theBoss.get_el()[which].status.generate_string_right();
+            + "\nMdef: " + theBoss.get_el()[which].get_mdef_actual() + " (x" + theBoss.get_el()[which].status.mdef + ")";
+            //+ "\n" + theBoss.get_el()[which].status.generate_string_right();
 
         previewTextCol2.gameObject.SetActive(true);
         gameObject.SetActive(true);

@@ -53,6 +53,8 @@ MonoBehaviour:
   selfStatus: 0
   selfStatusTextColorGreen: 0
   statusText: Pdef-
+  buffType: 2
+  explanationStr: Defense lowered!
   phase: 1
   preferredRow: 1
   strikes: 1
