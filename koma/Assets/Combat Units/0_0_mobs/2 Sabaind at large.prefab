@@ -43,14 +43,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 081b12efd40753d428fd913f350cf59e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSelectionPortrait: {fileID: 0}
-  boxImg: {fileID: 0}
+  moveSelectionPortrait: {fileID: 21300000, guid: 3b7b16535563cc242a821df5b9acfffd,
+    type: 3}
+  boxImg: {fileID: 21300000, guid: 2550eaee8a1dfbc408742e75bb92f3e1, type: 3}
+  playerUnitId: 0
   exp: 38
   level: 4
   nom: Sabaind-At-Large
   apMax: 1
   hpMax: 500
-  affinity: 6
+  break_multiplier: 2
+  affinity: 1
   mpMax: 0
   patk: 210
   pdef: 50
@@ -61,7 +64,6 @@ MonoBehaviour:
   - {fileID: 7570622779774209420, guid: 222679af41aca70498fed980f246143e, type: 3}
   - {fileID: 5690172353454418009, guid: fc7adbd6cf042b34295ab5fc2a89c3f7, type: 3}
   - {fileID: 5408471745153392735, guid: 922c88870487233408df44d2540b832b, type: 3}
-  break_multiplier: 2
   doSpawningVariance: 0
   default_priority: 6
   discipline: 0

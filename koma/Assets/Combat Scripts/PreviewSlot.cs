@@ -66,7 +66,7 @@ public class PreviewSlot : MonoBehaviour
         if (theBoss.get_pTurn() == playerTurnPhase.SELECTUNIT)
         {
             if (theBoss.get_el()[which] != null)
-                theBoss.show_active_portrait(theBoss.get_el()[which].get_activePortrait());           
+                theBoss.e_show_active_portrait(theBoss.get_el()[which].get_activePortrait());           
         }
         //PLAYER SELECTING A TARGET TILE (on the enemy side of the map)
         else if (theBoss.get_pTurn() == playerTurnPhase.SELECTTARGET && theBoss.currentUnit != null && theBoss.currentUnit.nextMove != null && theBoss.currentUnit.nextMove.get_isHeal() == false)

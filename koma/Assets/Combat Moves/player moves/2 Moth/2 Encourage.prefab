@@ -53,6 +53,8 @@ MonoBehaviour:
   selfStatus: 0
   selfStatusTextColorGreen: 0
   statusText: MP consumption-
+  buffType: 0
+  explanationStr: 
   phase: 0
   preferredRow: 2
   strikes: 1
@@ -62,7 +64,7 @@ MonoBehaviour:
   highSpread: 0
   xSize: 1
   ySize: 1
-  affinity: 6
+  affinity: 0
   usesPatk: 0
   usesPdef: 0
   apDrain: 1

@@ -45,7 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSelectionPortrait: {fileID: 21300000, guid: 3b7b16535563cc242a821df5b9acfffd,
     type: 3}
-  boxImg: {fileID: 0}
+  boxImg: {fileID: 21300000, guid: 2550eaee8a1dfbc408742e75bb92f3e1, type: 3}
   playerUnitId: 0
   exp: 6
   level: 1
@@ -53,7 +53,7 @@ MonoBehaviour:
   apMax: 1
   hpMax: 90
   break_multiplier: 1
-  affinity: 6
+  affinity: 1
   mpMax: 0
   patk: 85
   pdef: 60

@@ -43,9 +43,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba42b37bc7aa8744c844abe1c58e792a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSelectionPortrait: {fileID: 21300000, guid: 259da52cdff04264382f961c200e9515,
+  moveSelectionPortrait: {fileID: 21300000, guid: 0964fe523a50db04fbd4bb0a891aee63,
     type: 3}
-  boxImg: {fileID: 21300000, guid: b7c0d69d922f9ba4baad9c62a8629337, type: 3}
+  boxImg: {fileID: 21300000, guid: 9e81a0e8a2da48940b2643b8bb144d09, type: 3}
   playerUnitId: 2
   exp: 0
   level: 1
@@ -53,7 +53,7 @@ MonoBehaviour:
   apMax: 1
   hpMax: 90
   break_multiplier: 1
-  affinity: 4
+  affinity: 0
   mpMax: 40
   patk: 60
   pdef: 75
@@ -67,4 +67,3 @@ MonoBehaviour:
   - {fileID: 3557969058673008688, guid: 913290447572d1b4290df53bcb9c9cc2, type: 3}
   - {fileID: 924583595960017764, guid: 74bd5575a0f85b8408e6c6f3b4468df4, type: 3}
   - {fileID: 0}
-  allKnownMoveIds: 

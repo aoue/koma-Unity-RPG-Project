@@ -64,7 +64,7 @@ MonoBehaviour:
   highSpread: 1
   xSize: 1
   ySize: 1
-  affinity: 6
+  affinity: 0
   usesPatk: 1
   usesPdef: 1
   apDrain: 1

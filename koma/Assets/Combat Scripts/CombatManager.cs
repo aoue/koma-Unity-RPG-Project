@@ -15,12 +15,10 @@ public class CombatManager : MonoBehaviour
 
     [SerializeField] private DungeonUnitBox[] partyBoxes; //boxes that hold the party. 0-5
     [SerializeField] private DungeonUnitBox[] enemyBoxes; //boxes that hold the enemies. 0-5
-    [SerializeField] private Image activePortrait; //540x1080. show a portrait of the unit that's doing something; choosing a move, or executing one.
-    private Sprite lastActiveShown; //holds the last shown active Portrait. used to help us switch between scheduled move's user and current unit.
+    [SerializeField] private Image activePortrait; //player's active portrait. shows the active player pilot image.
+    [SerializeField] private Image enemyActivePortrait; //enemy's active portrait. shows the active enemy pilot image.
+
     [SerializeField] private Sprite emptySlotSprite; //used to fill empty dungeon boxes
-    [SerializeField] private Text partyApText;
-    [SerializeField] private Text enemyApText;
-    //[SerializeField] private Text staminaText;
     [SerializeField] private DmgText dmgTextPrefab;
 
     private BattleBrain brain;
@@ -268,7 +266,6 @@ public class CombatManager : MonoBehaviour
                 }
                 plAp += pl[i].get_apMax_actual();
                 plCount++;
-
             }
 
             if (el[i] != null && el[i].get_ooa() == false)
@@ -299,7 +296,7 @@ public class CombatManager : MonoBehaviour
     }
     void count_ap()
     {
-        //counts and displays the remaining ap of all units on both sides.
+        //recalculates ap
         plAp = 0;
         elAp = 0;
         for (int i = 0; i < 6; i++) //reset ap.
@@ -307,20 +304,19 @@ public class CombatManager : MonoBehaviour
             //functions that not only reset AP, they also adjust buff durations.
             if (pl[i] != null)
             {
-                plAp += pl[i].get_apMax_actual();
+                plAp += pl[i].get_ap();
             }
 
             if (el[i] != null)
             {
-                elAp += el[i].get_apMax_actual();
+                elAp += el[i].get_ap();
             }
-        }
-        
+        }        
     }
     void control()
     {
-        check_dead(); //need to update previews too.   
-        update_ap_texts();
+        check_dead(); //need to update previews too.
+        count_ap();
         //update each unit box stats
         fill_party_slots();
         fill_enemy_slots();
@@ -380,7 +376,6 @@ public class CombatManager : MonoBehaviour
         previews.show(playerScheduledMove, enemyScheduledMove, eorScheduledMove);
 
         //and hide active portrait too. (at this point, it is still the chosen player unit)
-        hide_active_portrait();
 
         control();
     }
@@ -416,7 +411,7 @@ public class CombatManager : MonoBehaviour
 
         //set ap to 0.
         currentUnit.drain_ap(currentUnit.get_ap());
-        update_ap_texts();
+        count_ap();
 
         //adjust ui
         pTurn = playerTurnPhase.NOT;
@@ -444,7 +439,7 @@ public class CombatManager : MonoBehaviour
             currentUnit.drain_ap(currentUnit.get_ap());
         }
 
-        update_ap_texts();
+        count_ap();
 
         //drain stamina. Yes, we drain it now no matter if the move is ever executed.
         //take into account currentUnit's status.trance
@@ -500,7 +495,6 @@ public class CombatManager : MonoBehaviour
             yield return new WaitForSeconds(1.5f);
 
             //afterwards, unhighlight it.
-            hide_active_portrait();
             unhighlight_preview_move(highlightPreviewMoveParam);
         }
         end_player_turn_p1(true);
@@ -732,7 +726,6 @@ public class CombatManager : MonoBehaviour
         playerScheduledMove = null;
 
         yield return new WaitForSeconds(2.0f);
-        hide_active_portrait();
         end_player_turn_p1(true);
     }
     IEnumerator waitWhilePlayerMoveExecutes(Move move, int spot, int unitIndex, whoseTurn setTurnTo, bool isEOR)
@@ -922,7 +915,6 @@ public class CombatManager : MonoBehaviour
         fill_enemy_slots();
 
         yield return new WaitForSeconds(2.0f);
-        hide_active_portrait();
 
         if ( setTurnTo == whoseTurn.WAIT)
         {
@@ -944,7 +936,7 @@ public class CombatManager : MonoBehaviour
         if ( (isEOR == false && enemyScheduledUnit != null) || (isEOR == true && eorScheduledUnit != null) )
         {
             el[unitIndex].set_isScheduled(false);
-            show_active_portrait(el[unitIndex].get_activePortrait());
+            e_show_active_portrait(el[unitIndex].get_activePortrait());
             previews.hide();
             plays.show(el[unitIndex].get_nom() + " uses " + move.get_nom() + "...");
             SM.play_moveSound(move.get_sound());
@@ -1107,7 +1099,6 @@ public class CombatManager : MonoBehaviour
         fill_enemy_slots();
         fill_party_slots();
         yield return new WaitForSeconds(2.0f);
-        hide_active_portrait();
 
         bool useEnemyScheduledUnit = true;
         if (setTurnTo == whoseTurn.WAIT)
@@ -1192,13 +1183,13 @@ public class CombatManager : MonoBehaviour
     //UI
     public void show_active_portrait(Sprite sp, bool setLastShown = true)
     {
-        if (setLastShown == true) lastActiveShown = sp;
         activePortrait.sprite = sp;
         activePortrait.gameObject.SetActive(true);
     }
-    public void hide_active_portrait()
+    public void e_show_active_portrait(Sprite sp, bool setLastShown = true)
     {
-        activePortrait.gameObject.SetActive(false);
+        enemyActivePortrait.sprite = sp;
+        enemyActivePortrait.gameObject.SetActive(true);
     }
     void show_ui_numbers(string toShow, bool targetsParty, bool isHeal, float duration, int which)
     {
@@ -1397,20 +1388,6 @@ public class CombatManager : MonoBehaviour
             }
         }
     }
-    void update_ap_texts()
-    {
-        //recalculate ap, then display it.
-        plAp = 0;
-        elAp = 0;
-        for (int i = 0; i < 6; i++)
-        {
-            if (pl[i] != null) plAp += pl[i].get_ap();
-            if (el[i] != null) elAp += el[i].get_ap();
-        }
-
-        partyApText.text = "Team AP: " + plAp;
-        enemyApText.text = "Team AP: " + elAp;
-    }
 
     //MOVE HIGHLIGHTING
     public void unhighlight_preview_move(int which)
@@ -1428,9 +1405,6 @@ public class CombatManager : MonoBehaviour
             case 0:
                 if (playerScheduledMove != null)
                 {
-                    if (pTurn == playerTurnPhase.SELECTTARGET)
-                        show_active_portrait(lastActiveShown);
-
                     highlighter.unhighlight_user(playerScheduledUnit.place, true);
                     if ( playerScheduledMove.get_isHeal() == true)
                     {
@@ -1445,9 +1419,6 @@ public class CombatManager : MonoBehaviour
             case 1:
                 if (eorScheduledMove != null)
                 {
-                    if (pTurn == playerTurnPhase.SELECTTARGET)
-                        show_active_portrait(lastActiveShown);
-
                     if (eorUserIsPlayer == true)
                     {
                         highlighter.unhighlight_user(eorScheduledUnit.place, true);
@@ -1478,9 +1449,6 @@ public class CombatManager : MonoBehaviour
             case 2:
                 if (enemyScheduledMove != null)
                 {
-                    if (pTurn == playerTurnPhase.SELECTTARGET)
-                        show_active_portrait(lastActiveShown);
-
                     highlighter.unhighlight_e_user(enemyScheduledUnit.place, true);
                     if (enemyScheduledMove.get_isHeal() == true)
                     {
@@ -1518,9 +1486,10 @@ public class CombatManager : MonoBehaviour
             case 1:
                 if (eorScheduledMove != null)
                 {
-                    show_active_portrait(eorScheduledUnit.get_activePortrait(), false);
+                    
                     if ( eorUserIsPlayer == true )
-                    {                       
+                    {
+                        show_active_portrait(eorScheduledUnit.get_activePortrait(), false);
                         if ( eorScheduledMove.get_isHeal() == true)
                         {
                             highlighter.highlight_party(eorScheduledMoveSpot, eorScheduledMove, true, eorScheduledUnit.place);
@@ -1532,7 +1501,8 @@ public class CombatManager : MonoBehaviour
                         highlighter.highlight_user(eorScheduledUnit.place);
                     }
                     else
-                    {                       
+                    {
+                        e_show_active_portrait(eorScheduledUnit.get_activePortrait(), false);
                         if (eorScheduledMove.get_isHeal() == true)
                         {
                             highlighter.highlight_enemy(eorScheduledMoveSpot, eorScheduledMove, false, eorScheduledUnit.place);
@@ -1548,7 +1518,7 @@ public class CombatManager : MonoBehaviour
             case 2:
                 if (enemyScheduledMove != null)
                 {       
-                    show_active_portrait(enemyScheduledUnit.get_activePortrait(), false);
+                    e_show_active_portrait(enemyScheduledUnit.get_activePortrait(), false);
                     if ( enemyScheduledMove.get_isHeal() == true)
                     {
                         highlighter.highlight_enemy(enemyScheduledMoveSpot, enemyScheduledMove, false, enemyScheduledUnit.place);
@@ -2089,7 +2059,7 @@ public class CombatManager : MonoBehaviour
         {
             el[chosenID].drain_ap(el[chosenID].get_ap());
         }
-        update_ap_texts();
+        count_ap();
 
         //three cases: depending on move's execution time.
         int para = 2;
@@ -2234,9 +2204,9 @@ public class CombatManager : MonoBehaviour
         previews.hide();
         plays.show(unit_name + " prepares " + move_name + " " + phase_words);
         highlight_preview_move(highlightPreviewMoveParam);
-        show_active_portrait(toShow);
+        e_show_active_portrait(toShow);
         yield return new WaitForSeconds(1.5f);
-        hide_active_portrait();
+        
         //afterwards, unhighlight it.
         unhighlight_preview_move(highlightPreviewMoveParam);
 

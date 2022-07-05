@@ -83,21 +83,34 @@ public class Move : MonoBehaviour
         //creates the string that will be shown in the move preview text.
         //you've got 3 lines.
 
-        //need to show:
-        // -phase
-
         string toReturn = "";
+
+        switch (affinity)
+        {
+            case 0:
+                toReturn = "Light - ";
+                break;
+            case 1:
+                toReturn = "Medium - ";
+                break;
+            case 2:
+                toReturn = "Heavy - ";
+                break;
+            default:
+                Debug.Log("move string generation: affinity default case.");
+                break;
+        }
 
         switch (preferredRow)
         {
             case preferredRow.FRONT:
-                toReturn = "(Front";
+                toReturn += "(Front";
                 break;
             case preferredRow.BACK:
-                toReturn = "(Back";
+                toReturn += "(Back";
                 break;
             case preferredRow.AMBI:
-                toReturn = "(Ambi";
+                toReturn += "(Ambi";
                 break;
         }
         switch (phase)

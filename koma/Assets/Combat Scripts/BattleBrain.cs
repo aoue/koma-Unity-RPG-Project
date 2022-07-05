@@ -11,15 +11,16 @@ public class BattleBrain
     //affinity table
     //2d array where elements are multipliers.
 
-    private float[,] affMultArray = new float[7, 7]
+    //legend:
+    //0: light
+    //1: medium
+    //2: heavy
+    // light > heavy > medium > light
+    private float[,] affMultArray = new float[3, 3]
     {
-        {1f, 0.5f, 1.5f, 1f, 1f, 1f, 1f},
-        {1.5f, 1f, 1f, 0.5f, 1f, 1f, 1f},
-        {0.5f, 1f, 1f, 1.5f, 1f, 1f, 1f},
-        {1f, 1.5f, 0.5f, 1f, 1f, 1f, 1f},
-        {1f, 1f, 1f, 1f, 0.5f, 2.0f, 1f},
-        {1f, 1f, 1f, 1f, 2.0f, 0.5f, 1f},
-        {1f, 1f, 1f, 1f, 1f, 1f, 1f}
+        {1f, 0.75f, 1.25f},
+        {1.25f, 1f, 0.75f},
+        {0.75f, 1.25f, 1f}
     };
 
     //UNIVERSAL CALCULATION FUNCTIONS

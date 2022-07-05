@@ -9,7 +9,7 @@ public class ElementalMove : Move
     public override void apply_status(Unit target, Unit[] pl, Enemy[] el, int userIndex)
     {
         
-        this.set_affinity(UnityEngine.Random.Range(0, 5 + 1));
+        this.set_affinity(UnityEngine.Random.Range(0, 2 + 1));
     }
 
 

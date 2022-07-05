@@ -8,8 +8,8 @@ public class Unit : MonoBehaviour
 
     //ui stuff
     public bool inParty { get; set; }
-    [SerializeField] private Sprite moveSelectionPortrait; //dimensions?
-    [SerializeField] private Sprite boxImg; //250x500 | 2:1 ratio.
+    [SerializeField] private Sprite moveSelectionPortrait; //small pilot profile picture.
+    [SerializeField] private Sprite boxImg; //the sprite for the character's robot sprite.
     //a crit portrait? to cover a slice of the screen like in trails in the sky? a bit more than that though; include like head and upper body?
 
     //base stats   
