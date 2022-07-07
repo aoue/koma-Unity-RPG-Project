@@ -41,7 +41,6 @@ public class UnitPrefabManager : MonoBehaviour
         mcUnit.set_level(1);
         mcUnit.set_exp(0);
         mcUnit.set_hpMax(100);
-        mcUnit.set_mpMax(30);
         mcUnit.set_patk(70);
         mcUnit.set_pdef(80);
         mcUnit.set_matk(110);
@@ -58,7 +57,6 @@ public class UnitPrefabManager : MonoBehaviour
         fridayUnit.set_level(1);
         fridayUnit.set_exp(100);
         fridayUnit.set_hpMax(140);
-        fridayUnit.set_mpMax(30);
         fridayUnit.set_patk(95);
         fridayUnit.set_pdef(115);
         fridayUnit.set_matk(95);
@@ -75,7 +73,6 @@ public class UnitPrefabManager : MonoBehaviour
         mothUnit.set_level(1);
         mothUnit.set_exp(0);
         mothUnit.set_hpMax(90);
-        mothUnit.set_mpMax(40);
         mothUnit.set_patk(60);
         mothUnit.set_pdef(75);
         mothUnit.set_matk(85);

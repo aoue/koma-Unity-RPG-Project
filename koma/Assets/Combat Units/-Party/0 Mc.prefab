@@ -54,7 +54,8 @@ MonoBehaviour:
   hpMax: 100
   break_multiplier: 1
   affinity: 1
-  mpMax: 30
+  starting_mp: 50
+  mpRegen: 15
   patk: 70
   pdef: 80
   matk: 110

@@ -95,8 +95,10 @@ public class EventManager : MonoBehaviour
         if (battle_block)
         {
             if (canProceed && (Input.GetKeyDown(KeyCode.Space) || Input.GetKeyDown(KeyCode.Return)))
-            {               
+            {
+                //Debug.Log("EventManager.Update(); battle_block=true; pdm.load_up() called");
                 pdm.load_up(saved_battle_id, saved_allow_prep);
+                canProceed = false;
             }
             return;
         }
@@ -644,6 +646,7 @@ public class EventManager : MonoBehaviour
 
         //turn off battle_block and automatically proceed next sentence.
         battle_block = false;
+        canProceed = true;
         SM.play_typingSound();
         DisplayNextSentence();
     }

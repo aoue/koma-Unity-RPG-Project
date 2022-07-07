@@ -21,11 +21,14 @@ public class PreviewSlot : MonoBehaviour
         {
             //only highlighht unit IF: unit's ap > 0 && unit.ooa == false
             if (theBoss.get_pl()[which] != null)
-            {               
-                theBoss.show_active_portrait(theBoss.get_pl()[which].get_activePortrait());
-
-                //if (theBoss.get_pl()[which].get_ap() > 0 && theBoss.get_pl()[which].get_ooa() == false)                
+            {
+                //only highlight and show portrait if the unit can act.
+                if (theBoss.get_pl()[which].get_ap() > 0 && theBoss.get_pl()[which].get_ooa() == false)
+                {
+                    theBoss.show_active_portrait(theBoss.get_pl()[which].get_activePortrait());
                     highlighter.highlight_user(which);
+                }
+                    
             }
         }
         //PLAYER SELECTING A TARGET TILE (on the player side of the map)
@@ -41,21 +44,24 @@ public class PreviewSlot : MonoBehaviour
 
         //cut off after certain characters and add a "." instead. because some names are too long.
         string nameString = theBoss.get_pl()[which].get_nom();
-        if (nameString.Length > 13)
+        if (nameString.Length > 20)
         {
-            nameString = nameString.Substring(0, 12);
+            nameString = nameString.Substring(0, 20);
             nameString += ".";
         }
 
-        previewText.text = nameString + " Lv " + theBoss.get_pl()[which].get_level() + "\nPatk: " + theBoss.get_pl()[which].get_patk() + " (x" + theBoss.get_pl()[which].status.patk + ")"
-            + "\nPdef: " + theBoss.get_pl()[which].get_pdef() + " (x" + theBoss.get_pl()[which].status.pdef + ")"
-            + "\n" + theBoss.get_pl()[which].status.generate_string();
+        //text 1: 
+        //Friday Lv 3 | Light Unit
+        //Patk: 1234 | Pdef: 1234 | Matk: 1243 | Mdef: 1234
+        previewText.text = nameString + " Lv " + theBoss.get_pl()[which].get_level()  + " | " + AffKeyWords.get_affName(theBoss.get_pl()[which].get_affinity()) + " Unit"
+            + "\nPatk: " + theBoss.get_pl()[which].get_patk()
+            + "| Pdef: " + theBoss.get_pl()[which].get_pdef()
+            + "| Matk: " + theBoss.get_pl()[which].get_matk()
+            + "| Mdef: " + theBoss.get_pl()[which].get_mdef();
 
-
-        previewTextCol2.text = "Affinity: " + AffKeyWords.get_affName(theBoss.get_pl()[which].get_affinity());
-        previewTextCol2.text += "\nMatk: " + theBoss.get_pl()[which].get_matk() + " (x" + theBoss.get_pl()[which].status.matk + ")"
-            + "\nMdef: " + theBoss.get_pl()[which].get_mdef() + " (x" + theBoss.get_pl()[which].status.mdef + ")";
-            //+ "\n" + theBoss.get_pl()[which].status.generate_string_right();
+        //text 2:
+        //2 lines to detail status.
+        previewTextCol2.text = theBoss.get_pl()[which].status.generate_string();
 
         previewTextCol2.gameObject.SetActive(true);
         gameObject.SetActive(true);
@@ -80,21 +86,24 @@ public class PreviewSlot : MonoBehaviour
         //highlighted an enemy slot.
         //cut off after certain characters and add a "." instead. because some names are too long.
         string nameString = theBoss.get_el()[which].get_nom();
-        if (nameString.Length > 13)
+        if (nameString.Length > 20)
         {
-            nameString = nameString.Substring(0, 12);
+            nameString = nameString.Substring(0, 20);
             nameString += ".";
         }
 
-        previewText.text = nameString + " Lv " + theBoss.get_el()[which].get_level()
-            + "\nPatk: " + theBoss.get_el()[which].get_patk_actual() + " (x" + theBoss.get_el()[which].status.patk + ")"
-            + "\nPdef: " + theBoss.get_el()[which].get_pdef_actual() + " (x" + theBoss.get_el()[which].status.pdef + ")"
-            + "\n" + theBoss.get_el()[which].status.generate_string();
+        //text 1: 
+        //Friday Lv 3 | Light Unit
+        //Patk: 1234 | Pdef: 1234 | Matk: 1243 | Mdef: 1234
+        previewText.text = nameString + " Lv " + theBoss.get_el()[which].get_level() + " | " + AffKeyWords.get_affName(theBoss.get_el()[which].get_affinity()) + " Unit"
+            + "\nPatk: " + theBoss.get_el()[which].get_patk()
+            + "| Pdef: " + theBoss.get_el()[which].get_pdef()
+            + "| Matk: " + theBoss.get_el()[which].get_matk()
+            + "| Mdef: " + theBoss.get_el()[which].get_mdef();
 
-        previewTextCol2.text = "Affinity: " + AffKeyWords.get_affName(theBoss.get_el()[which].get_affinity());
-        previewTextCol2.text += "\nMatk: " + theBoss.get_el()[which].get_matk_actual() + " (x" + theBoss.get_el()[which].status.matk + ")"
-            + "\nMdef: " + theBoss.get_el()[which].get_mdef_actual() + " (x" + theBoss.get_el()[which].status.mdef + ")";
-            //+ "\n" + theBoss.get_el()[which].status.generate_string_right();
+        //text 2:
+        //2 lines to detail status.
+        previewTextCol2.text = theBoss.get_el()[which].status.generate_string();
 
         previewTextCol2.gameObject.SetActive(true);
         gameObject.SetActive(true);

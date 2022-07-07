@@ -22,7 +22,7 @@ public class Enemy : Unit
     public float get_break_multiplier() { return break_multiplier; }
 
     //move picking system.
-    [SerializeField] private int mpRegen; //the amount of mp the unit regens per round.
+    
     private bool useHealIfPicked; //help healers fulfill their role.
 
     //overrides from parent class.
@@ -83,7 +83,8 @@ public class Enemy : Unit
             hp = get_hpMax_actual();
             break_level = 0;
             ooa = false;
-            mp = UnityEngine.Random.Range(20, 60);
+            //mp = UnityEngine.Random.Range(20, 60);
+            mp = starting_mp + UnityEngine.Random.Range(starting_mp - (starting_mp / 3), starting_mp + (starting_mp / 3));
         }
         else if (ooa == true) return false; //don't do any of this if out of action.
 
@@ -95,7 +96,7 @@ public class Enemy : Unit
         //handle status  
         bool expired = false;
         if (startOfBattle == true)
-        {
+        {         
             status.reset(this);
         }
         else

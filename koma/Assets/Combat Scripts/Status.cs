@@ -55,10 +55,10 @@ public class Status
                 defStr = "";
                 break;
             case defendState.DEFEND:
-                defStr = "Defending (pdef x1.5)\n";
+                defStr = "(Defending) ";
                 break;
             case defendState.BARRIER:
-                defStr = "Barrier up (mdef x1.5)\n";
+                defStr = "(Barrier up) ";
                 break;
         }
 
@@ -80,7 +80,6 @@ public class Status
         if (state == buffState.NEUTRAL)
         {
             reset(u);
-            explanation_text = "";
             return false;
         }
         else
@@ -119,7 +118,7 @@ public class Status
     }
     public bool decline(Unit u)
     {
-        //stat mods decrease. if they hit 0, then stats are reset.
+        //stat mods duration decrease. if they hit 0, then stats are reset.
         bool validExpiry = false;
         if (duration > 0)
         {

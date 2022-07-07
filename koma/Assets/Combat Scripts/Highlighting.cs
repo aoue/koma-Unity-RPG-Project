@@ -109,10 +109,24 @@ public class Highlighting : MonoBehaviour
         enemyHighlights[which].color = tmp;
     }
 
+    private bool is_spot_occupied(bool isPlayerSide, int which)
+    {
+        if (isPlayerSide)
+        {
+            if (theBoss.get_pl()[which] != null) return true;
+        }
+        else
+        {
+            if (theBoss.get_el()[which] != null) return true;
+        }
+        return false;
+    }
     public void highlight_enemy(int spot, Move move, bool userIsParty, int userSpot=-1)
     {
         //which tiles are highlighed are controller by which, xSize, and ySize.
         //which colour is controlled by isHeal. (true: green, false: red)
+
+        //if (is_spot_occupied(false, ))
 
         //color setup
         //color setup
@@ -137,28 +151,28 @@ public class Highlighting : MonoBehaviour
             switch (move.get_xSize())
             {
                 case 1:
-                    enemyHighlights[spot + (helper * y * 3)].color = tmp;
+                    if (is_spot_occupied(false, spot + (helper * y * 3))) enemyHighlights[spot + (helper * y * 3)].color = tmp;
                     break;
 
                 case 2:
                     //can just check the middle row. nice little cheat.
-                    enemyHighlights[spot + (helper * y * 3)].color = tmp;
-                    enemyHighlights[spot + 1 + (helper * y * 3)].color = tmp;
+                    if (is_spot_occupied(false, spot + (helper * y * 3))) enemyHighlights[spot + (helper * y * 3)].color = tmp;
+                    if (is_spot_occupied(false, spot + 1 + (helper * y * 3))) enemyHighlights[spot + 1 + (helper * y * 3)].color = tmp;
                     break;
 
                 case 3:
                     //can check any old spot.
                     if (spot % 3 == 0)
                     {
-                        enemyHighlights[spot + 2 + (helper * y * 3)].color = tmp;
+                        if (is_spot_occupied(false, spot + 2 + (helper * y * 3))) enemyHighlights[spot + 2 + (helper * y * 3)].color = tmp;
                     }
                     else
                     {
-                        enemyHighlights[spot - 1 + (helper * y * 3)].color = tmp;
+                        if (is_spot_occupied(false, spot - 1 + (helper * y * 3))) enemyHighlights[spot - 1 + (helper * y * 3)].color = tmp;
                     }
-                    
-                    enemyHighlights[spot + (helper * y * 3)].color = tmp;
-                    enemyHighlights[spot + 1 + (helper * y * 3)].color = tmp;
+
+                    if (is_spot_occupied(false, spot + (helper * y * 3))) enemyHighlights[spot + (helper * y * 3)].color = tmp;
+                    if (is_spot_occupied(false, spot + 1 + (helper * y * 3))) enemyHighlights[spot + 1 + (helper * y * 3)].color = tmp;
                     break;
             }
         }
@@ -196,6 +210,8 @@ public class Highlighting : MonoBehaviour
         //which tiles are highlighed are controller by which, xSize, and ySize.
         //which colour is controlled by isHeal. (true: green, false: red)
 
+        //if (is_spot_occupied(true, ))
+
         //color setup
         Color tmp;
         tmp.a = 255f;
@@ -218,27 +234,27 @@ public class Highlighting : MonoBehaviour
             switch (move.get_xSize())
             {
                 case 1:
-                    partyHighlights[spot + (helper * y * 3)].color = tmp;
+                    if (is_spot_occupied(true, spot + (helper * y * 3))) partyHighlights[spot + (helper * y * 3)].color = tmp;
                     break;
 
                 case 2:
                     //can just check the middle row. nice little cheat.
-                    partyHighlights[spot + (helper * y * 3)].color = tmp;
-                    partyHighlights[spot + 1 + (helper * y * 3)].color = tmp;
+                    if (is_spot_occupied(true, spot + (helper * y * 3))) partyHighlights[spot + (helper * y * 3)].color = tmp;
+                    if (is_spot_occupied(true, spot + 1 + (helper * y * 3))) partyHighlights[spot + 1 + (helper * y * 3)].color = tmp;
                     break;
 
                 case 3:
                     //can check any old spot.
                     if (spot % 3 == 0)
                     {
-                        partyHighlights[spot + 2 + (helper * y * 3)].color = tmp;
+                        if (is_spot_occupied(true, spot + 2 + (helper * y * 3))) partyHighlights[spot + 2 + (helper * y * 3)].color = tmp;
                     }
                     else
                     {
-                        partyHighlights[spot - 1 + (helper * y * 3)].color = tmp;
+                        if (is_spot_occupied(true, spot - 1 + (helper * y * 3))) partyHighlights[spot - 1 + (helper * y * 3)].color = tmp;
                     }
-                    partyHighlights[spot + (helper * y * 3)].color = tmp;
-                    partyHighlights[spot + 1 + (helper * y * 3)].color = tmp;
+                    if (is_spot_occupied(true, spot + (helper * y * 3))) partyHighlights[spot + (helper * y * 3)].color = tmp;
+                    if (is_spot_occupied(true, spot + 1 + (helper * y * 3))) partyHighlights[spot + 1 + (helper * y * 3)].color = tmp;
                     break;
             }
         }

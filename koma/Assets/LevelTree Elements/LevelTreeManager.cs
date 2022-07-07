@@ -330,7 +330,6 @@ public class LevelTreeManager : MonoBehaviour
         {
             case 0: //mc
                 currentlySelectedUnit.inc_hpMax(8, 10);
-                currentlySelectedUnit.inc_mpMax(2, 3);
                 currentlySelectedUnit.inc_patk(2, 3);
                 currentlySelectedUnit.inc_pdef(3, 5);
                 currentlySelectedUnit.inc_matk(5, 7);
@@ -338,7 +337,6 @@ public class LevelTreeManager : MonoBehaviour
                 break;
             case 1: //friday
                 currentlySelectedUnit.inc_hpMax(12, 15);
-                currentlySelectedUnit.inc_mpMax(1, 2);
                 currentlySelectedUnit.inc_patk(4, 6);
                 currentlySelectedUnit.inc_pdef(6, 8);
                 currentlySelectedUnit.inc_matk(4, 6);
@@ -346,7 +344,6 @@ public class LevelTreeManager : MonoBehaviour
                 break;
             case 2: //moth
                 currentlySelectedUnit.inc_hpMax(8, 10);
-                currentlySelectedUnit.inc_mpMax(2, 4);
                 currentlySelectedUnit.inc_patk(3, 4);
                 currentlySelectedUnit.inc_pdef(3, 5);
                 currentlySelectedUnit.inc_matk(4, 5);

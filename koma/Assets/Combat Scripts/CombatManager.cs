@@ -125,16 +125,22 @@ public class CombatManager : MonoBehaviour
 
         fill_party_slots();
         fill_enemy_slots();
+        for (int i = 0; i < 6; i++)
+        {
+            if (pl[i] != null) { partyBoxes[i].hide_stats(); }
+            if (el[i] != null) { enemyBoxes[i].hide_stats(); }
+        }
 
         //randomly choose whether player or enemy goes first in round 1.
-        if (UnityEngine.Random.Range(0, 2) == 0) playerGoesFirst = true;
-        else playerGoesFirst = false;
+        //if (UnityEngine.Random.Range(0, 2) == 0) playerGoesFirst = true;
+        //else playerGoesFirst = false;
+        playerGoesFirst = true;
 
         //start up the battle.
         //SM.play_background_music();
         battleOver = false;
         gameObject.SetActive(true);
-        start_of_round(true);
+        start_of_round(true, false);
     }
     void send_in_next_wave()
     {
@@ -162,7 +168,7 @@ public class CombatManager : MonoBehaviour
         enemyScheduledUnit = null;
         
         battleOver = false;
-        start_of_round();
+        start_of_round(false, true);
     }
     void Update()
     {
@@ -203,6 +209,7 @@ public class CombatManager : MonoBehaviour
         for (int i = 0; i < enemyBoxes.Length; i++)
         {
             enemyBoxes[i].fill_dummy(emptySlotSprite);
+            //enemyBoxes[i].fill_empty();
         }
 
         previews.hide();
@@ -221,7 +228,7 @@ public class CombatManager : MonoBehaviour
     }
 
     //COMBAT CONTROL 
-    IEnumerator rounderWait(float time, bool startOfBattle)
+    IEnumerator rounderWait(float time, bool startOfBattle, bool startOfNewWave)
     {
         if (startOfBattle == true)
         {
@@ -236,11 +243,40 @@ public class CombatManager : MonoBehaviour
             }
 
         }
+
+        //if not the first round of battle, then show the PW regeneration on each unit card.
+        if (!startOfBattle && !startOfNewWave)
+        {
+            //show_ui_numbers(string toShow, bool targetsParty, bool isHeal, float duration, int which)
+            for (int i = 0; i < 6; i++)
+            {
+                if (pl[i] != null)
+                {
+                    show_ui_numbers(pl[i].get_mpRegen() + " PW", true, true, 1.5f, i);
+                }
+                if (el[i] != null)
+                {
+                    show_ui_numbers(el[i].get_mpRegen() + " PW", false, true, 1.5f, i);
+                }
+            }
+        }
+
         yield return new WaitForSeconds(time);
-        if (startOfBattle) yield return new WaitForSeconds(1.5f);
+
+        //stop hiding stats on all dungeon boxes; (only if startOfBattle is true)
+        if (startOfBattle)
+        {
+            yield return new WaitForSeconds(1.5f);
+            for (int i = 0; i < 6; i++)
+            {
+                if (pl[i] != null) { partyBoxes[i].show_stats(); }
+                if (el[i] != null) { enemyBoxes[i].show_stats(); }
+            }
+        }
+
         control();
     }   
-    void start_of_round(bool startOfBattle = false)
+    void start_of_round(bool startOfBattle, bool startOfNewWave)
     {
         //goes through different units and sets their ap to proper levels.
         previews.hide();
@@ -292,7 +328,7 @@ public class CombatManager : MonoBehaviour
         playerGoesFirst = !playerGoesFirst;
 
         //wait for a second here.
-        StartCoroutine(rounderWait(1.5f, startOfBattle));
+        StartCoroutine(rounderWait(1.5f, startOfBattle, startOfNewWave));
     }
     void count_ap()
     {
@@ -338,7 +374,7 @@ public class CombatManager : MonoBehaviour
             }
             else
             {               
-                start_of_round();
+                start_of_round(false, false);
             }          
         }
         else if ( turn == whoseTurn.PLAYER)
@@ -376,7 +412,6 @@ public class CombatManager : MonoBehaviour
         previews.show(playerScheduledMove, enemyScheduledMove, eorScheduledMove);
 
         //and hide active portrait too. (at this point, it is still the chosen player unit)
-
         control();
     }
     void player_turn()
@@ -1366,6 +1401,7 @@ public class CombatManager : MonoBehaviour
             {
                 //Debug.Log(partyBoxes[i]);
                 partyBoxes[i].fill_dummy(emptySlotSprite);
+                //partyBoxes[i].fill_empty();
             }
             else
             {
@@ -1381,6 +1417,7 @@ public class CombatManager : MonoBehaviour
             if (el[i] == null)
             {
                 enemyBoxes[i].fill_dummy(emptySlotSprite);
+                //enemyBoxes[i].fill_empty();
             }
             else
             {

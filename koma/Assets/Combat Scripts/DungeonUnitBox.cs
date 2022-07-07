@@ -8,7 +8,7 @@ public class DungeonUnitBox : MonoBehaviour
     [SerializeField] private int boxID; // 0 - 5
 
     private Image unitImage; //dimensions are 500x250. 2:1
-    private Image affOrb; //we change the color depending on the unit's aff.
+    private Image affOrb; //we change the image depending on the unit's aff.
     private Text nameText;
     private Text apText;
     private Text hpText;
@@ -41,35 +41,45 @@ public class DungeonUnitBox : MonoBehaviour
         // -AP
 
         // -stat block col 1 (HP and MP)
-        if (u.status.hp == 0) hpText.text = u.get_hp() + " / " + u.get_hpMax() + " HP";
-        else if (u.status.hp > 0) hpText.text = u.get_hp() + " / <color=green>" + u.get_hpMax_actual() + " HP</color>";
-        else hpText.text = u.get_hp() + " / <color=red>" + u.get_hpMax_actual() + " HP</color>";
+        if (u.status.hp == 0) hpText.text = u.get_hp() + "/" + u.get_hpMax() + " HP";
+        else if (u.status.hp > 0) hpText.text = u.get_hp() + "/<color=green>" + u.get_hpMax_actual() + " HP</color>";
+        else hpText.text = u.get_hp() + "/<color=red>" + u.get_hpMax_actual() + " HP</color>";
 
-        //if we're dealing with a player unit, then show mp / mpmax too.
-        if (!(u is Enemy))
-        {
-            hpText.text += "\n" + u.get_mp() + " / " + u.get_mpMax() + " PW";
-        }
-
+        //show power/mp. Since max is 100 for all units, no need to show max here.
+        hpText.text += "\n" + u.get_mp() + " PW";
+        
         //if we're in battle, then show break percentage too.
         if (showAP == true)
         {
             apText.text = u.get_ap() + " AP";
             hpText.text += "\n<color=yellow>(" + u.get_break() + "%)</color>";
-
         }
 
-
-        
-
         //fill in their orb slot too.
-
         affOrb.sprite = affOrbSprite;
         affOrb.gameObject.SetActive(true);
 
         live_unit();
         gameObject.SetActive(true);
     }
+    public void hide_stats()
+    {
+        //used to hide stats at the start of the battle, as they are updated
+        affOrb.enabled = false;
+        nameText.enabled = false;
+        apText.enabled = false;
+        hpText.enabled = false;
+    }
+    public void show_stats()
+    {
+        //used to show stats once the battle has started
+        affOrb.enabled = true;
+        nameText.enabled = true;
+        apText.enabled = true;
+        hpText.enabled = true;
+    }
+
+
     public void fill_empty()
     {
         gameObject.SetActive(false);               

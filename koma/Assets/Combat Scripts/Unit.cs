@@ -23,8 +23,11 @@ public class Unit : MonoBehaviour
     protected int hp;
     [SerializeField] protected float break_multiplier; //multiplies all break percentage taken by this number. this is to reconcile the break system with bosses.
     [SerializeField] private int affinity;
+
+    [SerializeField] protected int starting_mp; //the mp/power that a unit starts a battle at.
     protected int mp; //greater/eq to 0 for player and determines how much the unit adds to the party's stamina, positive number for enemy (move picking influencer)
-    [SerializeField] private int mpMax; //the unit's max stamina.
+    [SerializeField] protected int mpRegen; //the amount of mp the unit regens per round.
+
     [SerializeField] protected int patk;
     [SerializeField] protected int pdef;
     [SerializeField] protected int matk;
@@ -75,6 +78,7 @@ public class Unit : MonoBehaviour
         if (ooa == true) return false; //don't do any of this if out of action.
         
         ap = get_apMax_actual();
+        mp = Mathf.Min(mp + mpRegen, get_mpMax());
 
         brokenThisRound = false;        
 
@@ -83,6 +87,7 @@ public class Unit : MonoBehaviour
         if (startOfBattle == true)
         {
             break_level = 0;
+            mp = starting_mp;
             status.reset(this);
         }
         else
@@ -148,7 +153,6 @@ public class Unit : MonoBehaviour
 
     //LEVEL UP INCREMENTERS
     public void inc_hpMax(int add1, int add2) { hpMax += UnityEngine.Random.Range(add1, add2 + 1); hp = hpMax; }
-    public void inc_mpMax(int add1, int add2) { mpMax += UnityEngine.Random.Range(add1, add2 + 1); mp = mpMax; }
     public void inc_patk(int add1, int add2) { patk += UnityEngine.Random.Range(add1, add2 + 1); }
     public void inc_pdef(int add1, int add2) { pdef += UnityEngine.Random.Range(add1, add2 + 1); }
     public void inc_matk(int add1, int add2) { matk += UnityEngine.Random.Range(add1, add2 + 1); }
@@ -158,13 +162,13 @@ public class Unit : MonoBehaviour
     public void set_level(int l) { level = l; }
     public void set_exp(int set) { exp = set; }
     public void set_hpMax(int set) { hpMax = set; }
-    public void set_mpMax(int set) { mpMax = set; }
     public void set_patk(int set) { patk = set; }
     public void set_pdef(int set) { pdef = set; }
     public void set_matk(int set) { matk = set; }
     public void set_mdef(int set) { mdef = set; }
 
     //GETTERS
+    public int get_mpRegen() { return mpRegen; }
     public List<int> get_allKnownMoveIds() { return allKnownMoveIds; }
     public int get_unitId() { return playerUnitId; }
     public bool get_isScheduled() { return isScheduled; }
@@ -175,7 +179,7 @@ public class Unit : MonoBehaviour
     public DefendMove get_defendMove() { return defendMove; }
     public Move[] get_moveset() { return moveset; }
     public int get_mp() { return mp; } //not for use in combat.
-    public int get_mpMax() { return mpMax; } //not for use in combat.
+    public int get_mpMax() { return 100; } //not for use in combat.
     public Sprite get_boxImg() { return boxImg; }
     public string get_nom() { return nom; }
     public int get_apMax() { return apMax; }

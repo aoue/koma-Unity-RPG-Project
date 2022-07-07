@@ -54,7 +54,8 @@ MonoBehaviour:
   hpMax: 60
   break_multiplier: 1
   affinity: 1
-  mpMax: 0
+  starting_mp: 40
+  mpRegen: 10
   patk: 70
   pdef: 50
   matk: 20
@@ -71,4 +72,3 @@ MonoBehaviour:
   isHealer: 0
   isBuffer: 0
   healer_priority: 0
-  mpRegen: 10
