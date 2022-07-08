@@ -116,7 +116,7 @@ public class MoveSelector : MonoBehaviour
                 {
                     moveButtons[i].interactable = false;
                 }
-                moveButtons[i].GetComponent<Image>().color = AffKeyWords.get_aff_color(unit.get_moveset()[i].get_affinity()); //colour based on move's affinity
+                //moveButtons[i].GetComponent<Image>().color = AffKeyWords.get_aff_color(unit.get_moveset()[i].get_affinity()); //colour based on move's affinity
                 moveButtons[i].transform.GetChild(1).gameObject.GetComponent<Text>().text = unit.get_moveset()[i].get_nom();
 
                 //if not interactable, then set alpha to 0.6 to show this visibly.
@@ -131,6 +131,7 @@ public class MoveSelector : MonoBehaviour
                 if ( unit.get_moveset()[i].get_preferredRow() == preferredRow.FRONT ) chevronSpots[i].sprite = upChevronImage;
                 else if (unit.get_moveset()[i].get_preferredRow() == preferredRow.BACK) chevronSpots[i].sprite = downChevronImage;
                 else chevronSpots[i].gameObject.SetActive(false);
+
                 if ( unit.get_moveset()[i].get_preferredRow() != preferredRow.AMBI ) chevronSpots[i].gameObject.SetActive(true);
             }
             else

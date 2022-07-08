@@ -131,6 +131,10 @@ public class CombatManager : MonoBehaviour
             if (el[i] != null) { enemyBoxes[i].hide_stats(); }
         }
 
+        //hide both active portraits to start with.
+        activePortrait.gameObject.SetActive(false);
+        enemyActivePortrait.gameObject.SetActive(false);
+
         //randomly choose whether player or enemy goes first in round 1.
         //if (UnityEngine.Random.Range(0, 2) == 0) playerGoesFirst = true;
         //else playerGoesFirst = false;

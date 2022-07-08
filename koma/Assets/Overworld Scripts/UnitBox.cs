@@ -17,7 +17,7 @@ public class UnitBox : MonoBehaviour
     [SerializeField] private Image unitImage; //dimensions are 500x250. 2:1
     [SerializeField] private Image affOrb; //we change the color depending on unit's aff.
     [SerializeField] private Text nameText;
-    [SerializeField] private Text StaminaText;
+    //[SerializeField] private Text StaminaText;
 
     public int get_boxID() { return boxID; }
     
@@ -35,11 +35,13 @@ public class UnitBox : MonoBehaviour
         nameText.text = u.get_nom() + " Lv " + u.get_level();
 
         // -stamina
+        /*
         if (StaminaText != null)
         {
             StaminaText.text = "HP: " + u.get_hp() + "/" + u.get_hpMax()
                 + "\nMP: " + u.get_mp() + "/" + u.get_mpMax();
         }
+        */
             
 
         //fill orb - deprecated

@@ -17,8 +17,15 @@ public static class AffKeyWords
     //coloring
     public static Color get_aff_color(int index)
     {       
-        //update: we don't change color now, we change the image entirely.
-
+        //update: move slots are not coloured based on affinity anymore.
+        //always return the default colour OR dark if index is -1
+        if (index == -1)
+        {
+            return new Color(1f, 1f, 1f, 1f);
+        }
+        return new Color(60f / 255f, 106f / 255f, 108f / 255f, 1f);
+        
+        /*
         //returns color associated with aff and alpha set to 1.
         switch (index)
         {
@@ -30,7 +37,8 @@ public static class AffKeyWords
                 return new Color(63f / 255f, 160f / 255f, 235f / 255f, 1f);
             default: //null
                 return new Color(1f, 1f, 1f, 1f);
-        }       
+        }      
+        */
     }
     
 
